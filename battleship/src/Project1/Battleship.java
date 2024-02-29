@@ -12,8 +12,8 @@ Notes: */
 public class Battleship {
     public static void main(String[] args) throws IOException {
         
-        battleshipModel model = new battleshipModel();
-        battleshipView view = new battleshipView();
-        battleshipController controller = new battleshipController(model, view);
+        //battleshipModel model = new battleshipModel();
+        //battleshipView view = new battleshipView();
+        battleshipController controller = new battleshipController();
     }
 }

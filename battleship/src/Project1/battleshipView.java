@@ -27,25 +27,22 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class battleshipView implements ActionListener{
+public class battleshipView{
     
     private JFrame frame;
     private JPanel panel1;
     private JPanel panel2;
     private JButton[][] button1;
     private JButton[][] button2;
-    private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png");
-
+    private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png"); 
+    private JLabel[][] label;
+    //View constructor that builds frame
     battleshipView() throws IOException{
-
-        //board1
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
-        frame.setLayout(new BorderLayout());
-        //frame.getContentPane().setBackground(Color.BLACK);
+        frame.setLayout(new BorderLayout());       
         frame.setLocationRelativeTo(null);
-        //frame.setLayout(new GridLayout(2, 1));
 
         MyPanel myPanel = new MyPanel(imageIcon);
         myPanel.setLayout(new GridLayout(10, 10));
@@ -56,16 +53,15 @@ public class battleshipView implements ActionListener{
         button1 = new JButton[10][10];
         button2 = new JButton[10][10];
 
+        //label = new JLabel[10][10];
+        
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
-                //JButton btn = new JButton();
-                JLabel label = new JLabel();
                 JButton btn2 = new JButton();
-                //button1[i][j] = btn;
                 button2[i][j] = btn2;
-                //btn.setBackground(Color.BLUE);
-                btn2.setBackground(Color.BLUE);
-                myPanel.add(label);
+                //label[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                //btn2.setBackground(Color.BLUE);
+                //myPanel.add(label[i][j]);
                 panel2.add(btn2);
             }
         }
@@ -78,15 +74,6 @@ public class battleshipView implements ActionListener{
         frame.getContentPane().setPreferredSize(new Dimension(300, 600));
         frame.pack();
         frame.setVisible(true);
-    }
-
-    public void fireCannon(){
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
-                JButton btn = button2[i][j];
-                btn.addActionListener(this);
-            }
-        }
     }
 
     public JButton getButton(int row, int column){
@@ -107,16 +94,9 @@ public class battleshipView implements ActionListener{
 
     public void updateView(int row, int column){
         button2[row][column].setText("X");
+        button2[row][column].setBackground(Color.RED);
     }
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JButton clickedButton = (JButton)e.getSource();
-        //finds clicked button position
-        int[] position = buttonPosition(clickedButton);
-
-        updateView(position[0], position[1]); 
-    }
+    /* 
     public JLabel getPictuerLabel(String pictureFilePath) throws IOException {
 
         File file = new File(pictureFilePath);
@@ -126,6 +106,7 @@ public class battleshipView implements ActionListener{
         JLabel battleShip = new JLabel(imageIcon);
         return battleShip;
     }
+    */
 }
 //drag n drop
 
@@ -164,19 +145,3 @@ class MyPanel extends JPanel{
         }
     }
     
-/* 
-    class MyFrame extends JFrame {
-        MyFrame(ImageIcon imageIcon){
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.setSize(800,800);
-            this.setLocationRelativeTo(null);
-            MyPanel myPanel = new MyPanel(imageIcon);
-            myPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-            myPanel.setSize(imageIcon.getIconHeight(), imageIcon.getIconWidth());
-            this.add(myPanel);
-            this.setSize(imageIcon.getIconHeight()*2, imageIcon.getIconWidth()*2);
-            this.setBackground(Color.CYAN);
-            this.setVisible(true);
-        }
-    }
-*/
