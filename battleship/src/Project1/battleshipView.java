@@ -36,15 +36,17 @@ public class battleshipView{
     private JButton[][] button2;
     private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png"); 
     private JLabel[][] label;
+
     //View constructor that builds frame
     battleshipView() throws IOException{
+
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
         frame.setLayout(new BorderLayout());       
         frame.setLocationRelativeTo(null);
 
-        MyPanel myPanel = new MyPanel(imageIcon);
+        MyPanel myPanel = new MyPanel(imageIcon); //Panel to hold ship image
         myPanel.setLayout(new GridLayout(10, 10));
         
         panel2 = new JPanel();
@@ -55,14 +57,12 @@ public class battleshipView{
 
         //label = new JLabel[10][10];
         
+        //adds grid of buttons to second panel
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
-                JButton btn2 = new JButton();
-                button2[i][j] = btn2;
-                //label[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                //btn2.setBackground(Color.BLUE);
-                //myPanel.add(label[i][j]);
-                panel2.add(btn2);
+                JButton btn = new JButton();
+                button2[i][j] = btn;
+                panel2.add(btn);
             }
         }
 
@@ -76,10 +76,12 @@ public class battleshipView{
         frame.setVisible(true);
     }
 
+    //called in fireCannon() method in controller. returns a button
     public JButton getButton(int row, int column){
         return button2[row][column];
     }
 
+    //called in controller to find clickedButton x&y position
     public int[] buttonPosition(JButton btn){
         // Find the button's position in the array
         for (int i = 0; i < 10; i++) {
@@ -92,24 +94,19 @@ public class battleshipView{
         return null;
     }
 
-    public void updateView(int row, int column){
-        button2[row][column].setText("X");
-        button2[row][column].setBackground(Color.RED);
+    //called in controller after checking if hit or miss. sets button text to X for hit or O for miss
+    public void updateView(int row, int column, String HitOrMiss){
+        button2[row][column].setText(HitOrMiss);
     }
-    /* 
-    public JLabel getPictuerLabel(String pictureFilePath) throws IOException {
 
-        File file = new File(pictureFilePath);
-        BufferedImage bufferedImage = ImageIO.read(file);
-
-        ImageIcon imageIcon = new ImageIcon(bufferedImage);
-        JLabel battleShip = new JLabel(imageIcon);
-        return battleShip;
+    public void showGameStatus(){
+        String message = "ship c sunk";
+        JOptionPane.showMessageDialog(frame, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
     }
-    */
 }
-//drag n drop
 
+
+//drag n drop
 class MyPanel extends JPanel{
     ImageIcon image;
     Point imageUpperLeft, prevPoint;

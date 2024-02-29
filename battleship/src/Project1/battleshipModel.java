@@ -32,10 +32,44 @@ public class battleshipModel {
     public battleshipModel() {
         board = new char[boardHeight][boardWidth];
         opponentBoard = new char[boardHeight][boardWidth];
-        randomlySetBoard();
-        while(/*Some button is not pushed or something*/ true) {
-            userPlaceShip();
+        initBoard();
+    }
+    // will - called in controller to check valid shot
+    public boolean checkForValidShot(int x, int y) {
+        if(board[x][y] != ' ') {
+            return true;
         }
+        return false;
+    }
+
+    //will - initializes a board with ' ' then i hardcoded a ship into it with 'c'. Doing this for testing
+    public void initBoard(){
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                board[i][j] = ' ';
+            }
+        }
+        //fake ship
+        board[4][0] = 'c';
+        board[4][1] = 'c';
+        board[4][2] = 'c';
+    }
+
+    // will - after the button clicked in controller it updates the model accordingly
+    public void updateModel(int x, int y, String HitOrMiss){
+        board[x][y] = HitOrMiss.charAt(0); // changes string to char
+    }
+
+    // will - function to recognize ship sank
+    public boolean shipStatus(){
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                if(board[i][j] == 'c'){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     //Potentially Not needed
@@ -130,21 +164,6 @@ public class battleshipModel {
         }
     }
 
-    //Returns true if the user's movement is valid
-    boolean userPlaceShip(/*something here */) {
-        /////
-        return true;
-        //////
-    }
-
-    //Will check if the shot by the user is valid
-    boolean checkForValidShot(int xPos, int yPos) {
-        boolean validShot = false;
-        if(board[xPos][yPos] != 'X' || board[xPos][yPos] != 'O') {
-            validShot = true;
-        }
-        return validShot;
-    }
 
     /*This method will check with the shot at the given coordinates are hits or misses. If it is a miss, 
      * 'O' will be returned. If it is a hit, the String of the corresponding ship will be returned. */
