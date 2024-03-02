@@ -46,7 +46,7 @@ public class battleshipView{
         frame.setLayout(new BorderLayout());       
         frame.setLocationRelativeTo(null);
 
-        MyPanel myPanel = new MyPanel(imageIcon); //Panel to hold ship image
+        carrierPanel myPanel = new carrierPanel(imageIcon); //Panel to hold ship image
         myPanel.setLayout(new GridLayout(10, 10));
         
         panel2 = new JPanel();
@@ -104,41 +104,4 @@ public class battleshipView{
         JOptionPane.showMessageDialog(frame, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
     }
 }
-
-
-//drag n drop
-class MyPanel extends JPanel{
-    ImageIcon image;
-    Point imageUpperLeft, prevPoint;
-    MyPanel(ImageIcon imageIcon){
-        image = imageIcon;
-        imageUpperLeft = new Point(100,100);
-        prevPoint = imageUpperLeft;
-        ClickListener clickListener = new ClickListener();
-        this.addMouseListener(clickListener);
-        DragListener dragListener = new DragListener();
-        this.addMouseMotionListener(dragListener);
-    }
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        image.paintIcon(this, g, (int) imageUpperLeft.getX(), (int)
-        imageUpperLeft.getY());
-    }
-    private class ClickListener extends MouseAdapter{
-        public void mousePressed(MouseEvent event) {
-            prevPoint = event.getPoint();
-        }   
-    }
-    private class DragListener extends MouseMotionAdapter{
-        public void mouseDragged(MouseEvent event) {
-            Point currPoint = event.getPoint();
-            int dx = (int) (currPoint.getX() - prevPoint.getX());
-            int dy = (int) (currPoint.getY() - prevPoint.getY());
-
-            imageUpperLeft.translate(dx, dy);
-            prevPoint = currPoint;
-            repaint();
-            }
-        }
-    }
     
