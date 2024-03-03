@@ -39,6 +39,7 @@ public class battleshipModel {
         board = new char[boardHeight][boardWidth];
         opponentBoard = new char[boardHeight][boardWidth];
         randomlySetBoard();
+        //randomlySetBoard();
         //initBoard();
     }
     // will - called in controller to check valid shot

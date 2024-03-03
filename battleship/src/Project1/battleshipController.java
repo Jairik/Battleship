@@ -19,6 +19,8 @@ public class battleshipController implements ActionListener{
         model = new battleshipModel();
         char[][] testArr = model.getBoard();
         view = new battleshipView(testArr);
+        view = new battleshipView();
+        model = new battleshipModel();
         //playGameMusic();
         fireCannon();
         

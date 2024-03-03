@@ -22,6 +22,7 @@ import java.net.URL;
 
 /*To open/run this, we would need to run the following things in a controller function (controller since we must access model)
  *      JFrame <shipName>Frame = new MyFrame("/resources/<file_name>");
+ *
  */
 
 //Creating a draggable panel for Carrier Ship
@@ -53,7 +54,6 @@ class shipPanel extends JPanel{
         ImageIcon shipIcon = null; //Initializing with null value
         try {
             URL shipImagePath = shipPanel.class.getResource(imagePath);
-            System.out.println(imagePath);
             InputStream inputStream = shipImagePath.openStream();
             Image image = ImageIO.read(inputStream);
             inputStream.close();

@@ -1,12 +1,14 @@
 package Project1;
 
+/*
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 /*/
-public class ImagePanel extends JPanel{
+
+/*public class ImagePanel extends JPanel{
     
     ImageIcon image = new ImageIcon("canvas1.png");
     final int IMG_WIDTH = image.getIconWidth();
@@ -56,6 +58,9 @@ public class ImagePanel extends JPanel{
     public static void main(String[] args){
         SwingUtilities.invokeLater(() -> {
             
+    public static void main(String[] args){
+        SwingUtilities.invokeLater(() -> {
+            /* 
             JFrame frame = new JFrame("Image Panel Example");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             
@@ -68,12 +73,17 @@ public class ImagePanel extends JPanel{
             
         });
     }
-}*/
+}
 
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+}*/
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -157,3 +167,11 @@ public class Image {
         return shipIcon;
     }
 } 
+
+/*
+        File file = new File("/Users/will/Desktop/Cosc330/Project1/canvas1.png");
+        BufferedImage bufferedImage = ImageIO.read(file);
+        ImageIcon imageIcon = new ImageIcon(bufferedImage);
+        JFrame jFrame = new MyFrame(imageIcon);
+    }
+} */
