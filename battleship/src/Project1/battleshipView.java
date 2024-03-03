@@ -27,28 +27,41 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class battleshipView implements ActionListener{
+public class battleshipView{
     
     private JFrame frame;
     private JPanel panel1;
     private JPanel panel2;
     private JButton[][] button1;
     private JButton[][] button2;
-    private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png");
+    //private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png"); 
+    private JLabel[][] label;
 
-    battleshipView() throws IOException{
+    //View constructor that builds frame
+    battleshipView(char[][] testArr) throws IOException{
 
-        //board1
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
-        frame.setLayout(new BorderLayout());
-        //frame.getContentPane().setBackground(Color.BLACK);
+        frame.setLayout(new BorderLayout());       
         frame.setLocationRelativeTo(null);
-        //frame.setLayout(new GridLayout(2, 1));
 
-        MyPanel myPanel = new MyPanel(imageIcon);
+        shipPanel myPanel = new shipPanel("/resources/canvas1.png"); //Panel to hold ship image
         myPanel.setLayout(new GridLayout(10, 10));
+
+        label = new JLabel[10][10];
+        
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                String testChar = Character.toString(testArr[i][j]);
+                System.out.println(testChar);
+                JLabel lbl = new JLabel();
+                lbl.setText(testChar);
+                label[i][j] = lbl;
+                lbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                myPanel.add(lbl);
+            }
+        }
         
         panel2 = new JPanel();
         panel2.setLayout(new GridLayout(10, 10));
@@ -56,17 +69,14 @@ public class battleshipView implements ActionListener{
         button1 = new JButton[10][10];
         button2 = new JButton[10][10];
 
+        
+        
+        //adds grid of buttons to second panel
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
-                //JButton btn = new JButton();
-                JLabel label = new JLabel();
-                JButton btn2 = new JButton();
-                //button1[i][j] = btn;
-                button2[i][j] = btn2;
-                //btn.setBackground(Color.BLUE);
-                btn2.setBackground(Color.BLUE);
-                myPanel.add(label);
-                panel2.add(btn2);
+                JButton btn = new JButton();
+                button2[i][j] = btn;
+                panel2.add(btn);
             }
         }
 
@@ -80,19 +90,12 @@ public class battleshipView implements ActionListener{
         frame.setVisible(true);
     }
 
-    public void fireCannon(){
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
-                JButton btn = button2[i][j];
-                btn.addActionListener(this);
-            }
-        }
-    }
-
+    //called in fireCannon() method in controller. returns a button
     public JButton getButton(int row, int column){
         return button2[row][column];
     }
 
+    //called in controller to find clickedButton x&y position
     public int[] buttonPosition(JButton btn){
         // Find the button's position in the array
         for (int i = 0; i < 10; i++) {
@@ -105,78 +108,14 @@ public class battleshipView implements ActionListener{
         return null;
     }
 
-    public void updateView(int row, int column){
-        button2[row][column].setText("X");
+    //called in controller after checking if hit or miss. sets button text to X for hit or O for miss
+    public void updateView(int row, int column, String HitOrMiss){
+        button2[row][column].setText(HitOrMiss);
     }
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JButton clickedButton = (JButton)e.getSource();
-        //finds clicked button position
-        int[] position = buttonPosition(clickedButton);
 
-        updateView(position[0], position[1]); 
-    }
-    public JLabel getPictuerLabel(String pictureFilePath) throws IOException {
-
-        File file = new File(pictureFilePath);
-        BufferedImage bufferedImage = ImageIO.read(file);
-
-        ImageIcon imageIcon = new ImageIcon(bufferedImage);
-        JLabel battleShip = new JLabel(imageIcon);
-        return battleShip;
+    public void showGameStatus(){
+        String message = "ship c sunk";
+        JOptionPane.showMessageDialog(frame, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
     }
 }
-//drag n drop
-
-class MyPanel extends JPanel{
-    ImageIcon image;
-    Point imageUpperLeft, prevPoint;
-    MyPanel(ImageIcon imageIcon){
-        image = imageIcon;
-        imageUpperLeft = new Point(100,100);
-        prevPoint = imageUpperLeft;
-        ClickListener clickListener = new ClickListener();
-        this.addMouseListener(clickListener);
-        DragListener dragListener = new DragListener();
-        this.addMouseMotionListener(dragListener);
-    }
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        image.paintIcon(this, g, (int) imageUpperLeft.getX(), (int)
-        imageUpperLeft.getY());
-    }
-    private class ClickListener extends MouseAdapter{
-        public void mousePressed(MouseEvent event) {
-            prevPoint = event.getPoint();
-        }   
-    }
-    private class DragListener extends MouseMotionAdapter{
-        public void mouseDragged(MouseEvent event) {
-            Point currPoint = event.getPoint();
-            int dx = (int) (currPoint.getX() - prevPoint.getX());
-            int dy = (int) (currPoint.getY() - prevPoint.getY());
-
-            imageUpperLeft.translate(dx, dy);
-            prevPoint = currPoint;
-            repaint();
-            }
-        }
-    }
     
-/* 
-    class MyFrame extends JFrame {
-        MyFrame(ImageIcon imageIcon){
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.setSize(800,800);
-            this.setLocationRelativeTo(null);
-            MyPanel myPanel = new MyPanel(imageIcon);
-            myPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-            myPanel.setSize(imageIcon.getIconHeight(), imageIcon.getIconWidth());
-            this.add(myPanel);
-            this.setSize(imageIcon.getIconHeight()*2, imageIcon.getIconWidth()*2);
-            this.setBackground(Color.CYAN);
-            this.setVisible(true);
-        }
-    }
-*/
