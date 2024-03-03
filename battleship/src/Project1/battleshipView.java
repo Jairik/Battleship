@@ -24,8 +24,9 @@ import javax.swing.*;
 public class battleshipView{
     
     private JFrame frame;
-    private JPanel panel1;
-    private JPanel panel2;
+    private JPanel topPanel; //Used for the user to shoot
+    private JPanel middlePanel; //Used to store ship information and stuff
+    private JPanel bottomPanel; //Used for drag & drop and displaying ships
     private JButton[][] button1;
     private JButton[][] button2;
     //private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png"); 
@@ -35,58 +36,78 @@ public class battleshipView{
     //View constructor that builds frame, gridlayout, labels, and buttons
     battleshipView(char[][] testArr) throws IOException{
 
-        //Start the game music
+        /* Initialize sounds and start the game music */
         soundEffects = new SoundFX();
         //soundEffects.playGameMusic(); (Uncomment this prior to submitting, its just annoying for testing)
 
-        //Create the root window
+        /* Create the root Frame */
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
         frame.setLayout(new BorderLayout());       
         frame.setLocationRelativeTo(null);
 
-        //Get a panel to hold the different ship images
-        shipPanel myPanel = new shipPanel("/resources/canvas1.png"); //Panel to hold ship image
-        myPanel.setLayout(new GridLayout(10, 10));
-
-        label = new JLabel[10][10];
+        /* Create bottom panel - used to display user ships and for Drag-n-Drop */
+        bottomPanel = new JPanel();
+        bottomPanel.setLayout(new GridLayout(10, 10));
         
+        //Add grid labels for bottom of the screen
+        label = new JLabel[10][10];
+
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
                 String testChar = Character.toString(testArr[i][j]);
                 label[i][j] = new JLabel();
                 label[i][j].setText(testChar);
                 label[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                myPanel.add(label[i][j]);
+                bottomPanel.add(label[i][j]);
             }
         }
         
-        panel2 = new JPanel();
-        panel2.setLayout(new GridLayout(10, 10));
+        /* Create top panel - used for shooting at enemy ships */
+        topPanel = new JPanel();
+        topPanel.setLayout(new GridLayout(10, 10));
 
+        //adds grid of buttons to second panel
         button1 = new JButton[10][10];
         button2 = new JButton[10][10];
 
-        
-        
-        //adds grid of buttons to second panel
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
                 JButton btn = new JButton();
                 button2[i][j] = btn;
-                panel2.add(btn);
+                bottomPanel.add(btn);
             }
         }
 
-        myPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        frame.add(myPanel);
-        frame.add(panel2, BorderLayout.SOUTH);
+        /* Create middle panel, reponsible for holding pictures of different ships */
+        JPanel middlePanel = new JPanel();
+        middlePanel.setLayout(new GridLayout(1, 7)); //One for each ship and two for message or whatever (Opponents Turn, Sank ship, etc)
+        middlePanel.setSize(300, 100);
+
+        topPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        frame.add(topPanel, BorderLayout.PAGE_START);
+        frame.add(middlePanel, BorderLayout.CENTER);
+        frame.add(bottomPanel, BorderLayout.PAGE_END);
         frame.setTitle("Battle-Ship-1");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setPreferredSize(new Dimension(300, 600));
         frame.pack();
         frame.setVisible(true);
+
+        /*Display draggable Ships */
+        //Get a panel to hold the different ship images
+        shipPanel battleshipPanel = new shipPanel("/resources/canvas1.png"); 
+        /*shipPanel carrierPanel = new shipPanel("<insertFilePath>");
+        shipPanel cruiserPanel = new shipPanel("<insertFilePath>");
+        shipPanel submarinePanel = new shipPanel("<insertFilePath>");
+        shipPanel destroyerPanel = new shipPanel("<insertFilePath>"); */
+        //Add all of the elements to the bottom panel
+        bottomPanel.add(battleshipPanel);
+        /*bottomPanel.add(carrierPanel);
+        bottomPanel.add(cruiserPanel);
+        bottomPanel.add(submarinePanel);
+        bottomPanel.add(destroyerPanel);*/
     }
 
     //called in fireCannon() method in controller. returns a button
