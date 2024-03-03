@@ -26,11 +26,10 @@ import java.io.IOException;
 
 //Creating a draggable panel for Carrier Ship
 class carrierPanel extends JPanel{
-    int gridSize; //We will need to get gridSize from view from controller
+    final int gridSize = 10;
     ImageIcon carrierImage;
     Point upperLeftCoordinate, prevGridCoordinate;
     carrierPanel(ImageIcon carrierIcon){
-        //gridSize = ?? - could call from super class
         carrierImage = carrierIcon;
         upperLeftCoordinate = new Point(100,100);
         //Get the points to pass into new Point()
@@ -62,6 +61,7 @@ class carrierPanel extends JPanel{
             prevGridCoordinate = currPoint;
 
             repaint();
+
             }
         }
 

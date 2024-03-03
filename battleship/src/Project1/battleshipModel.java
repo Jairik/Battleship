@@ -27,12 +27,19 @@ public class battleshipModel {
     char[][] opponentBoard; //2d board to hold the placements, hits, and misses on opponents board
     int moveCounter; //count the number of moves
     boolean turn; //Boolean may not be the best dataType
+    //Ships 
+    int carrierHitsRemaining = 5;
+    int battleshipHitsRemaining = 4;
+    int cruiserHitsRemaining = 4;
+    int submarineHitsRemaining = 4;
+    int destroyerRemaining = 4;
 
     //Constructor to make board and declare currentTurn
     public battleshipModel() {
         board = new char[boardHeight][boardWidth];
         opponentBoard = new char[boardHeight][boardWidth];
-        initBoard();
+        //randomlySetBoard();
+        //initBoard();
     }
     // will - called in controller to check valid shot
     public boolean checkForValidShot(int x, int y) {
@@ -43,9 +50,9 @@ public class battleshipModel {
     }
 
     //will - initializes a board with ' ' then i hardcoded a ship into it with 'c'. Doing this for testing
-    public void initBoard(){
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
+    public void initBoard() {
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
                 board[i][j] = ' ';
             }
         }
@@ -72,15 +79,6 @@ public class battleshipModel {
         return true;
     }
 
-    //Potentially Not needed
-    void clearBoard() {
-        for(int i = 0; i < boardHeight; i++) {
-            for (int j = 0; j < boardWidth; j++) {
-                board[i][j] = ' ';
-            }
-        }
-    }
-
     //Logic to randomly place the ships on the board
     void randomlySetBoard() {
         clearBoard();
@@ -91,75 +89,88 @@ public class battleshipModel {
         randomlyPlaceShip(destroyerSize, destroyer);
     }
 
+     //Helper function for randomly setting the board
+    void clearBoard() {
+        for(int i = 0; i < boardHeight; i++) {
+            for (int j = 0; j < boardWidth; j++) {
+                board[i][j] = ' ';
+            }
+        }
+    }
+
     //Given a shipSize, will find a section of the board that is not taken and place the given ship there
     //Notes: Definitely not the most efficient way to do it but it works for now
     void randomlyPlaceShip(int shipSize, char currentShip) {
-        int ranX = (int)(Math.random()) * (boardWidth+1); //Getting a random X coordinate
-        int ranY = (int)(Math.random()) * (boardHeight+1); //Getting a random Y coordinate
-        int dir = (int)(Math.random()) * (4); //Getting a random int to represent direction
-        int iterator = 0; //Used to iterate across the board to check if spots are valid or taken
-        if (dir == 0) { //Move right across the board
-            //Check each spot to see if the spot is empty or out of bounds
-            while(iterator < shipSize) {
-                //If it is off the board or is nonempty
-                if(ranX > (boardWidth+1) || ranY > (boardHeight+1) || board[ranX+iterator][ranY] != ' ') {
-                    randomlyPlaceShip(shipSize, currentShip); //Recursively call itself to try again
+        boolean validPlacement = false;
+        while(!validPlacement) {
+            int ranX = (int)(Math.random()) * (boardWidth+1); //Getting a random X coordinate
+            int ranY = (int)(Math.random()) * (boardHeight+1); //Getting a random Y coordinate
+            int dir = (int)(Math.random()) * (4); //Getting a random int to represent direction
+            int iterator = 0; //Used to iterate across the board to check if spots are valid or taken
+            if (dir == 0) { //Move right across the board
+                //Check each spot to see if the spot is empty or out of bounds
+                while(iterator < shipSize) {
+                    //If it is off the board or is nonempty
+                    if(ranX < (boardWidth+1) || ranY < (boardHeight+1) || board[ranX+iterator][ranY] == ' ') {
+                        iterator++;
+                    }
+                    else {
+                        
+                    }
                 }
-                iterator++;
-            }
-            //Since all spots are valid, place the ships
-            iterator = 0;
-            while(iterator < shipSize) {
-                board[ranX+iterator][ranY] = currentShip;
-                iterator++;
-            }
-        }
-        else if (dir == 1) { //Move left across the board
-            //Check each spot to see if the spot is empty or out of bounds
-            while(iterator < shipSize) {
-                //If it is off the board or is nonempty
-                if(ranX > (boardWidth+1) || ranY > (boardHeight+1) || board[ranX-iterator][ranY] != ' ') {
-                    randomlyPlaceShip(shipSize, currentShip); //Recursively call itself to try again
+                //Since all spots are valid, place the ships
+                iterator = 0;
+                while(iterator < shipSize) {
+                    board[ranX+iterator][ranY] = currentShip;
+                    iterator++;
                 }
-                iterator++;
             }
-            //Since all spots are valid, place the ships
-            iterator = 0;
-            while(iterator < shipSize) {
-                board[ranX-iterator][ranY] = currentShip;
-                iterator++;
-            }
-        }
-        else if (dir == 2) { //Move up the board
-            //Check each spot to see if the spot is empty or out of bounds
-            while(iterator < shipSize) {
-                //If it is off the board or is nonempty
-                if(ranX > (boardWidth+1) || ranY > (boardHeight+1) || board[ranX][ranY+iterator] != ' ') {
-                    randomlyPlaceShip(shipSize, currentShip); //Recursively call itself to try again
+            else if (dir == 1) { //Move left across the board
+                //Check each spot to see if the spot is empty or out of bounds
+                while(iterator < shipSize) {
+                    //If it is off the board or is nonempty
+                    if(ranX < (boardWidth+1) || ranY < (boardHeight+1) || board[ranX-iterator][ranY] == ' ') {
+                    iterator++;
+                    }
                 }
-                iterator++;
-            }
-            //Since all spots are valid, place the ships
-            iterator = 0;
-            while(iterator < shipSize) {
-                board[ranX][ranY+iterator] = currentShip;
-                iterator++;
-            }
-        }
-        else { //Move down the board
-            //Check each spot to see if the spot is empty or out of bounds
-            while(iterator < shipSize) {
-                //If it is off the board or is nonempty
-                if(ranX > (boardWidth+1) || ranY > (boardHeight+1) || board[ranX][ranY-iterator] != ' ') {
-                    randomlyPlaceShip(shipSize, currentShip); //Recursively call itself to try again
+                //Since all spots are valid, place the ships
+                iterator = 0;
+                while(iterator < shipSize) {
+                    board[ranX-iterator][ranY] = currentShip;
+                    iterator++;
                 }
-                iterator++;
             }
-            //Since all spots are valid, place the ships
-            iterator = 0;
-            while(iterator < shipSize) {
-                board[ranX][ranY-iterator] = currentShip;
-                iterator++;
+            else if (dir == 2) { //Move up the board
+                //Check each spot to see if the spot is empty or out of bounds
+                while(iterator < shipSize) {
+                    //If it is off the board or is nonempty
+                    if(ranX > (boardWidth+1) || ranY > (boardHeight+1) || board[ranX][ranY+iterator] != ' ') {
+                        randomlyPlaceShip(shipSize, currentShip); //Recursively call itself to try again
+                    }
+                    iterator++;
+                }
+                //Since all spots are valid, place the ships
+                iterator = 0;
+                while(iterator < shipSize) {
+                    board[ranX][ranY+iterator] = currentShip;
+                    iterator++;
+                }
+            }
+            else { //Move down the board
+                //Check each spot to see if the spot is empty or out of bounds
+                while(iterator < shipSize) {
+                    //If it is off the board or is nonempty
+                    if(ranX > (boardWidth+1) || ranY > (boardHeight+1) || board[ranX][ranY-iterator] != ' ') {
+                        validPlacement = false;
+                    }
+                    iterator++;
+                }
+                //Since all spots are valid, place the ships
+                iterator = 0;
+                while(iterator < shipSize) {
+                    board[ranX][ranY-iterator] = currentShip;
+                    iterator++;
+                }
             }
         }
     }
@@ -211,7 +222,7 @@ public class battleshipModel {
         return sankShip;
     }
 
-    //Will return the board to the opposing user
+    //Returns the board back to the controller
     char[][] getBoard() {
         return board;
     }

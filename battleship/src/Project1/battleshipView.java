@@ -48,6 +48,17 @@ public class battleshipView{
 
         carrierPanel myPanel = new carrierPanel(imageIcon); //Panel to hold ship image
         myPanel.setLayout(new GridLayout(10, 10));
+
+        label = new JLabel[10][10];
+        
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                JLabel lbl = new JLabel();
+                label[i][j] = lbl;
+                lbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                myPanel.add(lbl);
+            }
+        }
         
         panel2 = new JPanel();
         panel2.setLayout(new GridLayout(10, 10));
@@ -55,7 +66,7 @@ public class battleshipView{
         button1 = new JButton[10][10];
         button2 = new JButton[10][10];
 
-        //label = new JLabel[10][10];
+        
         
         //adds grid of buttons to second panel
         for(int i = 0; i < 10; i++){
