@@ -14,8 +14,8 @@ public class battleshipController implements ActionListener{
     //controllere contructor calls view and model constructors
     public battleshipController() throws IOException {
         model = new battleshipModel(); 
-        char[][] testArr = model.getBoard(); //testing
-        view = new battleshipView(testArr); //parameter for testing
+        char[][] userBoard = model.getBoard(); //testing
+        view = new battleshipView(userBoard); //parameter for testing
         model = new battleshipModel();
         fireCannon();
         
@@ -40,17 +40,7 @@ public void actionPerformed(ActionEvent e) {
         //if statement calls checkforvalidshot() from model if true hit = X else miss = O
         if(model.checkForValidShot(position[0], position[1])){
             HitOrMiss = model.determineHit(position[0], position[1]); //updates model 
-            if(HitOrMiss == "X") {
-                //playHitSound();
-            }
-            else if(HitOrMiss == "O") {
-                //playMissSound();
-            }
-            else { //Ship has been sank
-                //HitOrMiss now stores the String of what Ship has been sank.
-                //Can update the label containing the ship here
-                view.showGameStatus(); // view function displays message
-            }
+            view.playSoundEffect(HitOrMiss);
             view.updateView(position[0], position[1], HitOrMiss);
         }
         else {

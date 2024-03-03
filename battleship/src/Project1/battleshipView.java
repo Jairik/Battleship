@@ -3,6 +3,7 @@ package Project1;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 /* 
  - Implement the View component, which includes creating two boards on JFrame. 
    Grids can be implemented using JButton (2D array of JButtons, or 2D array of labels, etc.).
@@ -19,13 +20,6 @@ import java.awt.event.ActionListener;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class battleshipView{
     
@@ -38,12 +32,12 @@ public class battleshipView{
     private JLabel[][] label;
     SoundFX soundEffects;
 
-    //View constructor that builds frame
+    //View constructor that builds frame, gridlayout, labels, and buttons
     battleshipView(char[][] testArr) throws IOException{
 
         //Start the game music
         soundEffects = new SoundFX();
-        soundEffects.playGameMusic();
+        //soundEffects.playGameMusic(); (Uncomment this prior to submitting, its just annoying for testing)
 
         //Create the root window
         frame = new JFrame();

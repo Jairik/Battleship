@@ -5,6 +5,7 @@ import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -15,11 +16,11 @@ public class SoundFX {
     Clip missSound;
     Clip hitSound;
     Clip gameMusic;
-    //Constructor to initialize all sounds
+    //Constructor to initialize all sounds w/ filepaths
     SoundFX() {
         missSound = getClip("/resources/Big Water Splash Sound Effect.wav");
         hitSound = getClip("/resources/EXPLOSION SOUND EFFECT (No Copyright).wav");
-        gameMusic = getClip("/resources/🦜 Adventure & Pirate (Royalty Free Music) - THREE SHEETS TO THE WIND by Scott Buckley 🇸🇪 .wav");
+        gameMusic = getClip("/resources/Adventure & Pirate (Royalty Free Music) - THREE SHEETS TO THE WIND by Scott Buckley.wav");
     }
     //When called, will play an water splash sound effect for misses
     void playMissSound() {
@@ -33,6 +34,10 @@ public class SoundFX {
 
     //When called, will start the game music and will loop it until the program is closed
     void playGameMusic() {
+        //Reduce the volume
+        FloatControl gainControl = (FloatControl) gameMusic.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(-40.0f);
+        //Start playing the music
         gameMusic.loop(Clip.LOOP_CONTINUOUSLY); //Will continously loop the song when it ends
         gameMusic.start();
     } 
@@ -44,6 +49,10 @@ public class SoundFX {
     Clip getClip(String filename) {
         try {
             URL soundFileURL = SoundFX.class.getResource(filename);
+            if(soundFileURL == null) {
+                System.err.println("Sound file not found: " + filename);
+                return null;
+            }
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFileURL);
             Clip soundClip = AudioSystem.getClip();
             soundClip.open(audioIn);

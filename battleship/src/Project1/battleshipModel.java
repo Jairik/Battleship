@@ -102,7 +102,6 @@ public class battleshipModel {
     void randomlyPlaceShip(int shipSize, char currentShip) {
         boolean placeAgain = true;
         while(placeAgain) {
-            System.out.println("Inside Initial For Loop");
             int ranX = (int)(Math.random() * (boardWidth)); //Getting a random X coordinate
             int ranY = (int)(Math.random() * (boardHeight)); //Getting a random Y coordinate
             int dir = (int)(Math.random() * 2); //Getting a random int to represent direction
@@ -111,7 +110,6 @@ public class battleshipModel {
             if (dir == 0) { //Move right across the board
                 //Check each spot to see if the spot is empty or out of bounds
                 while(iterator < shipSize) {
-                    System.out.println("Iterator: " + iterator + " ranX: " + ranX); //DEBUGGING
                     if((ranX+iterator) < boardWidth && board[ranX+iterator][ranY] == ' ') {
                         shipPlacedCount++;
                     }
@@ -121,15 +119,12 @@ public class battleshipModel {
             else { //Move down the board
                 //Check each spot to see if the spot is empty or out of bounds
                 while(iterator < shipSize) {
-                    System.out.println("Iterator: " + iterator + " ranY: " + ranY); //DEBUGGING
                     if((ranY+iterator) < boardHeight && board[ranX][ranY+iterator] == ' ') {
                         shipPlacedCount++;
                     }
                     iterator++;
                 }
             }
-            System.out.println("Done Placing Ships - Iterator = " + iterator);
-            System.out.println("Placed ship count = " + shipPlacedCount);
             if(shipPlacedCount == shipSize) {
                 placeAgain = false;
                 for(int i = 0; i < shipSize; i++) {
