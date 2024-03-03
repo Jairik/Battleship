@@ -111,6 +111,7 @@ public class battleshipModel {
             if (dir == 0) { //Move right across the board
                 //Check each spot to see if the spot is empty or out of bounds
                 while(iterator < shipSize) {
+                    System.out.println("Iterator: " + iterator + " ranX: " + ranX); //DEBUGGING
                     if((ranX+iterator) < boardWidth && board[ranX+iterator][ranY] == ' ') {
                         shipPlacedCount++;
                     }
@@ -120,7 +121,8 @@ public class battleshipModel {
             else { //Move down the board
                 //Check each spot to see if the spot is empty or out of bounds
                 while(iterator < shipSize) {
-                    if((ranY+iterator) >= 0 && board[ranX][ranY+iterator] == ' ') {
+                    System.out.println("Iterator: " + iterator + " ranY: " + ranY); //DEBUGGING
+                    if((ranY+iterator) < boardHeight && board[ranX][ranY+iterator] == ' ') {
                         shipPlacedCount++;
                     }
                     iterator++;
@@ -162,6 +164,7 @@ public class battleshipModel {
             if(board[xPos][yPos] == carrier) {
                 board[xPos][yPos] = 'X';
                 hit = "X";
+                carrierRemaining--;
                 if(shipSank) {
                     hit = "Carrier";
                 }
@@ -169,6 +172,7 @@ public class battleshipModel {
             else if(board[xPos][yPos] == battleShip) {
                 board[xPos][yPos] = 'X';
                 hit = "X";
+                battleshipRemaining--;
                 if(shipSank) {
                     hit = "Battleship";
                 }
@@ -176,6 +180,7 @@ public class battleshipModel {
             else if(board[xPos][yPos] == cruiser) {
                 board[xPos][yPos] = 'X';
                 hit = "X";
+                cruiserRemaining--;
                 if(shipSank) {
                     hit = "Cruiser";
                 }
@@ -183,6 +188,7 @@ public class battleshipModel {
             else if(board[xPos][yPos] == submarine) {
                 board[xPos][yPos] = 'X';
                 hit = "X";
+                submarineRemaining--;
                 if(shipSank) {
                     hit = "Submarine";
                 }
@@ -190,6 +196,7 @@ public class battleshipModel {
             else{
                 board[xPos][yPos] = 'X';
                 hit = "X";
+                destroyerRemaining--;
                 if(shipSank) {
                     hit = "Destroyer";
                 }

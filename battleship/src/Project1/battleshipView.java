@@ -36,16 +36,23 @@ public class battleshipView{
     private JButton[][] button2;
     //private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png"); 
     private JLabel[][] label;
+    SoundFX soundEffects;
 
     //View constructor that builds frame
     battleshipView(char[][] testArr) throws IOException{
 
+        //Start the game music
+        soundEffects = new SoundFX();
+        soundEffects.playGameMusic();
+
+        //Create the root window
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
         frame.setLayout(new BorderLayout());       
         frame.setLocationRelativeTo(null);
 
+        //Get a panel to hold the different ship images
         shipPanel myPanel = new shipPanel("/resources/canvas1.png"); //Panel to hold ship image
         myPanel.setLayout(new GridLayout(10, 10));
 
@@ -114,6 +121,15 @@ public class battleshipView{
     public void showGameStatus(){
         String message = "ship c sunk";
         JOptionPane.showMessageDialog(frame, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void playSoundEffect(String hitOrMiss) {
+        if(hitOrMiss == "O") {
+            soundEffects.playMissSound();
+        }
+        else { //ship has been hit or sank
+            soundEffects.playHitSound();
+        }
     }
 }
     
