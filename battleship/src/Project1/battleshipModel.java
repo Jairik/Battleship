@@ -28,10 +28,10 @@ public class battleshipModel {
     int moveCounter; //count the number of moves
     boolean turn; //Boolean may not be the best dataType
     //Ships 
-    int carrierHitsRemaining = 5;
-    int battleshipHitsRemaining = 4;
-    int cruiserHitsRemaining = 4;
-    int submarineHitsRemaining = 4;
+    int carrierRemaining = 5;
+    int battleshipRemaining = 4;
+    int cruiserRemaining = 4;
+    int submarineRemaining = 4;
     int destroyerRemaining = 4;
 
     //Constructor to make board and declare currentTurn
@@ -42,11 +42,9 @@ public class battleshipModel {
         //initBoard();
     }
     // will - called in controller to check valid shot
+    /*Validates a user's shot, returning true if the shot will fall on an empty place on the array*/
     public boolean checkForValidShot(int x, int y) {
-        if(board[x][y] != ' ') {
-            return true;
-        }
-        return false;
+        return(board[x][y] == ' ');
     }
 
     //will - initializes a board with ' ' then i hardcoded a ship into it with 'c'. Doing this for testing
@@ -62,12 +60,12 @@ public class battleshipModel {
         board[4][2] = 'c';
     }
 
-    // will - after the button clicked in controller it updates the model accordingly
+    /* will - after the button clicked in controller it updates the model accordingly
     public void updateModel(int x, int y, String HitOrMiss){
         board[x][y] = HitOrMiss.charAt(0); // changes string to char
-    }
+    } */
 
-    // will - function to recognize ship sank
+    /*will - function to recognize ship sank
     public boolean shipStatus(){
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
@@ -77,7 +75,7 @@ public class battleshipModel {
             }
         }
         return true;
-    }
+    }*/
 
     //Logic to randomly place the ships on the board
     void randomlySetBoard() {
@@ -101,125 +99,157 @@ public class battleshipModel {
     //Given a shipSize, will find a section of the board that is not taken and place the given ship there
     //Notes: Definitely not the most efficient way to do it but it works for now
     void randomlyPlaceShip(int shipSize, char currentShip) {
-        boolean validPlacement = false;
-        while(!validPlacement) {
-            int ranX = (int)(Math.random()) * (boardWidth+1); //Getting a random X coordinate
-            int ranY = (int)(Math.random()) * (boardHeight+1); //Getting a random Y coordinate
+        boolean placeAgain = true;
+        while(placeAgain) {
+            int ranX = (int)(Math.random()) * (boardWidth); //Getting a random X coordinate
+            int ranY = (int)(Math.random()) * (boardHeight); //Getting a random Y coordinate
             int dir = (int)(Math.random()) * (4); //Getting a random int to represent direction
             int iterator = 0; //Used to iterate across the board to check if spots are valid or taken
             if (dir == 0) { //Move right across the board
                 //Check each spot to see if the spot is empty or out of bounds
                 while(iterator < shipSize) {
-                    //If it is off the board or is nonempty
-                    if(ranX < (boardWidth+1) || ranY < (boardHeight+1) || board[ranX+iterator][ranY] == ' ') {
+                    //If it is on the board and empty
+                    if(ranX < (boardWidth) && ranY < (boardHeight) && board[ranX+iterator][ranY] == ' ') {
                         iterator++;
-                    }
-                    else {
-                        
                     }
                 }
                 //Since all spots are valid, place the ships
-                iterator = 0;
-                while(iterator < shipSize) {
-                    board[ranX+iterator][ranY] = currentShip;
-                    iterator++;
-                }
+                if(iterator == shipSize-1) {
+                    placeAgain = false;
+                    iterator = 0;
+                    while(iterator < shipSize) {
+                        board[ranX+iterator][ranY] = currentShip;
+                        iterator++;
+                    }
+                }               
             }
             else if (dir == 1) { //Move left across the board
                 //Check each spot to see if the spot is empty or out of bounds
                 while(iterator < shipSize) {
-                    //If it is off the board or is nonempty
-                    if(ranX < (boardWidth+1) || ranY < (boardHeight+1) || board[ranX-iterator][ranY] == ' ') {
-                    iterator++;
+                    //If it is on the board and empty
+                    if(ranX < (boardWidth) && ranY < (boardHeight) && board[ranX-iterator][ranY] == ' ') {
+                        iterator++;
                     }
                 }
-                //Since all spots are valid, place the ships
-                iterator = 0;
-                while(iterator < shipSize) {
-                    board[ranX-iterator][ranY] = currentShip;
-                    iterator++;
+                if(iterator == shipSize-1) {
+                    //Since all spots are valid, place the ships
+                    placeAgain = false;
+                    iterator = 0;
+                    while(iterator < shipSize) {
+                        board[ranX-iterator][ranY] = currentShip;
+                        iterator++;
+                    }
                 }
             }
             else if (dir == 2) { //Move up the board
                 //Check each spot to see if the spot is empty or out of bounds
                 while(iterator < shipSize) {
-                    //If it is off the board or is nonempty
-                    if(ranX > (boardWidth+1) || ranY > (boardHeight+1) || board[ranX][ranY+iterator] != ' ') {
-                        randomlyPlaceShip(shipSize, currentShip); //Recursively call itself to try again
+                    //If it is on the board and empty
+                    if(ranX > (boardWidth) && ranY > (boardHeight) && board[ranX][ranY+iterator] == ' ') {
+                        iterator++;
                     }
-                    iterator++;
                 }
                 //Since all spots are valid, place the ships
-                iterator = 0;
-                while(iterator < shipSize) {
-                    board[ranX][ranY+iterator] = currentShip;
-                    iterator++;
-                }
+                if(iterator == shipSize-1) {
+                    placeAgain = false;
+                    iterator = 0;
+                    while(iterator < shipSize) {
+                        board[ranX][ranY+iterator] = currentShip;
+                        iterator++;
+                    }
+                }  
             }
             else { //Move down the board
                 //Check each spot to see if the spot is empty or out of bounds
                 while(iterator < shipSize) {
                     //If it is off the board or is nonempty
-                    if(ranX > (boardWidth+1) || ranY > (boardHeight+1) || board[ranX][ranY-iterator] != ' ') {
-                        validPlacement = false;
+                    if(ranX < (boardWidth) && ranY < (boardHeight) && board[ranX][ranY-iterator] == ' ') {
+                        iterator++;
                     }
-                    iterator++;
                 }
                 //Since all spots are valid, place the ships
-                iterator = 0;
-                while(iterator < shipSize) {
-                    board[ranX][ranY-iterator] = currentShip;
-                    iterator++;
-                }
+                if(iterator == shipSize-1) {
+                    placeAgain = false;
+                    iterator = 0;
+                    while(iterator < shipSize) {
+                        board[ranX][ranY-iterator] = currentShip;
+                        iterator++;
+                    }
+                }  
             }
         }
     }
 
 
-    /*This method will check with the shot at the given coordinates are hits or misses. If it is a miss, 
-     * 'O' will be returned. If it is a hit, the String of the corresponding ship will be returned. */
-    String getHitMessage(int xPos, int yPos) {
-        String returnMessage; 
-        String hitOrSink = "hit";
-        if(opponentBoard[xPos][yPos] != ' ') {
-            opponentBoard[xPos][yPos] = 'O';
-            returnMessage = "You Missed";
+    /*Returns a String corresponding to whether the shot was a hit, miss, or sink.
+    Hit:  X
+    Miss: O
+    Sink: <shipName>
+    */
+    /*IMPORTANT NOTE: We are going to later have to set this to opponentBoard, however board
+     * works now for testing
+     */
+    String determineHit(int xPos, int yPos) {
+        String hit;
+        boolean shipSank = checkForSinkShip(xPos, yPos);
+        if(board[xPos][yPos] != ' ') {
+            board[xPos][yPos] = 'O';
+            hit = "O";
         }
         else {
-            if(checkForSinkShip(xPos, yPos)) {
-                hitOrSink = "sank";
+            if(board[xPos][yPos] == carrier) {
+                board[xPos][yPos] = 'X';
+                hit = "X";
+                if(shipSank) {
+                    hit = "Carrier";
+                }
             }
-            if(opponentBoard[xPos][yPos] == carrier) {
-                opponentBoard[xPos][yPos] = 'X';
-                returnMessage = "You " + hitOrSink + " your opponent's CARRIER!";
+            else if(board[xPos][yPos] == battleShip) {
+                board[xPos][yPos] = 'X';
+                hit = "X";
+                if(shipSank) {
+                    hit = "Battleship";
+                }
             }
-            else if(opponentBoard[xPos][yPos] == battleShip) {
-                opponentBoard[xPos][yPos] = 'X';
-                returnMessage = "You " + hitOrSink + " your opponent's BATTLESHIP!";
+            else if(board[xPos][yPos] == cruiser) {
+                board[xPos][yPos] = 'X';
+                hit = "X";
+                if(shipSank) {
+                    hit = "Cruiser";
+                }
             }
-            else if(opponentBoard[xPos][yPos] == cruiser) {
-                opponentBoard[xPos][yPos] = 'X';
-                returnMessage = "You " + hitOrSink + " your opponent's CRUISER!";
-            }
-            else if(opponentBoard[xPos][yPos] == submarine) {
-                opponentBoard[xPos][yPos] = 'X';
-                returnMessage = "You " + hitOrSink + " your opponent's SUBMARINE!";
+            else if(board[xPos][yPos] == submarine) {
+                board[xPos][yPos] = 'X';
+                hit = "X";
+                if(shipSank) {
+                    hit = "Submarine";
+                }
             }
             else{
-                opponentBoard[xPos][yPos] = 'X';
-                returnMessage = "You " + hitOrSink + " your opponent's DESTROYER!";
+                board[xPos][yPos] = 'X';
+                hit = "X";
+                if(shipSank) {
+                    hit = "Destroyer";
+                }
             }
         }
-        return returnMessage;
+        return hit;
     }
 
     //Not entirely sure how I am going to implement this yet
+    //NOTE: WE WILL NEED TO CHANGE THIS TO OPPONENTBOARD
     boolean checkForSinkShip(int xPos, int yPos) {
-        boolean sankShip = false;
-        //
-        //logic
-        //
-        return sankShip;
+        boolean sank = false;
+        int numOfShips = 5;
+        char shipArr[] = {carrier, battleShip, cruiser, submarine, destroyer};
+        int shipHitsRemainingArr[] = {carrierRemaining, battleshipRemaining, cruiserRemaining, submarineRemaining, destroyerRemaining};
+        for(int i = 0; i < numOfShips; i++) {
+            if(board[xPos][yPos] == shipArr[i] && shipHitsRemainingArr[i] == 1) {
+                sank = true;
+                break; //skip the rest of the iterations
+            }
+        }
+        return sank;
     }
 
     //Returns the board back to the controller

@@ -41,21 +41,22 @@ public void actionPerformed(ActionEvent e) {
         String HitOrMiss = "";
         //if statement calls checkforvalidshot() from model if true hit = X else miss = O
         if(model.checkForValidShot(position[0], position[1])){
-            HitOrMiss = "X";
+            HitOrMiss = model.determineHit(position[0], position[1]); //updates model 
             if(HitOrMiss == "X") {
                 //playHitSound();
             }
-            else {
+            else if(HitOrMiss == "O") {
                 //playMissSound();
             }
-            view.updateView(position[0], position[1], HitOrMiss);
-            model.updateModel(position[0], position[1], HitOrMiss); // updates the model
-            if(model.shipStatus()){ // checks if ship sank. 
+            else { //Ship has been sank
+                //HitOrMiss now stores the String of what Ship has been sank.
+                //Can update the label containing the ship here
                 view.showGameStatus(); // view function displays message
             }
+            view.updateView(position[0], position[1], HitOrMiss);
         }
-        else{
-            HitOrMiss = "O";
+        else {
+            //User did not shoot a valid shot, must add logic to have them try again
         }
         //updates board accordingly in view
         view.updateView(position[0], position[1], HitOrMiss); 
@@ -64,6 +65,7 @@ public void actionPerformed(ActionEvent e) {
     /*--Sound-Effects--
     //There is a way we can package this all up but its likely easier if we get all of our images and relevent
     //Files first. For Testing, we can leave this commented out
+
     //When called, will play an water splash sound effect for misses
     void playMissSound() {
         try {

@@ -7,9 +7,12 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 /* -- Holds all the code for the draggable ships -- 
  * - We can easily split this into seperate files if need be
@@ -18,19 +21,18 @@ import java.io.IOException;
 */
 
 /*To open/run this, we would need to run the following things in a controller function (controller since we must access model)
- *      File file = new File("<filePath>");
-        BufferedImage bufferedImage = ImageIO.read(file);
-        ImageIcon <shipName> = new ImageIcon(bufferedImage);
-        JFrame <shipName>Frame = new MyFrame(<shipName>);
+ *      JFrame <shipName>Frame = new MyFrame(<shipName>);
  */
 
 //Creating a draggable panel for Carrier Ship
-class carrierPanel extends JPanel{
+class shipPanel extends JPanel{
     final int gridSize = 10;
-    ImageIcon carrierImage;
+    ImageIcon shipImage;
     Point upperLeftCoordinate, prevGridCoordinate;
-    carrierPanel(ImageIcon carrierIcon){
-        carrierImage = carrierIcon;
+    //Constructor
+    shipPanel(String imagePath) {
+        ImageIcon shipIcon = createImageIcon(imagePath);
+        shipImage = shipIcon;
         upperLeftCoordinate = new Point(100,100);
         //Get the points to pass into new Point()
         prevGridCoordinate = new Point();
@@ -39,10 +41,27 @@ class carrierPanel extends JPanel{
         DragListener dragListener = new DragListener();
         this.addMouseMotionListener(dragListener);
     }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        carrierImage.paintIcon(this, g, (int) upperLeftCoordinate.getX() * gridSize, (int)
+        shipImage.paintIcon(this, g, (int) upperLeftCoordinate.getX() * gridSize, (int)
         upperLeftCoordinate.getY() * gridSize);
+    }
+
+    /*Creates an image icon given a file path. Serves as a helper function the the constructor*/
+    public ImageIcon createImageIcon(String imagePath) {
+        ImageIcon shipIcon = null; //Initializing with null value
+        try {
+            URL shipImagePath = shipPanel.class.getResource(imagePath);
+            InputStream inputStream = shipImagePath.openStream();
+            Image image = ImageIO.read(inputStream);
+            inputStream.close();
+            shipIcon = new ImageIcon(image);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return shipIcon;
     }
     private class ClickListener extends MouseAdapter{
         public void mousePressed(MouseEvent event) {

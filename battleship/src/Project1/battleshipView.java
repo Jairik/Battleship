@@ -34,7 +34,7 @@ public class battleshipView{
     private JPanel panel2;
     private JButton[][] button1;
     private JButton[][] button2;
-    private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png"); 
+    //private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png"); 
     private JLabel[][] label;
 
     //View constructor that builds frame
@@ -46,7 +46,7 @@ public class battleshipView{
         frame.setLayout(new BorderLayout());       
         frame.setLocationRelativeTo(null);
 
-        carrierPanel myPanel = new carrierPanel(imageIcon); //Panel to hold ship image
+        shipPanel myPanel = new shipPanel("/resources/canvas1.png"); //Panel to hold ship image
         myPanel.setLayout(new GridLayout(10, 10));
 
         label = new JLabel[10][10];
