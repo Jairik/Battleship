@@ -54,12 +54,10 @@ public class battleshipView{
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
                 String testChar = Character.toString(testArr[i][j]);
-                System.out.println(testChar);
-                lbl.setText(testChar);
-                JLabel lbl = new JLabel();
-                label[i][j] = lbl;
-                lbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                myPanel.add(lbl);
+                label[i][j] = new JLabel();
+                label[i][j].setText(testChar);
+                label[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                myPanel.add(label[i][j]);
             }
         }
         

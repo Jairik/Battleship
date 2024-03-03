@@ -16,10 +16,9 @@ public class battleshipController implements ActionListener{
     
     //controllere contructor calls view and model constructors
     public battleshipController() throws IOException {
-        model = new battleshipModel();
-        char[][] testArr = model.getBoard();
-        view = new battleshipView(testArr);
-        view = new battleshipView();
+        model = new battleshipModel(); 
+        char[][] testArr = model.getBoard(); //testing
+        view = new battleshipView(testArr); //parameter for testing
         model = new battleshipModel();
         //playGameMusic();
         fireCannon();
