@@ -44,7 +44,7 @@ public void actionPerformed(ActionEvent e) {
             view.playSoundEffect(HitOrMiss);
             if(HitOrMiss != "X" && HitOrMiss != "O"){
                 view.updateView(position[0], position[1], "X");
-                view.showGameStatus(HitOrMiss);
+                //view.showGameStatus(HitOrMiss);
                 view.updateLabel(HitOrMiss);
                 if(model.getWinStatus()) {
                     view.declareWinner("Player");
@@ -54,9 +54,15 @@ public void actionPerformed(ActionEvent e) {
             else{
                 view.updateView(position[0], position[1], HitOrMiss);
             }
+            //check if all ships sunk
+            if(model.isWin()){
+                System.out.println("Game over");
+                view.showGameStatus("All ships sunk");
+            }
             //return
         }
         else{
+            view.playSoundEffect("O");
             view.updateView(position[0], position[1], "O");
         }
         //updates board accordingly in view

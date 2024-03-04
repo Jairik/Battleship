@@ -31,6 +31,8 @@ public class battleshipModel {
     int submarineRemaining = submarineSize;
     int destroyerRemaining = destroyerSize;
 
+    int shipsRemaining = 5; // variable to track how many ships remain
+
     //Constructor to make board and declare currentTurn
     public battleshipModel() {
         board = new char[boardHeight][boardWidth];
@@ -210,6 +212,7 @@ public class battleshipModel {
         for(int i = 0; i < numOfShips; i++) {
             if(board[xPos][yPos] == shipArr[i] && shipHitsRemainingArr[i] == 1) {
                 sank = true;
+                shipsRemaining--; // decrements ship amount after each dink
                 break; //skip the rest of the iterations
             }
         }
@@ -221,6 +224,13 @@ public class battleshipModel {
         return board;
     }
 
+    //called in controller to signal win
+    boolean isWin(){
+        if(shipsRemaining < 1){
+            return true;
+        }
+        return false;
+    }
     /* Called when a ship is sank in the controller, will return true if all ships have sanked  */
     boolean getWinStatus() {
         boolean winner = false;

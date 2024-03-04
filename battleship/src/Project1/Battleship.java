@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 -------------------------------------------------------------------------------------------------------------*/
 
 public class Battleship {
+    @SuppressWarnings("unused")
     public static void main(String[] args) throws IOException {
         
         battleshipController controller = new battleshipController();
