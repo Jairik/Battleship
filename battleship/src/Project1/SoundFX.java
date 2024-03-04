@@ -18,17 +18,18 @@ public class SoundFX {
     Clip gameMusic;
     //Constructor to initialize all sounds w/ filepaths
     SoundFX() {
-        missSound = getClip("/resources/Big Water Splash Sound Effect.wav");
-        hitSound = getClip("/resources/EXPLOSION SOUND EFFECT (No Copyright).wav");
         gameMusic = getClip("/resources/Adventure & Pirate (Royalty Free Music) - THREE SHEETS TO THE WIND by Scott Buckley.wav");
+        playGameMusic(); //COMMENT OUT THIS LINE TO STOP MUSIC
     }
     //When called, will play an water splash sound effect for misses
     void playMissSound() {
+        missSound = getClip("/resources/Big Water Splash Sound Effect.wav");
         missSound.start();
     }
 
     //When called, will play an explosion sound effect for hits
     void playHitSound() {
+        hitSound = getClip("/resources/EXPLOSION SOUND EFFECT (No Copyright).wav");
         hitSound.start();
     }
 

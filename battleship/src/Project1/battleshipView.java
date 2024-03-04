@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 /* 
  - Implement the View component, which includes creating two boards on JFrame. 
    Grids can be implemented using JButton (2D array of JButtons, or 2D array of labels, etc.).
@@ -18,15 +19,27 @@ import java.io.IOException;
 */
 import java.awt.event.ActionListener;
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import java.util.List;
 
+//drag n drop imports
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class battleshipView{
     
     private JFrame frame;
     private JPanel topPanel; //Used for the user to shoot
     private JPanel middlePanel; //Used to store ship information and stuff
-    private JPanel bottomPanel; //Used for drag & drop and displaying ships
+    private MyPanel bottomPanel; //Used for drag & drop and displaying ships
     private JButton[][] button1;
     private JButton[][] button2;
     //private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png"); 
@@ -42,9 +55,15 @@ public class battleshipView{
     //View constructor that builds frame, gridlayout, labels, and buttons
     battleshipView(char[][] testArr) throws IOException{
 
+        //list of images to pass into MyPanel bottomPanel
+        List<String> imagePaths = new ArrayList<>();
+        imagePaths.add("resources/Battleship.png");
+        imagePaths.add("resources/Carrier.png");
+        imagePaths.add("resources/Cruiser.png");
+        imagePaths.add("resources/Submarine.png");
+        imagePaths.add("resources/Destroyer.png");
         /* Initialize sounds and start the game music */
         soundEffects = new SoundFX();
-        //soundEffects.playGameMusic(); //(Uncomment this prior to submitting, its just annoying for testing)
 
         /* Create the root Frame */
         frame = new JFrame();
@@ -54,7 +73,7 @@ public class battleshipView{
         frame.setLocationRelativeTo(null);
 
         /* Create bottom panel - used to display user ships and for Drag-n-Drop */
-        bottomPanel = new JPanel();
+        bottomPanel = new MyPanel(imagePaths);
         bottomPanel.setLayout(new GridLayout(10, 10));
         
         //Add grid labels for bottom of the screen
@@ -92,25 +111,31 @@ public class battleshipView{
 
         /* Create middle panel, reponsible for holding pictures of different ships */
         middlePanel = new JPanel();
-        middlePanel.setLayout(new GridLayout(1, 7)); //One for each ship and two for message or whatever (Opponents Turn, Sank ship, etc)
+        //middlePanel.setLayout(new GridLayout(1, 7)); //One for each ship and two for message or whatever (Opponents Turn, Sank ship, etc)
         middlePanel.setBackground(Color.GRAY);
         middlePanel.setLayout(new GridLayout(1, 5));
         middlePanel.setPreferredSize(new Dimension(300, 100));
 
+        /* 
+        Font newFont = label.getFont().deriveFont(14.0f);
+        battleShip.setFont(newFont);
+        */
+        //middle panel formatting (should change later)
         battleShip = new JLabel("Battle Ship");
+        battleShip.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middlePanel.add(battleShip);
         carrier = new JLabel("Carrier");
+        carrier.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middlePanel.add(carrier);
         cruiser = new JLabel("Cruiser");
+        cruiser.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middlePanel.add(cruiser);
         submarine = new JLabel("Sub");
+        submarine.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middlePanel.add(submarine);
         destroyer = new JLabel("Destroyer");
+        destroyer.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middlePanel.add(destroyer);
-
-        //Setting panels on the frame
-        //frame.setLayout(new GridBagLayout());
-        //frame = setFrameLayout(topPanel, middlePanel, bottomPanel, frame);
 
         frame.add(topPanel, BorderLayout.PAGE_START);
         frame.add(middlePanel, BorderLayout.CENTER);
@@ -120,23 +145,8 @@ public class battleshipView{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setPreferredSize(new Dimension(300, 700));
         frame.pack();
+        frame.setResizable(false);
         frame.setVisible(true);
-
-        /*Display draggable Ships */
-        //Get a panel to hold the different ship images
-        shipPanel battleshipPanel = new shipPanel("/resources/Battleship.png"); 
-        shipPanel carrierPanel = new shipPanel("/resources/Carrier.png");
-        shipPanel cruiserPanel = new shipPanel("/resources/Cruiser.png");
-        shipPanel submarinePanel = new shipPanel("/resources/Submarine.png");
-        shipPanel destroyerPanel = new shipPanel("/resources/Destroyer.png");
-        //Add all of the elements to the bottom panel
-        /* 
-        middlePanel.add(battleshipPanel);
-        bottomPanel.add(carrierPanel);
-        bottomPanel.add(cruiserPanel);
-        bottomPanel.add(submarinePanel);
-        bottomPanel.add(destroyerPanel);
-        */
     }
 
     //called in fireCannon() method in controller. returns a button
@@ -159,12 +169,26 @@ public class battleshipView{
 
     //called in controller after checking if hit or miss. sets button text to X for hit or O for miss
     public void updateView(int row, int column, String HitOrMiss){
-        button2[row][column].setText(HitOrMiss);
+        Font newFont = new Font("Arial", Font.BOLD, 30);
+        button2[row][column].setFont(newFont);      
+        button2[row][column].setText("•");
+        if(HitOrMiss == "O") {
+            button2[row][column].setForeground(Color.GRAY);
+        }
+        else {
+            button2[row][column].setForeground(Color.RED);
+        }
+        
     }
 
     //testing
     public void showGameStatus(String message){
-        JOptionPane.showMessageDialog(frame, message + " was sunk", "Ship Sunk!", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frame, message, "Game Over!", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /* Opens a new window declaring when a player has won */
+    public void declareWinner(String message){
+        JOptionPane.showMessageDialog(frame, message + " has won!", "Winner!", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void updateLabel(String message){
@@ -194,5 +218,97 @@ public class battleshipView{
         }
     }
 
+}
+
+//drag and drop classes
+class MyPanel extends JPanel {
+    List<DraggableImage> images = new ArrayList<>();
+
+    MyPanel(List<String> imagePaths) {
+        setLayout(new FlowLayout(FlowLayout.LEFT)); // Use FlowLayout
+
+        int initialX = 100; // Initial x-coordinate
+        int initialY = 100; // Initial y-coordinate
+
+        for (String imagePath : imagePaths) {
+            try {
+                BufferedImage imageIcon = ImageIO.read(new File(imagePath));
+                System.out.println("Image loaded successfully: " + imagePath);
+                DraggableImage draggableImage = new DraggableImage(imageIcon, new Point(initialX, initialY));
+                images.add(draggableImage);
+                initialY += 100;// Adjust the gap between images
+            } catch (IOException e) {
+                System.out.println("Image not loaded successfully: ");
+                e.printStackTrace();
+            }
+        }
+
+        ClickListener clickListener = new ClickListener();
+        this.addMouseListener(clickListener);
+        DragListener dragListener = new DragListener();
+        this.addMouseMotionListener(dragListener);
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for (DraggableImage image : images) {
+            image.paintIcon(this, g);
+        }
+    }
+
+    private class ClickListener extends MouseAdapter {
+        public void mousePressed(MouseEvent event) {
+            for (DraggableImage image : images) {
+                image.mousePressed(event.getPoint());
+            }
+        }
+    }
+
+    private class DragListener extends MouseMotionAdapter {
+        public void mouseDragged(MouseEvent event) {
+            for (DraggableImage image : images) {
+                if (image.contains(event.getPoint())) {
+                    image.mouseDragged(event.getPoint());
+                }
+            }
+            repaint();
+        }
+    }
+}
+
+class DraggableImage {
+    ImageIcon image;
+    Point imageUpperLeft, prevPoint;
+
+    DraggableImage(BufferedImage imageIcon, Point initialPosition) {
+        image = new ImageIcon(imageIcon);
+        imageUpperLeft = initialPosition;
+        prevPoint = imageUpperLeft;
+    }
+
+    public void paintIcon(Component c, Graphics g) {
+        image.paintIcon(c, g, (int) imageUpperLeft.getX(), (int) imageUpperLeft.getY());
+    }
+
+    public void mousePressed(Point point) {
+        prevPoint = point;
+    }
+
+    public void mouseDragged(Point currPoint) {
+        int dx = (int) (currPoint.getX() - prevPoint.getX());
+        int dy = (int) (currPoint.getY() - prevPoint.getY());
+        imageUpperLeft.translate(dx, dy);
+        prevPoint = currPoint;
+    }
+
+    public boolean contains(Point point) {
+        int x = (int) imageUpperLeft.getX();
+        int y = (int) imageUpperLeft.getY();
+        int width = image.getIconWidth();
+        int height = image.getIconHeight();
+
+        return (point.getX() >= x && point.getX() <= x + width &&
+                point.getY() >= y && point.getY() <= y + height);
+    }
 }
     

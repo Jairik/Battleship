@@ -80,7 +80,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 }*/
-
+/* 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.JFrame;
@@ -146,7 +146,7 @@ class MyPanel extends JPanel{
 public class Image {
     public static void main(String[] args) throws IOException {
         /*File file = new File("/resources/canvas1.png");
-        BufferedImage bufferedImage = ImageIO.read(file);*/
+        BufferedImage bufferedImage = ImageIO.read(file);
         ImageIcon imageIcon = createImageIcon("/resources/canvas1.png");
         JFrame jFrame = new MyFrame(imageIcon);
     }
@@ -174,4 +174,5 @@ public class Image {
         ImageIcon imageIcon = new ImageIcon(bufferedImage);
         JFrame jFrame = new MyFrame(imageIcon);
     }
-} */
+} 
+*/
