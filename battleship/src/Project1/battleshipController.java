@@ -46,6 +46,10 @@ public void actionPerformed(ActionEvent e) {
                 view.updateView(position[0], position[1], "X");
                 view.showGameStatus(HitOrMiss);
                 view.updateLabel(HitOrMiss);
+                if(model.getWinStatus()) {
+                    view.declareWinner("Player");
+                    //Restart the game (?) (Last thing we implement)
+                }
             }
             else{
                 view.updateView(position[0], position[1], HitOrMiss);

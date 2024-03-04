@@ -1,18 +1,25 @@
-package Project1;
+//package Project1;
 
-// Fig. 24.6: ServerTest.java
-// Test the Server application.
+// Fig. 24.8: ClientTest.java
+// Test the Client class.
 import javax.swing.JFrame;
 
-public class ServerTest
+public class ClientTest 
 {
    public static void main( String args[] )
    {
-      Server application = new Server(); // create server
+      Client application; // declare client application
+
+      // if no command line args
+      if ( args.length == 0 )
+         application = new Client( "127.0.0.1" ); // connect to localhost
+      else
+         application = new Client( args[ 0 ] ); // use args to connect
+
       application.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-      application.runServer(); // run server application
+      application.runClient(); // run client application
    } // end main
-} // end class ServerTest
+} // end class ClientTest
 
 /**************************************************************************
  * (C) Copyright 1992-2005 by Deitel & Associates, Inc. and               *

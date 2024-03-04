@@ -44,7 +44,6 @@ public class battleshipView{
 
         /* Initialize sounds and start the game music */
         soundEffects = new SoundFX();
-        //soundEffects.playGameMusic(); //(Uncomment this prior to submitting, its just annoying for testing)
 
         /* Create the root Frame */
         frame = new JFrame();
@@ -159,12 +158,26 @@ public class battleshipView{
 
     //called in controller after checking if hit or miss. sets button text to X for hit or O for miss
     public void updateView(int row, int column, String HitOrMiss){
-        button2[row][column].setText(HitOrMiss);
+        Font newFont = new Font("Arial", Font.BOLD, 30);
+        button2[row][column].setFont(newFont);      
+        button2[row][column].setText("•");
+        if(HitOrMiss == "O") {
+            button2[row][column].setForeground(Color.GRAY);
+        }
+        else {
+            button2[row][column].setForeground(Color.RED);
+        }
+        
     }
 
     //testing
     public void showGameStatus(String message){
         JOptionPane.showMessageDialog(frame, message + " was sunk", "Ship Sunk!", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /* Opens a new window declaring when a player has won */
+    public void declareWinner(String message){
+        JOptionPane.showMessageDialog(frame, message + " has won!", "Winner!", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void updateLabel(String message){

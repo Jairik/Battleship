@@ -4,9 +4,6 @@ package Project1;
 Creation Date: 2/24/24 
 Last Update: 3/3/24 */
 
-import javax.swing.*;
-import java.awt.*;
-
 public class battleshipModel {
     //Different Ships (Can delete later, just helpful for implementing board)
     final char battleShip = 'b'; 
@@ -28,11 +25,11 @@ public class battleshipModel {
     int moveCounter; //count the number of moves
     boolean turn; //Boolean may not be the best dataType
     //Ships 
-    int carrierRemaining = 5;
-    int battleshipRemaining = 4;
-    int cruiserRemaining = 3;
-    int submarineRemaining = 3;
-    int destroyerRemaining = 2;
+    int carrierRemaining = cruiserSize;
+    int battleshipRemaining = battleShipSize;
+    int cruiserRemaining = cruiserSize;
+    int submarineRemaining = submarineSize;
+    int destroyerRemaining = destroyerSize;
 
     //Constructor to make board and declare currentTurn
     public battleshipModel() {
@@ -222,6 +219,15 @@ public class battleshipModel {
     //Returns the board back to the controller
     char[][] getUserBoard() {
         return board;
+    }
+
+    /* Called when a ship is sank in the controller, will return true if all ships have sanked  */
+    boolean getWinStatus() {
+        boolean winner = false;
+        if(carrierRemaining == 0 && battleshipRemaining == 0 && cruiserRemaining == 0 && submarineRemaining == 0 && destroyerRemaining == 0) {
+            winner = true;
+        }
+        return winner;
     }
 
 }

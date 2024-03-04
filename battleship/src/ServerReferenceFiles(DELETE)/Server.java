@@ -1,4 +1,4 @@
-package Project1;
+//package Project1;
 
 // Fig. 24.5: Server.java
 // Set up a Server that will receive a connection from a client, send 
@@ -86,7 +86,7 @@ public class Server extends JFrame
       {
          ioException.printStackTrace();
       } // end catch
-   } // end method runServer
+   } // end method runServer 
 
    // wait for connection to arrive, then display connection info
    private void waitForConnection() throws IOException

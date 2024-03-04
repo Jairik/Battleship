@@ -1,4 +1,4 @@
-package Project1;
+//package Project1;
 
 // Fig. 24.7: Client.java
 // Client that reads and displays information sent from a Server.
@@ -60,7 +60,8 @@ public class Client extends JFrame
    // connect to server and process messages from server
    public void runClient() 
    {
-      try // connect to server, get streams, process connection
+      // connect to server, get streams, process connection
+      try 
       {
          connectToServer(); // create a Socket to make connection
          getStreams(); // get the input and output streams
