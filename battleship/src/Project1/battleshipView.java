@@ -85,7 +85,7 @@ public class battleshipView{
         topPanel.setPreferredSize(new Dimension(300, 300));
 
         /* Create middle panel, reponsible for holding pictures of different ships */
-        JPanel middlePanel = new JPanel();
+        middlePanel = new JPanel();
         middlePanel.setLayout(new GridLayout(1, 7)); //One for each ship and two for message or whatever (Opponents Turn, Sank ship, etc)
         middlePanel.setBackground(Color.BLACK);
         middlePanel.setPreferredSize(new Dimension(300, 100));
@@ -106,24 +106,22 @@ public class battleshipView{
 
         /*Display draggable Ships */
         //Get a panel to hold the different ship images
-        shipPanel battleshipPanel = new shipPanel("/resources/canvas1.png"); 
-        /*shipPanel carrierPanel = new shipPanel("<insertFilePath>");
-        shipPanel cruiserPanel = new shipPanel("<insertFilePath>");
-        shipPanel submarinePanel = new shipPanel("<insertFilePath>");
-        shipPanel destroyerPanel = new shipPanel("<insertFilePath>"); */
+        shipPanel battleshipPanel = new shipPanel("/resources/Battleship.png"); 
+        shipPanel carrierPanel = new shipPanel("/resources/Carrier.png");
+        shipPanel cruiserPanel = new shipPanel("/resources/Cruiser.png");
+        shipPanel submarinePanel = new shipPanel("/resources/Submarine.png");
+        shipPanel destroyerPanel = new shipPanel("/resources/Destroyer.png");
         //Add all of the elements to the bottom panel
-        //bottomPanel.add(battleshipPanel);
-        /*bottomPanel.add(carrierPanel);
+        middlePanel.add(battleshipPanel);
+        bottomPanel.add(carrierPanel);
         bottomPanel.add(cruiserPanel);
         bottomPanel.add(submarinePanel);
-        bottomPanel.add(destroyerPanel);*/
-
-        middlePanel.add(battleshipPanel);
+        bottomPanel.add(destroyerPanel);
     }
 
     //called in fireCannon() method in controller. returns a button
     public JButton getButton(int row, int column){
-        return button1[row][column];
+        return button2[row][column];
     }
 
     //called in controller to find clickedButton x&y position
@@ -144,6 +142,7 @@ public class battleshipView{
         button2[row][column].setText(HitOrMiss);
     }
 
+    //testing
     public void showGameStatus(){
         String message = "ship c sunk";
         JOptionPane.showMessageDialog(frame, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
@@ -158,28 +157,5 @@ public class battleshipView{
         }
     }
 
-    // \/ Doesnt work but keeping just in case I need it at some point
-
-    /* Helper function for the constructor that places the panels on the root Frame in a 
-    specific formatting 
-    public JFrame setFrameLayout(JPanel topPanel, JPanel middlePanel, JPanel bottomFrame, JFrame frame) {
-        GridBagConstraints constraints = new GridBagConstraints();
-        //Set the weight constraints for the top panel
-        constraints.weighty = 3;//the "weight" of the panel in the y direction
-        constraints.gridy = 0; //Where the panel is placed in the y direction
-        frame.add(topPanel, constraints);
-
-        //Set the constraints for the middle panel
-        constraints.weighty = 2;
-        constraints.gridy = 1;
-        frame.add(middlePanel, constraints);
-
-        //Set the constraints for the top panel
-        constraints.weighty = 3;
-        constraints.gridy = 2; 
-        frame.add(bottomPanel, constraints); //weighty is already set to 3
-
-        return frame;
-    } */
 }
     

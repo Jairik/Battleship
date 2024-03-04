@@ -107,6 +107,7 @@ public class battleshipModel {
             int dir = (int)(Math.random() * 2); //Getting a random int to represent direction
             int iterator = 0; //Used to iterate across the board to check if spots are valid or taken
             int shipPlacedCount = 0;
+            System.out.println("In randomlyPlaceShip DIR: " + dir + " ship: " + currentShip);
             if (dir == 0) { //Move right across the board
                 //Check each spot to see if the spot is empty or out of bounds
                 while(iterator < shipSize) {
@@ -217,7 +218,7 @@ public class battleshipModel {
     }
 
     //Returns the board back to the controller
-    char[][] getBoard() {
+    char[][] getUserBoard() {
         return board;
     }
 

@@ -11,11 +11,11 @@ public class battleshipController implements ActionListener{
     private battleshipView view;
     private battleshipModel model;
     
-    //controllere contructor calls view and model constructors
+    //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
         model = new battleshipModel(); 
-        char[][] userBoard = model.getBoard(); //testing
-        view = new battleshipView(userBoard); //parameter for testing
+        char[][] userBoard = model.getUserBoard(); 
+        view = new battleshipView(userBoard);
         model = new battleshipModel();
         fireCannon();
         
@@ -33,18 +33,19 @@ public class battleshipController implements ActionListener{
 //button action for firing
 @Override
 public void actionPerformed(ActionEvent e) {
+    String HitOrMiss = ""; //Initializing
     JButton clickedButton = (JButton)e.getSource();
+    //while(true) {
         //finds clicked button position
         int[] position = view.buttonPosition(clickedButton);
-        String HitOrMiss = "";
-        //if statement calls checkforvalidshot() from model if true hit = X else miss = O
+        System.out.println(position[0] + ", " + position[1]);
+        //if statement calls checkforvalidshot() from model - if true hit = X else miss = O
         if(model.checkForValidShot(position[0], position[1])){
             HitOrMiss = model.determineHit(position[0], position[1]); //updates model 
+            System.out.println(HitOrMiss);
             view.playSoundEffect(HitOrMiss);
             view.updateView(position[0], position[1], HitOrMiss);
-        }
-        else {
-            //User did not shoot a valid shot, must add logic to have them try again
+            //return
         }
         //updates board accordingly in view
         view.updateView(position[0], position[1], HitOrMiss); 
