@@ -112,11 +112,13 @@ public class battleshipView{
         shipPanel submarinePanel = new shipPanel("/resources/Submarine.png");
         shipPanel destroyerPanel = new shipPanel("/resources/Destroyer.png");
         //Add all of the elements to the bottom panel
+        /* 
         middlePanel.add(battleshipPanel);
         bottomPanel.add(carrierPanel);
         bottomPanel.add(cruiserPanel);
         bottomPanel.add(submarinePanel);
         bottomPanel.add(destroyerPanel);
+        */
     }
 
     //called in fireCannon() method in controller. returns a button

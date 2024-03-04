@@ -39,13 +39,12 @@ public class battleshipModel {
         board = new char[boardHeight][boardWidth];
         opponentBoard = new char[boardHeight][boardWidth];
         randomlySetBoard();
-        //randomlySetBoard();
         //initBoard();
     }
     // will - called in controller to check valid shot
     /*Validates a user's shot, returning true if the shot will fall on an empty place on the array*/
     public boolean checkForValidShot(int x, int y) {
-        return(board[x][y] == ' ');
+        return(board[x][y] != ' ');
     }
 
     //will - initializes a board with ' ' then i hardcoded a ship into it with 'c'. Doing this for testing
@@ -152,7 +151,7 @@ public class battleshipModel {
     String determineHit(int xPos, int yPos) {
         String hit;
         boolean shipSank = checkForSinkShip(xPos, yPos);
-        if(board[xPos][yPos] != ' ') {
+        if(board[xPos][yPos] == ' ') {
             board[xPos][yPos] = 'O';
             hit = "O";
         }

@@ -16,10 +16,7 @@ public class battleshipController implements ActionListener{
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
-        model = new battleshipModel();
         fireCannon();
-        
-        
     }
     //adds a actionlistener to every button
     public void fireCannon(){
