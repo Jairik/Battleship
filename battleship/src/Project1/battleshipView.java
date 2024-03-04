@@ -38,12 +38,12 @@ public class battleshipView{
 
         /* Initialize sounds and start the game music */
         soundEffects = new SoundFX();
-        //soundEffects.playGameMusic(); (Uncomment this prior to submitting, its just annoying for testing)
+        //soundEffects.playGameMusic(); //(Uncomment this prior to submitting, its just annoying for testing)
 
         /* Create the root Frame */
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);
+        frame.setSize(300, 600);
         frame.setLayout(new BorderLayout());       
         frame.setLocationRelativeTo(null);
 
@@ -63,35 +63,44 @@ public class battleshipView{
                 bottomPanel.add(label[i][j]);
             }
         }
+        bottomPanel.setPreferredSize(new Dimension(300, 300));
         
         /* Create top panel - used for shooting at enemy ships */
         topPanel = new JPanel();
         topPanel.setLayout(new GridLayout(10, 10));
 
         //adds grid of buttons to second panel
-        button1 = new JButton[10][10];
+        //button1 = new JButton[10][10];
         button2 = new JButton[10][10];
 
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
                 JButton btn = new JButton();
                 button2[i][j] = btn;
-                bottomPanel.add(btn);
+                topPanel.add(btn);
             }
         }
+
+        topPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        topPanel.setPreferredSize(new Dimension(300, 300));
 
         /* Create middle panel, reponsible for holding pictures of different ships */
         JPanel middlePanel = new JPanel();
         middlePanel.setLayout(new GridLayout(1, 7)); //One for each ship and two for message or whatever (Opponents Turn, Sank ship, etc)
-        middlePanel.setSize(300, 100);
+        middlePanel.setBackground(Color.BLACK);
+        middlePanel.setPreferredSize(new Dimension(300, 100));
 
-        topPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        //Setting panels on the frame
+        //frame.setLayout(new GridBagLayout());
+        //frame = setFrameLayout(topPanel, middlePanel, bottomPanel, frame);
+
         frame.add(topPanel, BorderLayout.PAGE_START);
         frame.add(middlePanel, BorderLayout.CENTER);
         frame.add(bottomPanel, BorderLayout.PAGE_END);
+
         frame.setTitle("Battle-Ship-1");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setPreferredSize(new Dimension(300, 600));
+        frame.getContentPane().setPreferredSize(new Dimension(300, 700));
         frame.pack();
         frame.setVisible(true);
 
@@ -103,16 +112,18 @@ public class battleshipView{
         shipPanel submarinePanel = new shipPanel("<insertFilePath>");
         shipPanel destroyerPanel = new shipPanel("<insertFilePath>"); */
         //Add all of the elements to the bottom panel
-        bottomPanel.add(battleshipPanel);
+        //bottomPanel.add(battleshipPanel);
         /*bottomPanel.add(carrierPanel);
         bottomPanel.add(cruiserPanel);
         bottomPanel.add(submarinePanel);
         bottomPanel.add(destroyerPanel);*/
+
+        middlePanel.add(battleshipPanel);
     }
 
     //called in fireCannon() method in controller. returns a button
     public JButton getButton(int row, int column){
-        return button2[row][column];
+        return button1[row][column];
     }
 
     //called in controller to find clickedButton x&y position
@@ -146,5 +157,29 @@ public class battleshipView{
             soundEffects.playHitSound();
         }
     }
+
+    // \/ Doesnt work but keeping just in case I need it at some point
+
+    /* Helper function for the constructor that places the panels on the root Frame in a 
+    specific formatting 
+    public JFrame setFrameLayout(JPanel topPanel, JPanel middlePanel, JPanel bottomFrame, JFrame frame) {
+        GridBagConstraints constraints = new GridBagConstraints();
+        //Set the weight constraints for the top panel
+        constraints.weighty = 3;//the "weight" of the panel in the y direction
+        constraints.gridy = 0; //Where the panel is placed in the y direction
+        frame.add(topPanel, constraints);
+
+        //Set the constraints for the middle panel
+        constraints.weighty = 2;
+        constraints.gridy = 1;
+        frame.add(middlePanel, constraints);
+
+        //Set the constraints for the top panel
+        constraints.weighty = 3;
+        constraints.gridy = 2; 
+        frame.add(bottomPanel, constraints); //weighty is already set to 3
+
+        return frame;
+    } */
 }
     
