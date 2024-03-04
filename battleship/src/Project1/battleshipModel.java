@@ -30,9 +30,9 @@ public class battleshipModel {
     //Ships 
     int carrierRemaining = 5;
     int battleshipRemaining = 4;
-    int cruiserRemaining = 4;
-    int submarineRemaining = 4;
-    int destroyerRemaining = 4;
+    int cruiserRemaining = 3;
+    int submarineRemaining = 3;
+    int destroyerRemaining = 2;
 
     //Constructor to make board and declare currentTurn
     public battleshipModel() {
@@ -44,7 +44,10 @@ public class battleshipModel {
     // will - called in controller to check valid shot
     /*Validates a user's shot, returning true if the shot will fall on an empty place on the array*/
     public boolean checkForValidShot(int x, int y) {
-        return(board[x][y] != ' ');
+        if(board[x][y] != ' ') {
+            return true;
+        }
+        return false;
     }
 
     //will - initializes a board with ' ' then i hardcoded a ship into it with 'c'. Doing this for testing

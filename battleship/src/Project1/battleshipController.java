@@ -38,14 +38,25 @@ public void actionPerformed(ActionEvent e) {
         System.out.println(position[0] + ", " + position[1]);
         //if statement calls checkforvalidshot() from model - if true hit = X else miss = O
         if(model.checkForValidShot(position[0], position[1])){
-            HitOrMiss = model.determineHit(position[0], position[1]); //updates model 
+            System.out.println("Valid");
+            HitOrMiss = model.determineHit(position[0], position[1]); //updates model //checks for sinkship
             System.out.println(HitOrMiss);
             view.playSoundEffect(HitOrMiss);
-            view.updateView(position[0], position[1], HitOrMiss);
+            if(HitOrMiss != "X" && HitOrMiss != "O"){
+                view.updateView(position[0], position[1], "X");
+                view.showGameStatus(HitOrMiss);
+                view.updateLabel(HitOrMiss);
+            }
+            else{
+                view.updateView(position[0], position[1], HitOrMiss);
+            }
             //return
         }
+        else{
+            view.updateView(position[0], position[1], "O");
+        }
         //updates board accordingly in view
-        view.updateView(position[0], position[1], HitOrMiss); 
+        //view.updateView(position[0], position[1], HitOrMiss); 
     } 
     
 }

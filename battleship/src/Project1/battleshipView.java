@@ -33,6 +33,12 @@ public class battleshipView{
     private JLabel[][] label;
     SoundFX soundEffects;
 
+    JLabel carrier;
+    JLabel battleShip;
+    JLabel submarine;
+    JLabel destroyer;
+    JLabel cruiser;
+
     //View constructor that builds frame, gridlayout, labels, and buttons
     battleshipView(char[][] testArr) throws IOException{
 
@@ -87,8 +93,20 @@ public class battleshipView{
         /* Create middle panel, reponsible for holding pictures of different ships */
         middlePanel = new JPanel();
         middlePanel.setLayout(new GridLayout(1, 7)); //One for each ship and two for message or whatever (Opponents Turn, Sank ship, etc)
-        middlePanel.setBackground(Color.BLACK);
+        middlePanel.setBackground(Color.GRAY);
+        middlePanel.setLayout(new GridLayout(1, 5));
         middlePanel.setPreferredSize(new Dimension(300, 100));
+
+        battleShip = new JLabel("Battle Ship");
+        middlePanel.add(battleShip);
+        carrier = new JLabel("Carrier");
+        middlePanel.add(carrier);
+        cruiser = new JLabel("Cruiser");
+        middlePanel.add(cruiser);
+        submarine = new JLabel("Sub");
+        middlePanel.add(submarine);
+        destroyer = new JLabel("Destroyer");
+        middlePanel.add(destroyer);
 
         //Setting panels on the frame
         //frame.setLayout(new GridBagLayout());
@@ -145,9 +163,26 @@ public class battleshipView{
     }
 
     //testing
-    public void showGameStatus(){
-        String message = "ship c sunk";
-        JOptionPane.showMessageDialog(frame, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
+    public void showGameStatus(String message){
+        JOptionPane.showMessageDialog(frame, message + " was sunk", "Ship Sunk!", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void updateLabel(String message){
+        if(message == "Carrier"){
+            carrier.setForeground(Color.RED);
+        }
+        if(message == "Battleship"){
+            battleShip.setForeground(Color.RED);
+        }
+        if(message == "Cruiser"){
+            cruiser.setForeground(Color.RED);
+        }
+        if(message == "Submarine"){
+            submarine.setForeground(Color.RED);
+        }
+        if(message == "Destroyer"){
+            destroyer.setForeground(Color.RED);
+        }
     }
 
     public void playSoundEffect(String hitOrMiss) {
