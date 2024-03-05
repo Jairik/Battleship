@@ -233,4 +233,9 @@ public class battleshipModel {
         return false;
     }
 
+    /* Setting the opponent's board to current board */
+    void getOppBoard(char[][] oppBoard) {
+        //opponentBoard = oppBoard;
+        board = oppBoard; //FOR TESTING- if they swap after connection, W
+    }
 }

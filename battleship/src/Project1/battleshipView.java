@@ -234,6 +234,17 @@ public class battleshipView{
         
     }
 
+    /* TEST - Doesn't work, there is probably some wierd threading stuff that won't allow for
+     * the view to update. No clue why that is happening, will fix tmr.
+     */
+    public void TESTSETVIEW(char[][] oppBoard) {
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                button2[i][j].setText(Character.toString(oppBoard[i][j]));
+            }
+        }
+    }
+
     //testing
     public void showGameStatus(String message){
         JOptionPane.showMessageDialog(frame, message, "Game Over!", JOptionPane.INFORMATION_MESSAGE);
