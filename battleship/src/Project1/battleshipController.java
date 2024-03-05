@@ -83,7 +83,7 @@ public void actionPerformed(ActionEvent e) {
                 view.updateView(position[0], position[1], HitOrMiss);
             }
             //check if all ships sunk
-            if(model.isWin()){
+            if(model.isWin()) {
                 System.out.println("Game over");
                 view.showGameStatus("All ships sunk");
             }
