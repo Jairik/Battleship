@@ -52,6 +52,10 @@ public class battleshipView{
     JLabel destroyer;
     JLabel cruiser;
 
+    JButton pushToHost;
+    JButton pushToConnect;
+    JButton finalizeShipPlacement;
+
     //View constructor that builds frame, gridlayout, labels, and buttons
     battleshipView(char[][] testArr) throws IOException{
 
@@ -120,6 +124,46 @@ public class battleshipView{
         Font newFont = label.getFont().deriveFont(14.0f);
         battleShip.setFont(newFont);
         */
+
+        /* Creating Initial Host and Connect buttons on JFrame */
+        pushToConnect = new JButton("Connect");
+        pushToHost = new JButton("Host");
+        /* Placing Buttons On the Middle Panel */
+        middlePanel.add(pushToConnect);
+        middlePanel.add(pushToHost);
+
+        frame.add(topPanel, BorderLayout.PAGE_START);
+        frame.add(middlePanel, BorderLayout.CENTER);
+        frame.add(bottomPanel, BorderLayout.PAGE_END);
+
+        frame.setTitle("Battle-Ship-1");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setPreferredSize(new Dimension(300, 700));
+        frame.pack();
+        frame.setResizable(false);
+        frame.setVisible(true);
+    }
+
+    String createConnectExternalWindow() {
+        String ipAddress;
+        ipAddress = JOptionPane.showInputDialog(frame, "Enter IP Address", JOptionPane.INFORMATION_MESSAGE);
+        return ipAddress;
+    }
+
+    void createHostExternalWindow(String IPAddress) {
+        JOptionPane.showMessageDialog(frame, "IP: " + IPAddress + "\nWaiting for connection...", "Awaiting Connection", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public JButton getConnectButton() {
+        return pushToConnect;
+    }
+
+    public JButton getHostButton() {
+        return pushToHost;
+    }
+
+    /* Update the middle panel with ships */
+    void updateMiddlePanel() {
         //middle panel formatting (should change later)
         battleShip = new JLabel("Battle Ship");
         battleShip.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -136,17 +180,6 @@ public class battleshipView{
         destroyer = new JLabel("Destroyer");
         destroyer.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middlePanel.add(destroyer);
-
-        frame.add(topPanel, BorderLayout.PAGE_START);
-        frame.add(middlePanel, BorderLayout.CENTER);
-        frame.add(bottomPanel, BorderLayout.PAGE_END);
-
-        frame.setTitle("Battle-Ship-1");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setPreferredSize(new Dimension(300, 700));
-        frame.pack();
-        frame.setResizable(false);
-        frame.setVisible(true);
     }
 
     //called in fireCannon() method in controller. returns a button

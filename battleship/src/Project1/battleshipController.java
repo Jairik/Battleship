@@ -14,10 +14,36 @@ public class battleshipController implements ActionListener{
     
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
-        server = new battleshipServer(true);
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
+        //Getting host and connect Buttons
+        JButton cButton = view.getConnectButton();
+        JButton hButton = view.getHostButton();
+        //Adding action listeners and defining them
+        cButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                server = new battleshipServer(true, "");
+                String IPAddress = server.getIP();
+                view.createHostExternalWindow(IPAddress);
+                server.Connect();
+            }
+        });
+        hButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String HostIPAddress = server.getIP();
+                String enteredIPAddress;
+                enteredIPAddress = view.createConnectExternalWindow();
+                if(enteredIPAddress == HostIPAddress) {
+                    server = new battleshipServer(false, enteredIPAddress);
+                    server.Connect();
+                }
+            }
+        });
+
+        //getMouseInput
         fireCannon();
     }
     //adds a actionlistener to every button
@@ -70,6 +96,6 @@ public void actionPerformed(ActionEvent e) {
         //updates board accordingly in view
         //view.updateView(position[0], position[1], HitOrMiss); 
     } 
-    
+
 }
 

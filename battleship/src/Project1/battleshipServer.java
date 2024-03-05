@@ -12,19 +12,29 @@ public class battleshipServer {
     static boolean Host;
     BServer server;
     BClient client;
+    String hostIP = "127.0.0.1";
     /* Constructor, which will make the host or client object and interact with them */
-    battleshipServer(boolean isHost) {
-        Test(server, client);
+    battleshipServer(boolean isHost, String IP) {
         Host = isHost;
-        if(false /*Host*/) {
+        if(Host) {
             server = new BServer();
+        }
+        else {
+            client = new BClient(IP);
         }
     }
 
-    void Test(BServer server, BClient client) {
-        server = new BServer();
-        client = new BClient("127.0.0.1");
+    public String getIP() {
+        return hostIP;
     }
 
+    public void Connect() {
+        if(Host) {
+            server.runServer();
+        }
+        else {
+            client.runClient();
+        }
+    }
 
 }
