@@ -57,11 +57,11 @@ public class battleshipView{
 
         //list of images to pass into MyPanel bottomPanel
         List<String> imagePaths = new ArrayList<>();
-        imagePaths.add("resources/Battleship.png");
-        imagePaths.add("resources/Carrier.png");
-        imagePaths.add("resources/Cruiser.png");
-        imagePaths.add("resources/Submarine.png");
-        imagePaths.add("resources/Destroyer.png");
+        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/Battleship.png");
+        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/Carrier.png");
+        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/Cruiser.png");
+        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/Submarine.png");
+        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/Destroyer.png");
         /* Initialize sounds and start the game music */
         soundEffects = new SoundFX();
 
@@ -79,6 +79,7 @@ public class battleshipView{
         //Add grid labels for bottom of the screen
         label = new JLabel[10][10];
 
+        
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
                 String testChar = Character.toString(testArr[i][j]);
@@ -88,6 +89,7 @@ public class battleshipView{
                 bottomPanel.add(label[i][j]);
             }
         }
+        
         bottomPanel.setPreferredSize(new Dimension(300, 300));
         
         /* Create top panel - used for shooting at enemy ships */
@@ -228,7 +230,7 @@ class MyPanel extends JPanel {
         setLayout(new FlowLayout(FlowLayout.LEFT)); // Use FlowLayout
 
         int initialX = 100; // Initial x-coordinate
-        int initialY = 100; // Initial y-coordinate
+        int initialY = 20; // Initial y-coordinate
 
         for (String imagePath : imagePaths) {
             try {
@@ -236,7 +238,7 @@ class MyPanel extends JPanel {
                 System.out.println("Image loaded successfully: " + imagePath);
                 DraggableImage draggableImage = new DraggableImage(imageIcon, new Point(initialX, initialY));
                 images.add(draggableImage);
-                initialY += 100;// Adjust the gap between images
+                initialY += 30;// Adjust the gap between images
             } catch (IOException e) {
                 System.out.println("Image not loaded successfully: ");
                 e.printStackTrace();

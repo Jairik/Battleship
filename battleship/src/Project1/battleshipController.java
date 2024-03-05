@@ -65,8 +65,7 @@ public void actionPerformed(ActionEvent e) {
             view.playSoundEffect("O");
             view.updateView(position[0], position[1], "O");
         }
-        //updates board accordingly in view
-        //view.updateView(position[0], position[1], HitOrMiss); 
+        
     } 
     
 }
