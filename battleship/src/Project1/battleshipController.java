@@ -28,7 +28,7 @@ public class battleshipController implements ActionListener{
         //Getting host and connect Buttons
         JButton cButton = view.getConnectButton();
         JButton hButton = view.getHostButton();
-
+        fireCannon();
         /* Adding action listeners for buttons, then defining them */
         System.out.println("In while loop");
         //If any of this works, dont ask me why I have absolutely no clue
