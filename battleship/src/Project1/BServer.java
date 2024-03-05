@@ -48,7 +48,7 @@ public class BServer {
    } 
 
    // send message to client
-   private void sendData(String message) {
+   public void sendMessage(String message) {
       try {
          output.writeObject(message);
          output.flush(); // flush output to client
@@ -57,6 +57,21 @@ public class BServer {
          System.err.println( "\nError writing object (SERVER)" );
       } 
    } 
+
+   // recieve and return message from server
+   public String getMessage() {
+      String messageFromClient = "";
+      try {
+         messageFromClient = (String) input.readObject();
+      }
+      catch (IOException e) {
+         e.printStackTrace();
+      }
+      catch (ClassNotFoundException e) {
+         System.err.println(e);
+      }
+      return messageFromClient;
+   }
 
    //Close the conection 
    private void closeConnection() {

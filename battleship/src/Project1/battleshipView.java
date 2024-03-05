@@ -1,5 +1,12 @@
 package Project1;
 
+/*----------------------------------------------------------------------------------------------------------
+  Authors: JJ McCauley & Will Lamuth 
+  Creation Date: 2/23/24
+  Last Update: 3/5/24
+-------------------------------------------------------------------------------------------------------------*/
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

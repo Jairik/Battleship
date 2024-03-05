@@ -78,19 +78,34 @@ public class BClient {
       } 
    } 
 
-   // send message to server
-  private void sendData( String message ) {
-    // send object to server
-      try  {
-         output.writeObject( "CLIENT>>> " + message );
-         output.flush(); // flush data to output
-      } 
-      catch (IOException ioException) {
-         System.err.println("Error writing object");
-      } 
-   } 
+  // send message to server
+  public void sendMessage(String message) {
+    try {
+       output.writeObject(message);
+       output.flush(); // flush output to client
+    } 
+    catch ( IOException ioException ) {
+       System.err.println( "\nError writing object (SERVER)" );
+    } 
+  } 
 
-  // process connection with server
+  // recieve and return message from server
+  public String getMessage() {
+    String messageFromClient = "";
+    try {
+       messageFromClient = (String) input.readObject();
+    }
+    catch (IOException e) {
+       e.printStackTrace();
+    }
+    catch (ClassNotFoundException e) {
+       System.err.println(e);
+    }
+    return messageFromClient;
+  }
+}
+
+  /*  process connection with server
   private void processConnection() throws IOException {
     // process messages sent from server  
     try {
@@ -101,4 +116,4 @@ public class BClient {
     } 
     System.out.println("Outside of ProcessConnection in Client");
   }
-}
+}*/

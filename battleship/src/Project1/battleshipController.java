@@ -1,10 +1,16 @@
 package Project1;
 
+/*----------------------------------------------------------------------------------------------------------
+  Authors: JJ McCauley & Will Lamuth 
+  Creation Date: 2/23/24
+  Last Update: 3/5/24
+-------------------------------------------------------------------------------------------------------------*/
+
+
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-
 
 public class battleshipController implements ActionListener{
     
