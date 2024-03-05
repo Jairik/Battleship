@@ -10,9 +10,11 @@ public class battleshipController implements ActionListener{
     
     private battleshipView view;
     private battleshipModel model;
+    private battleshipServer server;
     
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
+        server = new battleshipServer(true);
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
@@ -46,7 +48,7 @@ public void actionPerformed(ActionEvent e) {
                 view.updateView(position[0], position[1], "X");
                 //view.showGameStatus(HitOrMiss);
                 view.updateLabel(HitOrMiss);
-                if(model.getWinStatus()) {
+                if(model.isWin()) {
                     view.declareWinner("Player");
                     //Restart the game (?) (Last thing we implement)
                 }

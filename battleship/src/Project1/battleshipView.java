@@ -191,11 +191,6 @@ public class battleshipView{
         JOptionPane.showMessageDialog(frame, message + " has won!", "Winner!", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    /* Opens a new window declaring when a player has won */
-    public void declareWinner(String message){
-        JOptionPane.showMessageDialog(frame, message + " has won!", "Winner!", JOptionPane.INFORMATION_MESSAGE);
-    }
-
     public void updateLabel(String message){
         if(message == "Carrier"){
             carrier.setForeground(Color.RED);

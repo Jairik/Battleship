@@ -11,12 +11,20 @@ package Project1;
 public class battleshipServer {
     static boolean Host;
     BServer server;
-    //BClient client;
+    BClient client;
     /* Constructor, which will make the host or client object and interact with them */
     battleshipServer(boolean isHost) {
+        Test(server, client);
         Host = isHost;
-        if(Host) {
+        if(false /*Host*/) {
             server = new BServer();
         }
     }
+
+    void Test(BServer server, BClient client) {
+        server = new BServer();
+        client = new BClient("127.0.0.1");
+    }
+
+
 }

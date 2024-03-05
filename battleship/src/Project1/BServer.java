@@ -71,7 +71,7 @@ public class BServer {
    }
 
    /* Waits for the connection with the client, then returns the Host name*/
-   String waitForConnection() throws IOException {
+   private String waitForConnection() throws IOException {
     connection = server.accept();
     return(connection.getInetAddress().getHostName());
    }
@@ -85,9 +85,16 @@ public class BServer {
     input = new ObjectInputStream(connection.getInputStream());
    }
 
-   private void processConnection() throws IOException {
+   //I have absolutely no clue what this does if it is necessary, so i'll just keep it until then
+   private void processConnection() throws IOException{
+    String message = "Connection could not process";
     sendData("Connection Successful");
-    //Still need to finish, gtg for practice
+    try {
+      message = (String) input.readObject();
+    }
+    catch (ClassNotFoundException e) {
+      System.err.println(e);
+    }
    }
 
 }

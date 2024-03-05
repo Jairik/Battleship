@@ -23,9 +23,10 @@ public class battleshipModel {
     char[][] board; //2d board to hold the different ships for the user
     char[][] opponentBoard; //2d board to hold the placements, hits, and misses on opponents board
     int moveCounter; //count the number of moves
-    boolean turn; //Boolean may not be the best dataType
-    //Ships 
-    int carrierRemaining = cruiserSize;
+    //boolean turn; //Boolean may not be the best dataType
+
+    //Remaining shots needed to sink the given ship 
+    int carrierRemaining = carrierSize;
     int battleshipRemaining = battleShipSize;
     int cruiserRemaining = cruiserSize;
     int submarineRemaining = submarineSize;
@@ -226,18 +227,10 @@ public class battleshipModel {
 
     //called in controller to signal win
     boolean isWin(){
-        if(shipsRemaining < 1){
+        if(shipsRemaining == 0){
             return true;
         }
         return false;
-    }
-    /* Called when a ship is sank in the controller, will return true if all ships have sanked  */
-    boolean getWinStatus() {
-        boolean winner = false;
-        if(carrierRemaining == 0 && battleshipRemaining == 0 && cruiserRemaining == 0 && submarineRemaining == 0 && destroyerRemaining == 0) {
-            winner = true;
-        }
-        return winner;
     }
 
 }

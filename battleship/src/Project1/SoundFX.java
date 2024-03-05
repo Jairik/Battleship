@@ -21,6 +21,7 @@ public class SoundFX {
         gameMusic = getClip("/resources/Adventure & Pirate (Royalty Free Music) - THREE SHEETS TO THE WIND by Scott Buckley.wav");
         playGameMusic(); //COMMENT OUT THIS LINE TO STOP MUSIC
     }
+    
     //When called, will play an water splash sound effect for misses
     void playMissSound() {
         missSound = getClip("/resources/Big Water Splash Sound Effect.wav");
