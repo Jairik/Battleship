@@ -8,6 +8,8 @@ package Project1;
   parameter will determine which object to make, and will interact with that object on behalf of the user.
 -------------------------------------------------------------------------------------------------------------*/
 
+import javax.swing.SwingUtilities; //Used for invokeLater() Function
+
 public class battleshipServer {
     static boolean Host;
     BServer server;

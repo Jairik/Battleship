@@ -33,7 +33,7 @@ public class BClient {
     try {
       connectToServer(); //Create a socket to make a connection
       getStreams(); //Get the input and output streams
-      processConnection(); //Process the connection
+      //processConnection(); //Process the connection
     }
     catch(EOFException e) {
       System.out.println("Client Terminated Connection");
@@ -79,8 +79,7 @@ public class BClient {
    } 
 
    // send message to server
-   private void sendData( String message )
-   {
+  private void sendData( String message ) {
     // send object to server
       try  {
          output.writeObject( "CLIENT>>> " + message );
@@ -91,19 +90,15 @@ public class BClient {
       } 
    } 
 
-   // process connection with server
-   private void processConnection() throws IOException {
+  // process connection with server
+  private void processConnection() throws IOException {
     // process messages sent from server  
-    do { 
-      // read message and display it
-      try {
-        message = ( String ) input.readObject(); // read new message
-      } 
-      catch ( ClassNotFoundException classNotFoundException ) 
-      {
-        System.err.println("Unknown object type received");
-      } // end catch
-
-      } while ( !message.equals( "SERVER>>> TERMINATE" ) );
-   } // end method processConnection
+    try {
+      message = ( String ) input.readObject(); // read new message
+    } 
+    catch ( ClassNotFoundException classNotFoundException ) {
+      System.err.println("Unknown object type received");
+    } 
+    System.out.println("Outside of ProcessConnection in Client");
+  }
 }

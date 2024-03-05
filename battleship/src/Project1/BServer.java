@@ -50,7 +50,7 @@ public class BServer {
    // send message to client
    private void sendData(String message) {
       try {
-         output.writeObject( "SERVER>>> " + message );
+         output.writeObject(message);
          output.flush(); // flush output to client
       } 
       catch ( IOException ioException ) {
@@ -88,14 +88,14 @@ public class BServer {
 
    //I have absolutely no clue what this does if it is necessary, so i'll just keep it until then
    private void processConnection() throws IOException{
-    String message = "Connection could not process";
-    sendData("Connection Successful");
-    try {
+      System.out.println("Connection Successful");
+    /*try {
       message = (String) input.readObject();
     }
     catch (ClassNotFoundException e) {
       System.err.println(e);
     }
+    System.out.println("Outside of process Connection"); */
    }
 
 }

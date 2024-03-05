@@ -11,7 +11,7 @@ public class battleshipController implements ActionListener{
     private battleshipView view;
     private battleshipModel model;
     private battleshipServer server;
-    
+    private boolean buttonClicked = false;
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
         //Defining model and view
@@ -29,43 +29,36 @@ public class battleshipController implements ActionListener{
         hButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /* Run this in the background under a different thread so the GUI can later update */
-                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-                    @Override
-                    protected Void doInBackground() throws Exception {
-                        server = new battleshipServer(true);
-                        server.Connect();
-                        return null;
-                    }
-                    @Override
-                    protected void done() {
-                        view.updateMiddlePanel();
-                    }
-                };    
+                server = new battleshipServer(true);
+                server.Connect();
+                
+                        
             }
         });
 
-        hButton.addActionListener(new ActionListener() {
+        cButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /* Run this in the background under a different thread so the GUI can later update */
-                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-                    @Override
-                    protected Void doInBackground() throws Exception {
-                        server = new battleshipServer(false);
-                        server.Connect();
-                        return null;
-                    }
-                    @Override
-                    protected void done() {
-                        view.updateMiddlePanel();
-                    }
-                };    
+                server = new battleshipServer(false);
+                server.Connect();
+                view.updateMiddlePanel();
+                buttonClicked = true;
             }
         });
+        
+        while(!buttonClicked) {
+            try {
+                Thread.sleep(100); //Avoid "busy-looping"
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
-        fireCannon();
+        view.updateMiddlePanel();
+        SwingUtilities.invokeLater(() -> fireCannon());
     }
+
     //adds a actionlistener to every button
     public void fireCannon(){
         System.out.println("Inside Fire Cannon");
