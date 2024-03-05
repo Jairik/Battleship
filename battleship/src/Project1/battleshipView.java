@@ -136,12 +136,18 @@ public class battleshipView{
         frame.add(middlePanel, BorderLayout.CENTER);
         frame.add(bottomPanel, BorderLayout.PAGE_END);
 
+/*      Testing stuff
+        shipPanel shipPanel = new shipPanel("/resources/Battleship.png");
+        frame.add(shipPanel);
+*/
+
         frame.setTitle("Battle-Ship-1");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setPreferredSize(new Dimension(300, 700));
         frame.pack();
         frame.setResizable(false);
         frame.setVisible(true);
+
     }
 
     String createConnectExternalWindow() {
@@ -164,6 +170,12 @@ public class battleshipView{
 
     /* Update the middle panel with ships */
     void updateMiddlePanel() {
+        /* Resetting the middle panel */
+        middlePanel = new JPanel();
+        middlePanel.setBackground(Color.GRAY);
+        middlePanel.setLayout(new GridLayout(1, 5));
+        middlePanel.setPreferredSize(new Dimension(300, 100));
+        
         //middle panel formatting (should change later)
         battleShip = new JLabel("Battle Ship");
         battleShip.setBorder(BorderFactory.createLineBorder(Color.BLACK));

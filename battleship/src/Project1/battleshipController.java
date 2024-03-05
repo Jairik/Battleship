@@ -14,6 +14,10 @@ public class battleshipController implements ActionListener{
     
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
+        //So extremely poorly coded and jank but might work
+        battleshipServer temp = new battleshipServer(true, null);
+        String hostIP = temp.getIP();
+        //The rest of the actual "good" code
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
@@ -21,23 +25,23 @@ public class battleshipController implements ActionListener{
         JButton cButton = view.getConnectButton();
         JButton hButton = view.getHostButton();
         //Adding action listeners and defining them
-        cButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                server = new battleshipServer(true, "");
-                String IPAddress = server.getIP();
-                view.createHostExternalWindow(IPAddress);
-                server.Connect();
-            }
-        });
         hButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String HostIPAddress = server.getIP();
+                server = new battleshipServer(true, hostIP);
+                view.createHostExternalWindow(hostIP);
+                view.updateMiddlePanel();
+                server.Connect();
+            }
+        });
+        cButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 String enteredIPAddress;
                 enteredIPAddress = view.createConnectExternalWindow();
-                if(enteredIPAddress == HostIPAddress) {
+                if(enteredIPAddress == hostIP) {
                     server = new battleshipServer(false, enteredIPAddress);
+                    view.updateMiddlePanel();
                     server.Connect();
                 }
             }
@@ -89,7 +93,7 @@ public void actionPerformed(ActionEvent e) {
             }
             //return
         }
-        else{
+        else {
             view.playSoundEffect("O");
             view.updateView(position[0], position[1], "O");
         }

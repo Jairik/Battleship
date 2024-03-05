@@ -71,9 +71,10 @@ public class BServer {
    }
 
    /* Waits for the connection with the client, then returns the Host name*/
-   private String waitForConnection() throws IOException {
+   private void waitForConnection() throws IOException {
     connection = server.accept();
-    return(connection.getInetAddress().getHostName());
+    //return(connection.getInetAddress().getHostName());
+    System.out.println("Connection Successful");
    }
 
    /* Gets the stream to send a recieve data */

@@ -1,6 +1,6 @@
 package Project1;
 
-/* 
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.JFrame;
@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-*/
+
 /* -- Holds all the code for the draggable ships -- 
  * - We can easily split this into seperate files if need be
  * - All ships should follow the same logic, however making them 'snappable' may be weird
@@ -28,7 +28,7 @@ import java.net.URL;
 
 //Creating a draggable panel for Carrier Ship
 
-/* 
+
 class shipPanel extends JPanel{
     final int gridSize = 10;
     ImageIcon shipImage;
@@ -56,6 +56,7 @@ class shipPanel extends JPanel{
     public ImageIcon createImageIcon(String imagePath) {
         ImageIcon shipIcon = null; //Initializing with null value
         try {
+            System.out.println(imagePath);
             URL shipImagePath = shipPanel.class.getResource(imagePath);
             InputStream inputStream = shipImagePath.openStream();
             Image image = ImageIO.read(inputStream);
@@ -95,8 +96,8 @@ class shipPanel extends JPanel{
             return new Point(xPos, yPos);
         }
     }
-*/
-/* 
+
+/*
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
