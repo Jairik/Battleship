@@ -11,12 +11,30 @@ package Project1;
 public class battleshipServer {
     static boolean Host;
     BServer server;
-    //BClient client;
+    BClient client;
+    String hostIP = "127.0.0.1";
     /* Constructor, which will make the host or client object and interact with them */
-    battleshipServer(boolean isHost) {
+    battleshipServer(boolean isHost, String IP) {
         Host = isHost;
         if(Host) {
             server = new BServer();
         }
+        else {
+            client = new BClient(IP);
+        }
     }
+
+    public String getIP() {
+        return hostIP;
+    }
+
+    public void Connect() {
+        if(Host) {
+            server.runServer();
+        }
+        else {
+            client.runClient();
+        }
+    }
+
 }

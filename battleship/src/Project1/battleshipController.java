@@ -10,12 +10,40 @@ public class battleshipController implements ActionListener{
     
     private battleshipView view;
     private battleshipModel model;
+    private battleshipServer server;
     
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
+        //Getting host and connect Buttons
+        JButton cButton = view.getConnectButton();
+        JButton hButton = view.getHostButton();
+        //Adding action listeners and defining them
+        cButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                server = new battleshipServer(true, "");
+                String IPAddress = server.getIP();
+                view.createHostExternalWindow(IPAddress);
+                server.Connect();
+            }
+        });
+        hButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String HostIPAddress = server.getIP();
+                String enteredIPAddress;
+                enteredIPAddress = view.createConnectExternalWindow();
+                if(enteredIPAddress == HostIPAddress) {
+                    server = new battleshipServer(false, enteredIPAddress);
+                    server.Connect();
+                }
+            }
+        });
+
+        //getMouseInput
         fireCannon();
     }
     //adds a actionlistener to every button
@@ -46,7 +74,7 @@ public void actionPerformed(ActionEvent e) {
                 view.updateView(position[0], position[1], "X");
                 //view.showGameStatus(HitOrMiss);
                 view.updateLabel(HitOrMiss);
-                if(model.getWinStatus()) {
+                if(model.isWin()) {
                     view.declareWinner("Player");
                     //Restart the game (?) (Last thing we implement)
                 }
@@ -55,7 +83,7 @@ public void actionPerformed(ActionEvent e) {
                 view.updateView(position[0], position[1], HitOrMiss);
             }
             //check if all ships sunk
-            if(model.isWin()){
+            if(model.isWin()) {
                 System.out.println("Game over");
                 view.showGameStatus("All ships sunk");
             }
@@ -67,6 +95,6 @@ public void actionPerformed(ActionEvent e) {
         }
         
     } 
-    
+
 }
 
