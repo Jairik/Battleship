@@ -14,38 +14,61 @@ public class battleshipController implements ActionListener{
     
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
-        //The rest of the actual "good" code
+        //Defining model and view
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
+
         //Getting host and connect Buttons
         JButton cButton = view.getConnectButton();
         JButton hButton = view.getHostButton();
-        //Adding action listeners and defining them
+
+        /* Adding action listeners for buttons, then defining them */
+        System.out.println("In while loop");
+        //If any of this works, dont ask me why I have absolutely no clue
         hButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                server = new battleshipServer(true);
-                view.createHostExternalWindow("127.0.0.1");
-                server.Connect();
-                view.updateMiddlePanel();
-            }
-        });
-        cButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                view.createConnectExternalWindow();
-                server = new battleshipServer(false);
-                view.updateMiddlePanel();
-                server.Connect();
+                /* Run this in the background under a different thread so the GUI can later update */
+                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        server = new battleshipServer(true);
+                        server.Connect();
+                        return null;
+                    }
+                    @Override
+                    protected void done() {
+                        view.updateMiddlePanel();
+                    }
+                };    
             }
         });
 
-        //getMouseInput
+        hButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /* Run this in the background under a different thread so the GUI can later update */
+                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        server = new battleshipServer(false);
+                        server.Connect();
+                        return null;
+                    }
+                    @Override
+                    protected void done() {
+                        view.updateMiddlePanel();
+                    }
+                };    
+            }
+        });
+
         fireCannon();
     }
     //adds a actionlistener to every button
     public void fireCannon(){
+        System.out.println("Inside Fire Cannon");
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
                 view.getButton(i, j).addActionListener(this);
@@ -77,7 +100,7 @@ public void actionPerformed(ActionEvent e) {
                     //Restart the game (?) (Last thing we implement)
                 }
             }
-            else{
+            else {
                 view.updateView(position[0], position[1], HitOrMiss);
             }
             //check if all ships sunk
