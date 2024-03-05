@@ -57,11 +57,11 @@ public class battleshipView{
 
         //list of images to pass into MyPanel bottomPanel
         List<String> imagePaths = new ArrayList<>();
-        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/Battleship.png");
-        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/Carrier.png");
-        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/Cruiser.png");
-        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/Submarine.png");
-        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/Destroyer.png");
+        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/BattleshipReSize.png");
+        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/carrierReSize.png");
+        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/CruiserReSize.png");
+        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/SubmarineReSize.png");
+        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/DestroyerReSize.png");
         /* Initialize sounds and start the game music */
         soundEffects = new SoundFX();
 
@@ -193,11 +193,6 @@ public class battleshipView{
         JOptionPane.showMessageDialog(frame, message + " has won!", "Winner!", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    /* Opens a new window declaring when a player has won */
-    public void declareWinner(String message){
-        JOptionPane.showMessageDialog(frame, message + " has won!", "Winner!", JOptionPane.INFORMATION_MESSAGE);
-    }
-
     public void updateLabel(String message){
         if(message == "Carrier"){
             carrier.setForeground(Color.RED);
@@ -226,6 +221,7 @@ public class battleshipView{
     }
 
 }
+
 
 //drag and drop classes
 class MyPanel extends JPanel {
