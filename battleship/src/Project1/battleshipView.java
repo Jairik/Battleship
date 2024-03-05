@@ -11,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 /* 
  - Implement the View component, which includes creating two boards on JFrame. 
@@ -71,11 +73,11 @@ public class battleshipView{
 
         //list of images to pass into MyPanel bottomPanel
         List<String> imagePaths = new ArrayList<>();
-        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/BattleshipReSize.png");
-        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/carrierReSize.png");
-        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/CruiserReSize.png");
-        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/SubmarineReSize.png");
-        imagePaths.add("/Users/will/Desktop/COSC330-BattleShip/battleship/src/resources/DestroyerReSize.png");
+        imagePaths.add("/resources/carrierReSize.png");
+        imagePaths.add("/resources/BattleshipReSize.png");
+        imagePaths.add("/resources/CruiserReSize.png");
+        imagePaths.add("/resources/SubmarineReSize.png");
+        imagePaths.add("/resources/DestroyerReSize.png");
         /* Initialize sounds and start the game music */
         soundEffects = new SoundFX();
 
@@ -234,7 +236,6 @@ public class battleshipView{
         else {
             button2[row][column].setForeground(Color.RED);
         }
-        
     }
 
     /* TEST - Doesn't work, there is probably some wierd threading stuff that won't allow for
@@ -299,18 +300,11 @@ class MyPanel extends JPanel {
         int initialY = 20; // Initial y-coordinate
 
         for (String imagePath : imagePaths) {
-            try {
-                BufferedImage imageIcon = ImageIO.read(new File(imagePath));
-                System.out.println("Image loaded successfully: " + imagePath);
-                DraggableImage draggableImage = new DraggableImage(imageIcon, new Point(initialX, initialY));
-                images.add(draggableImage);
-                initialY += 30;// Adjust the gap between images
-            } catch (IOException e) {
-                System.out.println("Image not loaded successfully: ");
-                e.printStackTrace();
-            }
+            ImageIcon imageIcon;
+            DraggableImage draggableImage = new DraggableImage(imagePath, new Point(initialX, initialY));              
+            images.add(draggableImage);
+            initialY += 30;// Adjust the gap between images
         }
-
         ClickListener clickListener = new ClickListener();
         this.addMouseListener(clickListener);
         DragListener dragListener = new DragListener();
@@ -342,14 +336,16 @@ class MyPanel extends JPanel {
             repaint();
         }
     }
+
 }
 
 class DraggableImage {
     ImageIcon image;
+    String imagePath;
     Point imageUpperLeft, prevPoint;
 
-    DraggableImage(BufferedImage imageIcon, Point initialPosition) {
-        image = new ImageIcon(imageIcon);
+    DraggableImage(String iPath, Point initialPosition) {
+        image = createImageIcon(iPath);
         imageUpperLeft = initialPosition;
         prevPoint = imageUpperLeft;
     }
@@ -378,5 +374,23 @@ class DraggableImage {
         return (point.getX() >= x && point.getX() <= x + width &&
                 point.getY() >= y && point.getY() <= y + height);
     }
+
+    //Creates an image icon given a file path. Serves as a helper function the the constructor
+    public ImageIcon createImageIcon(String imagePath) {
+        ImageIcon shipIcon = null; //Initializing with null value
+        try {
+            URL shipImagePath = shipPanel.class.getResource(imagePath);
+            System.out.println("image loaded: " + imagePath);
+            InputStream inputStream = shipImagePath.openStream();
+            Image image = ImageIO.read(inputStream);
+            inputStream.close();
+            shipIcon = new ImageIcon(image);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return shipIcon;
+    }
+
 }
     

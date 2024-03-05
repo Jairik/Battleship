@@ -37,8 +37,7 @@ public class battleshipController implements ActionListener{
             public void actionPerformed(ActionEvent e) {
                 server = new battleshipServer(true);
                 server.Connect();
-                
-                        
+                buttonClicked = true;      
             }
         });
 
@@ -67,7 +66,7 @@ public class battleshipController implements ActionListener{
         server.sendToOpponent(model.getUserBoard());
         view.TESTSETVIEW(server.receiveOpponentBoard());
 
-        SwingUtilities.invokeLater(() -> fireCannon());
+        /*SwingUtilities.invokeLater(() ->*/ fireCannon();
     }
 
     //adds a actionlistener to every button

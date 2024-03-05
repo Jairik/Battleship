@@ -56,8 +56,8 @@ class shipPanel extends JPanel{
     public ImageIcon createImageIcon(String imagePath) {
         ImageIcon shipIcon = null; //Initializing with null value
         try {
-            System.out.println("image loaded: " + imagePath);
             URL shipImagePath = shipPanel.class.getResource(imagePath);
+            System.out.println("image loaded: " + imagePath);
             InputStream inputStream = shipImagePath.openStream();
             Image image = ImageIO.read(inputStream);
             inputStream.close();
