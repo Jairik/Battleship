@@ -28,7 +28,7 @@ public class BServer {
       try {
          server = new ServerSocket( 12345, 100 ); // create ServerSocket
 
-         while ( true ) {
+         //while ( true ) {
             try {
                waitForConnection(); // wait for a connection
                getStreams(); // get input & output streams
@@ -40,7 +40,7 @@ public class BServer {
             finally {
                closeConnection(); //  close connection
             } 
-         } 
+         //} 
       } 
       catch ( IOException ioException ) {
          ioException.printStackTrace();
@@ -72,8 +72,8 @@ public class BServer {
 
    /* Waits for the connection with the client, then returns the Host name*/
    private void waitForConnection() throws IOException {
+      System.out.println("Waiting for connection...");
     connection = server.accept();
-    //return(connection.getInetAddress().getHostName());
     System.out.println("Connection Successful");
    }
 

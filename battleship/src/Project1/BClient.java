@@ -48,6 +48,7 @@ public class BClient {
 
   /* Connects to the server */
   private void connectToServer() throws IOException {
+    System.out.println("Attempting to connect to server");
     client = new Socket(InetAddress.getByName(serverIP), 12345);
     System.out.println("Client has successfully connected to: " + client.getInetAddress().getHostAddress());
   }

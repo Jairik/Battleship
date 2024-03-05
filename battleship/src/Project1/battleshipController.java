@@ -14,9 +14,6 @@ public class battleshipController implements ActionListener{
     
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
-        //So extremely poorly coded and jank but might work
-        battleshipServer temp = new battleshipServer(true, null);
-        String hostIP = temp.getIP();
         //The rest of the actual "good" code
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
@@ -28,22 +25,19 @@ public class battleshipController implements ActionListener{
         hButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                server = new battleshipServer(true, hostIP);
-                view.createHostExternalWindow(hostIP);
-                view.updateMiddlePanel();
+                server = new battleshipServer(true);
+                view.createHostExternalWindow("127.0.0.1");
                 server.Connect();
+                view.updateMiddlePanel();
             }
         });
         cButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String enteredIPAddress;
-                enteredIPAddress = view.createConnectExternalWindow();
-                if(enteredIPAddress == hostIP) {
-                    server = new battleshipServer(false, enteredIPAddress);
-                    view.updateMiddlePanel();
-                    server.Connect();
-                }
+                view.createConnectExternalWindow();
+                server = new battleshipServer(false);
+                view.updateMiddlePanel();
+                server.Connect();
             }
         });
 

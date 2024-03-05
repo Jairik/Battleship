@@ -152,10 +152,9 @@ public class battleshipView{
 
     }
 
-    String createConnectExternalWindow() {
+    void createConnectExternalWindow() {
         String ipAddress;
-        ipAddress = JOptionPane.showInputDialog(frame, "Enter IP Address", JOptionPane.INFORMATION_MESSAGE);
-        return ipAddress;
+        JOptionPane.showMessageDialog(frame, "Attempting to connect...", "Attempting to Connect", JOptionPane.INFORMATION_MESSAGE);
     }
 
     void createHostExternalWindow(String IPAddress) {

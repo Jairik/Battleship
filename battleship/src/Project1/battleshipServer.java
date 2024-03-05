@@ -14,13 +14,13 @@ public class battleshipServer {
     BClient client;
     String hostIP = "127.0.0.1";
     /* Constructor, which will make the host or client object and interact with them */
-    battleshipServer(boolean isHost, String IP) {
+    battleshipServer(boolean isHost) {
         Host = isHost;
         if(Host) {
             server = new BServer();
         }
         else {
-            client = new BClient(IP);
+            client = new BClient(hostIP);
         }
     }
 
