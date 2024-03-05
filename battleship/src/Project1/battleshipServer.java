@@ -10,8 +10,8 @@ package Project1;
 
 /* GUIDE ON HOW TO USE THIS JAWN:
  * For implementation, this class bascially has 4 important functions that will have to be called in controller:
- * sendToOpponent(Char[][]) >>> Used to send the char array to the opponent
- * sendToOpponent(int, int) >>> Used to pass the int coordinates to the opponent
+ * sendToOpponent(Char[][] board) >>> Used to send the char array to the opponent
+ * sendToOpponent(int x, int y) >>> Used to pass the int coordinates to the opponent
  * receiveOpponentBoard() >>> Used to get board from opponent, returns a char[][]
  * receiveOpponentCoordinates() >>> Used to get coordinates from opponent, returns an int[][]
  * 
