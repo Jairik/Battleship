@@ -49,9 +49,9 @@ import java.util.List;
 public class battleshipView{
     
     private JFrame frame;
-    private JPanel topPanel; //Used for the user to shoot
+    private JPanel rightPanel; //Used for the user to shoot
     private JPanel middlePanel; //Used to store ship information and stuff
-    private MyPanel bottomPanel; //Used for drag & drop and displaying ships
+    private MyPanel leftPanel; //Used for drag & drop and displaying ships
     private JButton[][] button1;
     private JButton[][] button2;
     //private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png"); 
@@ -71,9 +71,9 @@ public class battleshipView{
     //View constructor that builds frame, gridlayout, labels, and buttons
     battleshipView(char[][] testArr) throws IOException{
 
-        //list of images to pass into MyPanel bottomPanel
+        //list of images to pass into MyPanel leftPanel
         List<String> imagePaths = new ArrayList<>();
-        imagePaths.add("/resources/carrierReSize.png");
+        imagePaths.add("/resources/BShip_Carrier.png");
         imagePaths.add("/resources/BattleshipReSize.png");
         imagePaths.add("/resources/CruiserReSize.png");
         imagePaths.add("/resources/SubmarineReSize.png");
@@ -84,13 +84,13 @@ public class battleshipView{
         /* Create the root Frame */
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 600);
+        frame.setSize(1200, 500);
         frame.setLayout(new BorderLayout());       
         frame.setLocationRelativeTo(null);
 
-        /* Create bottom panel - used to display user ships and for Drag-n-Drop */
-        bottomPanel = new MyPanel(imagePaths);
-        bottomPanel.setLayout(new GridLayout(10, 10));
+        /* Create left panel - used to display user ships and for Drag-n-Drop */
+        leftPanel = new MyPanel(imagePaths);
+        leftPanel.setLayout(new GridLayout(10, 10));
         
         //Add grid labels for bottom of the screen
         label = new JLabel[10][10];
@@ -102,15 +102,15 @@ public class battleshipView{
                 label[i][j] = new JLabel();
                 label[i][j].setText(testChar);
                 label[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                bottomPanel.add(label[i][j]);
+                leftPanel.add(label[i][j]);
             }
         }
         
-        bottomPanel.setPreferredSize(new Dimension(300, 300));
+        leftPanel.setPreferredSize(new Dimension(500, 500));
         
-        /* Create top panel - used for shooting at enemy ships */
-        topPanel = new JPanel();
-        topPanel.setLayout(new GridLayout(10, 10));
+        /* Create right panel - used for shooting at enemy ships */
+        rightPanel = new JPanel();
+        rightPanel.setLayout(new GridLayout(10, 10));
 
         //adds grid of buttons to second panel
         //button1 = new JButton[10][10];
@@ -120,19 +120,19 @@ public class battleshipView{
             for(int j = 0; j < 10; j++){
                 JButton btn = new JButton();
                 button2[i][j] = btn;
-                topPanel.add(btn);
+                rightPanel.add(btn);
             }
         }
 
-        topPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        topPanel.setPreferredSize(new Dimension(300, 300));
+        rightPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        rightPanel.setPreferredSize(new Dimension(500, 500));
 
         /* Create middle panel, reponsible for holding pictures of different ships */
         middlePanel = new JPanel();
         //middlePanel.setLayout(new GridLayout(1, 7)); //One for each ship and two for message or whatever (Opponents Turn, Sank ship, etc)
         middlePanel.setBackground(Color.GRAY);
-        middlePanel.setLayout(new GridLayout(1, 5));
-        middlePanel.setPreferredSize(new Dimension(300, 100));
+        middlePanel.setLayout(new GridLayout(2, 1)); //Setting layout for just buttons
+        middlePanel.setPreferredSize(new Dimension(150, 500));
 
         /* 
         Font newFont = label.getFont().deriveFont(14.0f);
@@ -146,9 +146,10 @@ public class battleshipView{
         middlePanel.add(pushToConnect);
         middlePanel.add(pushToHost);
 
-        frame.add(topPanel, BorderLayout.PAGE_START);
+        /* Placing the bottoms in the right location */
+        frame.add(rightPanel, BorderLayout.EAST);
         frame.add(middlePanel, BorderLayout.CENTER);
-        frame.add(bottomPanel, BorderLayout.PAGE_END);
+        frame.add(leftPanel, BorderLayout.WEST);
 
 /*      Testing stuff
         shipPanel shipPanel = new shipPanel("/resources/Battleship.png");
@@ -157,7 +158,7 @@ public class battleshipView{
 
         frame.setTitle("Battle-Ship-1");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setPreferredSize(new Dimension(300, 700));
+        frame.getContentPane().setPreferredSize(new Dimension(1150, 500));
         frame.pack();
         frame.setResizable(false);
         frame.setVisible(true);

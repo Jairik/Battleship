@@ -37,9 +37,9 @@ public class BServer {
             catch ( EOFException eofException ) {
                //Display to JFRame in view that connection has been terminated
             } // end catch
-            finally {
+            /*finally {
                closeConnection(); //  close connection
-            } 
+            } */ //We probably should close this at some point, however 
          //} 
       } 
       catch ( IOException ioException ) {

@@ -41,9 +41,9 @@ public class BClient {
     catch (IOException e) {
       e.printStackTrace();
     }
-    finally {
+    /*finally {
       closeConnection();
-    }
+    } */ //We probably should close this at some point, however 
   }
 
   /* Connects to the server */
