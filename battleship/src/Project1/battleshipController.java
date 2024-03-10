@@ -60,11 +60,13 @@ public class battleshipController implements ActionListener{
             }
         }
 
+        System.out.println("Updating Panel: ");
         view.updateMiddlePanel();
 
         //Potential Testing if I can debug the connect buttons and stuff
-        server.sendToOpponent(model.getUserBoard());
-        view.TESTSETVIEW(server.receiveOpponentBoard());
+        //server.sendToOpponent(model.getUserBoard());
+        //view.TESTSETVIEW(server.receiveOpponentBoard());
+
 
         /*SwingUtilities.invokeLater(() ->*/ fireCannon();
     }
