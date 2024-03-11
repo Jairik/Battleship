@@ -133,7 +133,7 @@ public class battleshipView{
         /* Create middle panel, reponsible for holding pictures of different ships */
         middlePanel = new JPanel();
         middlePanel.setBackground(Color.GRAY);
-        middlePanel.setLayout(new GridLayout(2, 1)); //Setting layout for just buttons
+        middlePanel.setLayout(new GridLayout(3, 1)); //Setting layout for just buttons
         middlePanel.setPreferredSize(new Dimension(150, 500));
 
         /* 
@@ -144,9 +144,20 @@ public class battleshipView{
         /* Creating Initial Host and Connect buttons on JFrame */
         pushToConnect = new JButton("Connect");
         pushToHost = new JButton("Host");
+
+        JButton pushToSet = new JButton("Set ships");
+        pushToSet.addActionListener(e -> {
+            List<Point> coordinates = ((MyPanel) leftPanel).getImagesCoordinates();
+            for (int i = 0; i < coordinates.size(); i++) {
+                Point point = coordinates.get(i);
+                System.out.println("Image " + (i + 1) + " - X: " + point.getX() + ", Y: " + point.getY());
+            }
+        }); 
+        // temp button to test ship setting
         /* Placing Buttons On the Middle Panel */
         middlePanel.add(pushToConnect);
         middlePanel.add(pushToHost);
+        middlePanel.add(pushToSet);
 
         /* Placing the bottoms in the right location */
         frame.add(rightPanel, BorderLayout.EAST);
@@ -312,7 +323,7 @@ class MyPanel extends JPanel {
             ImageIcon imageIcon;
             DraggableImage draggableImage = new DraggableImage(imagePath, new Point(initialX, initialY));              
             images.add(draggableImage);
-            initialY += 30;// Adjust the gap between images
+            initialY += 50;// Adjust the gap between images
         }
         ClickListener clickListener = new ClickListener();
         this.addMouseListener(clickListener);
@@ -325,6 +336,15 @@ class MyPanel extends JPanel {
         for (DraggableImage image : images) {
             image.paintIcon(this, g);
         }
+    }
+    public List<Point> getImagesCoordinates() {
+        List<Point> coordinates = new ArrayList<>();
+        for (DraggableImage image : images) {
+            int xCoordinate = image.getXCoordinate();
+            int yCoordinate = image.getYCoordinate();
+            coordinates.add(new Point(xCoordinate, yCoordinate));
+        }
+        return coordinates;
     }
 
     private class ClickListener extends MouseAdapter {
@@ -403,6 +423,14 @@ class DraggableImage {
         }
         return shipIcon;
     }
+    public int getXCoordinate() {
+        return (int) (imageUpperLeft.getX() / 50);
+    }
+    
+    public int getYCoordinate() {
+        return (int) (imageUpperLeft.getY() / 50);
+    }
+    
 
 }
     
