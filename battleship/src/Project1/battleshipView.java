@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ScopedValue.Carrier;
 import java.net.URL;
 import java.util.ArrayList;
 /* 
@@ -153,6 +154,21 @@ public class battleshipView{
                 ImageInfo imageInfo = imagesInfo.get(i);
                 Point coordinates = imageInfo.getCoordinates();
                 String imagePath = imageInfo.getImagePath();
+                if(imagePath == "/resources/Carrier.png" ){
+                    
+                }
+                else if(imagePath == "/resources/Battleship.png"){
+                    //BS_Battleship bShip = new BS_BattleShip(coordinates.getX(), coordinates.getY());
+                }
+                else if(imagePath == "/resources/Destroyer.png"){
+
+                }
+                else if(imagePath == "/resources/Cruiser.png"){
+
+                }
+                else if(imagePath == "/resources/SubmarineReSize.png"){
+
+                }
                 System.out.println("Image " + (i + 1) + " - X: " + coordinates.getX() + ", Y: " + coordinates.getY() + ", Path: " + imagePath);
             }
         }); 
