@@ -224,4 +224,9 @@ public class battleshipModel {
         opponentBoard = oppBoard;
     }
 
+    //each ship class will call this function to update model
+    void setModel(int x, int y, String shipCharacter){
+        board[x][y] = shipCharacter.charAt(0);
+    }
+
 }

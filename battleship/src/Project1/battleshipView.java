@@ -155,19 +155,19 @@ public class battleshipView{
                 Point coordinates = imageInfo.getCoordinates();
                 String imagePath = imageInfo.getImagePath();
                 if(imagePath == "/resources/Carrier.png" ){
-                    
+                    BS_Carrier cShip = new BS_Carrier(coordinates);
                 }
                 else if(imagePath == "/resources/Battleship.png"){
-                    //BS_Battleship bShip = new BS_BattleShip(coordinates.getX(), coordinates.getY());
+                    BS_Battleship bShip = new BS_Battleship(coordinates);
                 }
                 else if(imagePath == "/resources/Destroyer.png"){
-
+                    BS_Destroyer dShip = new BS_Destroyer(coordinates);
                 }
                 else if(imagePath == "/resources/Cruiser.png"){
-
+                    BS_Cruiser rShip = new BS_Cruiser(coordinates);
                 }
                 else if(imagePath == "/resources/SubmarineReSize.png"){
-
+                    BS_Submarine sShip = new BS_Submarine(coordinates);
                 }
                 System.out.println("Image " + (i + 1) + " - X: " + coordinates.getX() + ", Y: " + coordinates.getY() + ", Path: " + imagePath);
             }
