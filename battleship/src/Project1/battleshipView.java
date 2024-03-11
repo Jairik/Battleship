@@ -52,7 +52,7 @@ public class battleshipView{
     private JFrame frame;
     private JPanel rightPanel; //Used for the user to shoot
     private JPanel middlePanel; //Used to store ship information and stuff
-    private JPanel leftPanel; //Used for drag & drop and displaying ships
+    private MyPanel leftPanel; //Used for drag & drop and displaying ships
     private JButton[][] button2;
     private JLabel[][] label;
     SoundFX soundEffects;
@@ -137,10 +137,6 @@ public class battleshipView{
         middlePanel.setLayout(new GridLayout(3, 1)); //Setting layout for just buttons
         middlePanel.setPreferredSize(new Dimension(150, 500));
 
-        /* 
-        Font newFont = label.getFont().deriveFont(14.0f);
-        battleShip.setFont(newFont);
-        */
 
         /* Creating Initial Host and Connect buttons on JFrame */
         pushToConnect = new JButton("Connect");
@@ -328,150 +324,11 @@ public class battleshipView{
 }
 
 
-//drag and drop classes
-class MyPanel extends JPanel {
-    List<DraggableImage> images = new ArrayList<>();
-
-    MyPanel(List<String> imagePaths) {
-        setLayout(new FlowLayout(FlowLayout.LEFT)); // Use FlowLayout
-
-        int initialX = 100;//positions[0]; // Initial x-coordinate
-        int initialY = 100;//positions[1]; // Initial y-coordinate
-
-        for (String imagePath : imagePaths) {
-            ImageIcon imageIcon;
-            DraggableImage draggableImage = new DraggableImage(imagePath, new Point(initialX, initialY));              
-            images.add(draggableImage);
-            initialY += 50;// Adjust the gap between images
-        }
-        ClickListener clickListener = new ClickListener();
-        this.addMouseListener(clickListener);
-        DragListener dragListener = new DragListener();
-        this.addMouseMotionListener(dragListener);
-    }
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        for (DraggableImage image : images) {
-            image.paintIcon(this, g);
-        }
-    }
-    public List<ImageInfo> getImagesInfo() {
-        List<ImageInfo> imagesInfo = new ArrayList<>();
-        for (DraggableImage image : images) {
-            int xCoordinate = image.getXCoordinate();
-            int yCoordinate = image.getYCoordinate();
-            String imagePath = image.getImagePath();
-            imagesInfo.add(new ImageInfo(new Point(xCoordinate, yCoordinate), imagePath));
-        }
-        return imagesInfo;
-    }
-
-    private class ClickListener extends MouseAdapter {
-        public void mousePressed(MouseEvent event) {
-            for (DraggableImage image : images) {
-                image.mousePressed(event.getPoint());
-            }
-        }
-    }
-
-    private class DragListener extends MouseMotionAdapter {
-        public void mouseDragged(MouseEvent event) {
-            for (DraggableImage image : images) {
-                if (image.contains(event.getPoint())) {
-                    image.mouseDragged(event.getPoint());
-                }
-            }
-            repaint();
-        }
-    }
-
-}
-
-class DraggableImage {
-    ImageIcon image;
-    String imagePath;
-    Point imageUpperLeft, prevPoint;
-
-    DraggableImage(String iPath, Point initialPosition) {
-        imagePath = iPath;  // Store the image path
-        createImageIcon();  // Initialize the ImageIcon
-        imageUpperLeft = initialPosition;
-        prevPoint = imageUpperLeft;
-    }
-
-    public void paintIcon(Component c, Graphics g) {
-        image.paintIcon(c, g, (int) imageUpperLeft.getX(), (int) imageUpperLeft.getY());
-    }
-
-    public void mousePressed(Point point) {
-        prevPoint = point;
-    }
-
-    public void mouseDragged(Point currPoint) {
-        int dx = (int) (currPoint.getX() - prevPoint.getX());
-        int dy = (int) (currPoint.getY() - prevPoint.getY());
-        imageUpperLeft.translate(dx, dy);
-        prevPoint = currPoint;
-    }
-
-    public boolean contains(Point point) {
-        int x = (int) imageUpperLeft.getX();
-        int y = (int) imageUpperLeft.getY();
-        int width = image.getIconWidth();
-        int height = image.getIconHeight();
-
-        return (point.getX() >= x && point.getX() <= x + width &&
-                point.getY() >= y && point.getY() <= y + height);
-    }
-
-    //Creates an image icon given a file path. Serves as a helper function the the constructor
-    private void createImageIcon() {
-        try {
-            URL shipImagePath = shipPanel.class.getResource(imagePath);
-            InputStream inputStream = shipImagePath.openStream();
-            Image image = ImageIO.read(inputStream);
-            inputStream.close();
-            this.image = new ImageIcon(image);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-
-    
-    public int getXCoordinate() {
-        return (int) (imageUpperLeft.getX() / 50);
-    }
-    
-    public int getYCoordinate() {
-        return (int) (imageUpperLeft.getY() / 50);
-    }
-    public String getImagePath() {
-        return imagePath;
-    }
-    
-
-}
 
 
-class ImageInfo {
-    private Point coordinates;
-    private String imagePath;
 
-    public ImageInfo(Point coordinates, String imagePath) {
-        this.coordinates = coordinates;
-        this.imagePath = imagePath;
-    }
 
-    public Point getCoordinates() {
-        return coordinates;
-    }
 
-    public String getImagePath() {
-        return imagePath;
-    }
-}
 
 
 

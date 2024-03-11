@@ -6,6 +6,7 @@ public class BS_Battleship {
     private int shipSize = 4;
     private boolean rotation = false;
     private String shipSymbol = "b";
+    private battleshipModel model;
     
 
     BS_Battleship(Point coordinates){
@@ -17,7 +18,7 @@ public class BS_Battleship {
         //updates ships x coordinate if no rotation
         if(rotation = false){
             while(shipSize > 0){
-                //update ship model.setShip(xPos, yPos, shipSymbol);
+                model.setModel(xPos, yPos, shipSymbol);
                 xPos++;
                 shipSize--;
             }

@@ -6,6 +6,7 @@ public class BS_Destroyer {
     private int shipSize = 2;
     private boolean rotation = false;
     private String shipSymbol = "d";
+    private battleshipModel model;
 
     BS_Destroyer(Point coordinates){
         double x = coordinates.getX();
@@ -16,7 +17,7 @@ public class BS_Destroyer {
         //updates ships x coordinate if no rotation
         if(rotation = false){
             while(shipSize > 0){
-                //update ship model.setShip(xPos, yPos, shipSymbol);
+                model.setModel(xPos, yPos, shipSymbol);
                 xPos++;
                 shipSize--;
             }

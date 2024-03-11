@@ -229,4 +229,13 @@ public class battleshipModel {
         board[x][y] = shipCharacter.charAt(0);
     }
 
+    void printBoard(){
+        for(int i = 0; i < boardHeight; i++) {
+            for (int j = 0; j < boardWidth; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
 }
