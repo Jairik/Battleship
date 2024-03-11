@@ -2,28 +2,11 @@ package Project1;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.ScopedValue.Carrier;
-import java.net.URL;
 import java.util.ArrayList;
-import java.awt.event.ActionListener;
-import javax.imageio.ImageIO;
 import java.util.List;
-
-//drag n drop imports
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JPanel;
 

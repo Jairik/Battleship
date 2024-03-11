@@ -9,12 +9,9 @@ package Project1;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.ScopedValue.Carrier;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 /* 
  - Implement the View component, which includes creating two boards on JFrame. 
    Grids can be implemented using JButton (2D array of JButtons, or 2D array of labels, etc.).
@@ -27,24 +24,10 @@ import java.util.ArrayList;
  - Implement the controller program to test View and Model. At this stage,
    your test program should have GUI and a Data Model backend and should update the GUI and data model accordingly.
 */
-import java.awt.event.ActionListener;
-import javax.imageio.ImageIO;
-import java.util.List;
 
-//drag n drop imports
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-//rotate image imports
+
+
 
 
 public class battleshipView{
