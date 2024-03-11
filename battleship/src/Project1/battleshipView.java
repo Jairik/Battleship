@@ -73,11 +73,11 @@ public class battleshipView{
 
         //list of images to pass into MyPanel leftPanel
         List<String> imagePaths = new ArrayList<>();
-        imagePaths.add("/resources/BShip_Carrier.png");
-        imagePaths.add("/resources/BattleshipReSize.png");
-        imagePaths.add("/resources/CruiserReSize.png");
-        imagePaths.add("/resources/BShip_Submarine.png");
-        imagePaths.add("/resources/DestroyerReSize.png"); 
+        imagePaths.add("/resources/Carrier.png");
+        imagePaths.add("/resources/Battleship.png");
+        imagePaths.add("/resources/Cruiser.png");
+        imagePaths.add("/resources/Submarine.png");
+        imagePaths.add("/resources/Destroyer.png"); 
         /* Initialize sounds and start the game music */
         soundEffects = new SoundFX();
 
