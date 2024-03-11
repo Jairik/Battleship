@@ -51,7 +51,7 @@ public class battleshipView{
     private JFrame frame;
     private JPanel rightPanel; //Used for the user to shoot
     private JPanel middlePanel; //Used to store ship information and stuff
-    private MyPanel leftPanel; //Used for drag & drop and displaying ships
+    private JPanel leftPanel; //Used for drag & drop and displaying ships
     private JButton[][] button1;
     private JButton[][] button2;
     //private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png"); 
@@ -76,8 +76,8 @@ public class battleshipView{
         imagePaths.add("/resources/BShip_Carrier.png");
         imagePaths.add("/resources/BattleshipReSize.png");
         imagePaths.add("/resources/CruiserReSize.png");
-        imagePaths.add("/resources/SubmarineReSize.png");
-        imagePaths.add("/resources/DestroyerReSize.png");
+        imagePaths.add("/resources/BShip_Submarine.png");
+        imagePaths.add("/resources/DestroyerReSize.png"); 
         /* Initialize sounds and start the game music */
         soundEffects = new SoundFX();
 
@@ -90,12 +90,15 @@ public class battleshipView{
 
         /* Create left panel - used to display user ships and for Drag-n-Drop */
         leftPanel = new MyPanel(imagePaths);
+        //MyPanel carrierPanel = new MyPanel("/resources/BShip_Carrier.png", findShipPosition(testArr, 'c'));
+        //MyPanel battleshipPanel = new MyPanel("/resources/BShip_Battleship_NONRESIZE.png", findShipPosition(testArr, 'c'));
+        //leftPanel.add(carrierPanel);
+        //leftPanel.add(battleshipPanel);
+        leftPanel.setBackground(Color.BLUE);
         leftPanel.setLayout(new GridLayout(10, 10));
         
         //Add grid labels for bottom of the screen
         label = new JLabel[10][10];
-
-        
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
                 String testChar = Character.toString(testArr[i][j]);
@@ -106,10 +109,12 @@ public class battleshipView{
             }
         }
         
+        //Setting dimensions
         leftPanel.setPreferredSize(new Dimension(500, 500));
         
         /* Create right panel - used for shooting at enemy ships */
         rightPanel = new JPanel();
+        rightPanel.setBackground(Color.BLUE);
         rightPanel.setLayout(new GridLayout(10, 10));
 
         //adds grid of buttons to second panel
@@ -129,7 +134,6 @@ public class battleshipView{
 
         /* Create middle panel, reponsible for holding pictures of different ships */
         middlePanel = new JPanel();
-        //middlePanel.setLayout(new GridLayout(1, 7)); //One for each ship and two for message or whatever (Opponents Turn, Sank ship, etc)
         middlePanel.setBackground(Color.GRAY);
         middlePanel.setLayout(new GridLayout(2, 1)); //Setting layout for just buttons
         middlePanel.setPreferredSize(new Dimension(150, 500));
@@ -150,11 +154,6 @@ public class battleshipView{
         frame.add(rightPanel, BorderLayout.EAST);
         frame.add(middlePanel, BorderLayout.CENTER);
         frame.add(leftPanel, BorderLayout.WEST);
-
-/*      Testing stuff
-        shipPanel shipPanel = new shipPanel("/resources/Battleship.png");
-        frame.add(shipPanel);
-*/
 
         frame.setTitle("Battle-Ship-1");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -186,7 +185,7 @@ public class battleshipView{
     void updateMiddlePanel() {
         /* Resetting the middle panel */
         middlePanel = new JPanel();
-        middlePanel.setBackground(Color.GRAY);
+        middlePanel.setBackground(Color.GREEN); //just for testing
         middlePanel.setLayout(new GridLayout(1, 5));
         middlePanel.setPreferredSize(new Dimension(300, 100));
         
@@ -239,17 +238,6 @@ public class battleshipView{
         }
     }
 
-    /* TEST - Doesn't work, there is probably some wierd threading stuff that won't allow for
-     * the view to update. No clue why that is happening, will fix tmr.
-     */
-    public void TESTSETVIEW(char[][] oppBoard) {
-        for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < 10; j++) {
-                button2[i][j].setText(Character.toString(oppBoard[i][j]));
-            }
-        }
-    }
-
     //testing
     public void showGameStatus(String message){
         JOptionPane.showMessageDialog(frame, message, "Game Over!", JOptionPane.INFORMATION_MESSAGE);
@@ -287,6 +275,28 @@ public class battleshipView{
         }
     }
 
+    /* Search top-to-bottom through the array to find the first instance of the
+     * given ship. This program will then convert the instance in the array to the
+     * coordinates in the gui, which can be assigned. 
+     */
+    int[] findShipPosition(char[][] board, char c) {
+        int x = -1, y = -1; //Will hold the positions
+        //Find the first instance
+        outerLoop:
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                if(board[i][j] == c) {
+                    x = i;
+                    y = j; 
+                    break outerLoop;
+                }
+            }
+        }
+        x = 500 - (x*50); //Finding the position on the GUI board
+        y = (y*50);
+        int pos[] = {x, y};
+        return pos;
+    }
 }
 
 
@@ -297,8 +307,8 @@ class MyPanel extends JPanel {
     MyPanel(List<String> imagePaths) {
         setLayout(new FlowLayout(FlowLayout.LEFT)); // Use FlowLayout
 
-        int initialX = 100; // Initial x-coordinate
-        int initialY = 20; // Initial y-coordinate
+        int initialX = 100;//positions[0]; // Initial x-coordinate
+        int initialY = 100;//positions[1]; // Initial y-coordinate
 
         for (String imagePath : imagePaths) {
             ImageIcon imageIcon;

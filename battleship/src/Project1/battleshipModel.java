@@ -50,19 +50,6 @@ public class battleshipModel {
         return false;
     }
 
-    //will - initializes a board with ' ' then i hardcoded a ship into it with 'c'. Doing this for testing
-    public void initBoard() {
-        for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < 10; j++) {
-                board[i][j] = ' ';
-            }
-        }
-        //fake ship
-        board[4][0] = 'c';
-        board[4][1] = 'c';
-        board[4][2] = 'c';
-    }
-
     /* will - after the button clicked in controller it updates the model accordingly
     public void updateModel(int x, int y, String HitOrMiss){
         board[x][y] = HitOrMiss.charAt(0); // changes string to char
@@ -203,7 +190,6 @@ public class battleshipModel {
         return hit;
     }
 
-    //Not entirely sure how I am going to implement this yet
     //NOTE: WE WILL NEED TO CHANGE THIS TO OPPONENTBOARD
     boolean checkForSinkShip(int xPos, int yPos) {
         boolean sank = false;
@@ -233,9 +219,9 @@ public class battleshipModel {
         return false;
     }
 
-    /* Setting the opponent's board to current board */
-    void getOppBoard(char[][] oppBoard) {
-        //opponentBoard = oppBoard;
-        board = oppBoard; //FOR TESTING- if they swap after connection, W
+    /* Receiving the opponents board and setting it */
+    void setOppBoard(char[][] oppBoard) {
+        opponentBoard = oppBoard;
     }
+
 }

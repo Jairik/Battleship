@@ -63,10 +63,10 @@ public class battleshipController implements ActionListener{
         System.out.println("Updating Panel: ");
         view.updateMiddlePanel();
 
-        //Potential Testing if I can debug the connect buttons and stuff
-        //server.sendToOpponent(model.getUserBoard());
-        //view.TESTSETVIEW(server.receiveOpponentBoard());
 
+        /* We should have this all in a while loop inside a try catch statement that runs while
+         * a boolean winner is false and while the connection is valid.
+         */
 
         /*SwingUtilities.invokeLater(() ->*/ fireCannon();
     }
