@@ -96,3 +96,6 @@ class shipPanel extends JPanel{
             return new Point(xPos, yPos);
         }
     }
+
+
+    

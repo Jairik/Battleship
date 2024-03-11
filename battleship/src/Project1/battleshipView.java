@@ -52,9 +52,7 @@ public class battleshipView{
     private JPanel rightPanel; //Used for the user to shoot
     private JPanel middlePanel; //Used to store ship information and stuff
     private JPanel leftPanel; //Used for drag & drop and displaying ships
-    private JButton[][] button1;
     private JButton[][] button2;
-    //private ImageIcon imageIcon = new ImageIcon("/Users/will/Desktop/Cosc330/Project1/canvas1.png"); 
     private JLabel[][] label;
     SoundFX soundEffects;
 
@@ -76,7 +74,7 @@ public class battleshipView{
         imagePaths.add("/resources/Carrier.png");
         imagePaths.add("/resources/Battleship.png");
         imagePaths.add("/resources/Cruiser.png");
-        imagePaths.add("/resources/Submarine.png");
+        imagePaths.add("/resources/SubmarineReSize.png");
         imagePaths.add("/resources/Destroyer.png"); 
         /* Initialize sounds and start the game music */
         soundEffects = new SoundFX();
@@ -381,6 +379,9 @@ class DraggableImage {
         int y = (int) imageUpperLeft.getY();
         int width = image.getIconWidth();
         int height = image.getIconHeight();
+        int xPos = x / 50;
+        int yPos = y / 50;
+        System.out.println("x: " + xPos + " y: " + yPos);
 
         return (point.getX() >= x && point.getX() <= x + width &&
                 point.getY() >= y && point.getY() <= y + height);
