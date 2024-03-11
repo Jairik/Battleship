@@ -145,12 +145,15 @@ public class battleshipView{
         pushToConnect = new JButton("Connect");
         pushToHost = new JButton("Host");
 
+        //button returns ship position
         JButton pushToSet = new JButton("Set ships");
         pushToSet.addActionListener(e -> {
-            List<Point> coordinates = ((MyPanel) leftPanel).getImagesCoordinates();
-            for (int i = 0; i < coordinates.size(); i++) {
-                Point point = coordinates.get(i);
-                System.out.println("Image " + (i + 1) + " - X: " + point.getX() + ", Y: " + point.getY());
+            List<ImageInfo> imagesInfo = ((MyPanel) leftPanel).getImagesInfo();
+            for (int i = 0; i < imagesInfo.size(); i++) {
+                ImageInfo imageInfo = imagesInfo.get(i);
+                Point coordinates = imageInfo.getCoordinates();
+                String imagePath = imageInfo.getImagePath();
+                System.out.println("Image " + (i + 1) + " - X: " + coordinates.getX() + ", Y: " + coordinates.getY() + ", Path: " + imagePath);
             }
         }); 
         // temp button to test ship setting
@@ -337,14 +340,15 @@ class MyPanel extends JPanel {
             image.paintIcon(this, g);
         }
     }
-    public List<Point> getImagesCoordinates() {
-        List<Point> coordinates = new ArrayList<>();
+    public List<ImageInfo> getImagesInfo() {
+        List<ImageInfo> imagesInfo = new ArrayList<>();
         for (DraggableImage image : images) {
             int xCoordinate = image.getXCoordinate();
             int yCoordinate = image.getYCoordinate();
-            coordinates.add(new Point(xCoordinate, yCoordinate));
+            String imagePath = image.getImagePath();
+            imagesInfo.add(new ImageInfo(new Point(xCoordinate, yCoordinate), imagePath));
         }
-        return coordinates;
+        return imagesInfo;
     }
 
     private class ClickListener extends MouseAdapter {
@@ -374,7 +378,8 @@ class DraggableImage {
     Point imageUpperLeft, prevPoint;
 
     DraggableImage(String iPath, Point initialPosition) {
-        image = createImageIcon(iPath);
+        imagePath = iPath;  // Store the image path
+        createImageIcon();  // Initialize the ImageIcon
         imageUpperLeft = initialPosition;
         prevPoint = imageUpperLeft;
     }
@@ -399,30 +404,26 @@ class DraggableImage {
         int y = (int) imageUpperLeft.getY();
         int width = image.getIconWidth();
         int height = image.getIconHeight();
-        int xPos = x / 50;
-        int yPos = y / 50;
-        System.out.println("x: " + xPos + " y: " + yPos);
 
         return (point.getX() >= x && point.getX() <= x + width &&
                 point.getY() >= y && point.getY() <= y + height);
     }
 
     //Creates an image icon given a file path. Serves as a helper function the the constructor
-    public ImageIcon createImageIcon(String imagePath) {
-        ImageIcon shipIcon = null; //Initializing with null value
+    private void createImageIcon() {
         try {
             URL shipImagePath = shipPanel.class.getResource(imagePath);
-            System.out.println("image loaded: " + imagePath);
             InputStream inputStream = shipImagePath.openStream();
             Image image = ImageIO.read(inputStream);
             inputStream.close();
-            shipIcon = new ImageIcon(image);
-        }
-        catch (IOException e) {
+            this.image = new ImageIcon(image);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return shipIcon;
     }
+    
+
+    
     public int getXCoordinate() {
         return (int) (imageUpperLeft.getX() / 50);
     }
@@ -430,7 +431,32 @@ class DraggableImage {
     public int getYCoordinate() {
         return (int) (imageUpperLeft.getY() / 50);
     }
+    public String getImagePath() {
+        return imagePath;
+    }
     
 
 }
+
+
+class ImageInfo {
+    private Point coordinates;
+    private String imagePath;
+
+    public ImageInfo(Point coordinates, String imagePath) {
+        this.coordinates = coordinates;
+        this.imagePath = imagePath;
+    }
+
+    public Point getCoordinates() {
+        return coordinates;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+}
+
+
+
     
