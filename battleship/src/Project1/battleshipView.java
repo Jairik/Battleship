@@ -40,12 +40,14 @@ public class battleshipView{
     private JLabel[][] label;
     SoundFX soundEffects;
 
+    /* Labels on middle panel - showcases the current state of the ships */
     JLabel carrier;
     JLabel battleShip;
     JLabel submarine;
     JLabel destroyer;
     JLabel cruiser;
 
+    /* Different buttons that will be applied to the middle panel */
     JButton pushToHost;
     JButton pushToConnect;
     JButton pushToSet;
@@ -58,7 +60,7 @@ public class battleshipView{
     JButton rotateDestroyer;
 
     //View constructor that builds frame, gridlayout, labels, and buttons
-    battleshipView(char[][] testArr) throws IOException{
+    battleshipView(char[][] testArr) throws IOException {
 
         Color seaTurqoise = new Color(108, 218, 231);
 
@@ -81,11 +83,7 @@ public class battleshipView{
 
         /* Create left panel - used to display user ships and for Drag-n-Drop */
         leftPanel = new MyPanel(imagePaths);
-        //MyPanel carrierPanel = new MyPanel("/resources/BShip_Carrier.png", findShipPosition(testArr, 'c'));
-        //MyPanel battleshipPanel = new MyPanel("/resources/BShip_Battleship_NONRESIZE.png", findShipPosition(testArr, 'c'));
-        //leftPanel.add(carrierPanel);
-        //leftPanel.add(battleshipPanel);
-        leftPanel.setBackground(Color.BLUE);
+        leftPanel.setBackground(seaTurqoise);
         leftPanel.setLayout(new GridLayout(10, 10));
         
         //Add grid labels for bottom of the screen
@@ -342,10 +340,14 @@ public class battleshipView{
         middlePanel.add(rotateCruiser);
         middlePanel.add(rotateSubmarine);
         middlePanel.add(rotateDestroyer);
+
+        //Submit the changes to the GUI
+        middlePanel.revalidate();
+        middlePanel.repaint();
     }   
 
     /* Getter functions for the controller that returns the button */
-    JButton getFinalizePlacementButton() {
+    JButton getFinalizePlacement() {
         return finalizeShipPlacement;
     }
 

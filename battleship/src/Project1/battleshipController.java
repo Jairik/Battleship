@@ -27,8 +27,6 @@ public class battleshipController implements ActionListener{
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
-
-        //button grabs image info(coordinates, image path) then calls ship classes to update model
         view.getSetButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,17 +60,6 @@ public class battleshipController implements ActionListener{
                     System.out.println("Image " + (i + 1) + " - X: " + coordinates.getX() + ", Y: " + coordinates.getY() + ", Path: " + imagePath);
                 }
                 model.printBoard();
-            }
-        });
-
-        view.getRotateShip().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                List<DraggableImage> images = view.getDragImage();
-                if (!images.isEmpty()) {
-                    DraggableImage firstImage = images.get(0);
-                    firstImage.rotateImage(view.getPanel());
-                }
             }
         });
         //Getting host and connect Buttons
@@ -179,6 +166,17 @@ public void actionPerformed(ActionEvent e) {
             }
         }
 
+    }
+
+    /* Handle events of ships dragging and add event handlers for each of the buttons */
+    void placeShips() {
+        JButton finalizeShipPlacement = view.getFinalizePlacement();
+        JButton randomPlacement = view.getRandomPlacement();
+        JButton rotateCarrier = view.getRotateCarrier();
+        JButton rotateBattleship = view.getRotateBattleship();
+        JButton rotateCruiser = view.getRotateCruiser();
+        JButton rotateSubmarine = view.getRotateSubmarine();
+        JButton rotateDestroyer = view.getRotateDestroyer();
     }
 }
 
