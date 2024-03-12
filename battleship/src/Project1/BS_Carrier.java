@@ -5,11 +5,11 @@ import java.io.IOException;
 
 public class BS_Carrier{
     private int shipSize = 5;
-    private boolean rotation = true;
+    
     private String shipSymbol = "c";
     private battleshipModel model;
     
-    BS_Carrier(Point coordinates, battleshipModel model){
+    BS_Carrier(Point coordinates, battleshipModel model, boolean rotation){
         this.model = model;
         double x = coordinates.getX();
         double y = coordinates.getY();
@@ -18,14 +18,25 @@ public class BS_Carrier{
         System.out.println("Carrier - x: " + xPos + " y: " + yPos);
         
         //updates ships x coordinate if no rotation
-        if(rotation){
+        if(!rotation){
             while(shipSize > 0){
                 model.setModel(xPos, yPos, shipSymbol);
                 xPos++;
                 shipSize--;
             }
         }
-       
-
+        else{
+            while(shipSize > 0){
+                model.setModel(xPos, yPos, shipSymbol);
+                yPos++;
+                shipSize--;
+            }
+        }
     }
+
+    /* 
+    public void getRotateStatus(boolean rotate){
+        rotation = rotate;
+    }
+    */
 }

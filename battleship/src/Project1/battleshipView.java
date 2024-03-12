@@ -129,7 +129,7 @@ public class battleshipView{
         /* Create middle panel, reponsible for holding pictures of different ships */
         middlePanel = new JPanel();
         middlePanel.setBackground(Color.GRAY);
-        middlePanel.setLayout(new GridLayout(4, 1)); //Setting layout for just buttons
+        middlePanel.setLayout(new GridLayout(8, 1)); //Setting layout for just buttons
         middlePanel.setPreferredSize(new Dimension(150, 500));
 
 
@@ -140,12 +140,20 @@ public class battleshipView{
         //button returns ship position
         pushToSet = new JButton("Set ships"); 
         rotateCarrier = new JButton("rotate carrier");
+        rotateBattleship = new JButton("rotate battleship");
+        rotateCruiser = new JButton("rotate cruiser");
+        rotateDestroyer = new JButton("rotate destroyer");
+        rotateSubmarine = new JButton("rotate submarine");
         // temp button to test ship setting
         /* Placing Buttons On the Middle Panel */
         middlePanel.add(pushToConnect);
         middlePanel.add(pushToHost);
         middlePanel.add(pushToSet);
         middlePanel.add(rotateCarrier);
+        middlePanel.add(rotateBattleship);
+        middlePanel.add(rotateCruiser);
+        middlePanel.add(rotateDestroyer);
+        middlePanel.add(rotateSubmarine);
 
         /* Placing the bottoms in the right location */
         frame.add(rightPanel, BorderLayout.EAST);
@@ -192,9 +200,21 @@ public class battleshipView{
     public List<ImageInfo> getPanelInfo(){
         return ((MyPanel) leftPanel).getImagesInfo();
     }
-
-    public JButton getRotateShip(){
+    //button for rotate carrier
+    public JButton getRotateCarrierShip(){
         return rotateCarrier;
+    }
+    public JButton getRotateBattleShip(){
+        return rotateBattleship;
+    }
+    public JButton getRotateCruiserShip(){
+        return rotateCruiser;
+    }
+    public JButton getRotateSubShip(){
+        return rotateSubmarine;
+    }
+    public JButton getRotateDestroyerShip(){
+        return rotateDestroyer;
     }
 
     public MyPanel getPanel(){

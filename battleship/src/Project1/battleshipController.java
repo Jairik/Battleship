@@ -22,6 +22,16 @@ public class battleshipController implements ActionListener{
     private battleshipModel model;
     private battleshipServer server;
     private boolean rotated = false;
+    BS_Carrier cShip;
+    BS_Battleship bShip;
+    BS_Destroyer dShip;
+    BS_Cruiser rShip;
+    BS_Submarine sShip;
+    boolean rotateCarrier;
+    boolean rotateBattleship;
+    boolean rotateCruiser;
+    boolean rotateSubmarine;
+    boolean rotateDestroyer;
     //private boolean buttonClicked = false;
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
@@ -33,9 +43,48 @@ public class battleshipController implements ActionListener{
         view = new battleshipView(userBoard);
 
         setShipsManually();
-        rotateBattleship();
-        //test button to rotate the carrier image, still scuffed
         
+        //carrier button
+        view.getRotateCarrierShip().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rotateCarrier = rotateBattleship(0, "/resources/carrierRotated.png", "/resources/Carrier.png");
+                
+            }
+        });
+        //battleship button
+        view.getRotateBattleShip().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rotateBattleship = rotateBattleship(1, "/resources/battleshipRotated.png", "/resources/Battleship.png");
+                
+            }
+        });
+        //cruiser button
+        view.getRotateCruiserShip().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rotateCruiser = rotateBattleship(2, "/resources/cruiserRotated.png", "/resources/Cruiser.png");
+                
+            }
+        });
+        //submarine button
+        view.getRotateSubShip().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rotateSubmarine = rotateBattleship(3, "/resources/submarineRotated.png", "/resources/SubmarineReSize.png");
+                
+            }
+        });
+        //destroyer button
+        view.getRotateDestroyerShip().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rotateDestroyer = rotateBattleship(4, "/resources/destroyerRotated.png", "/resources/Destroyer.png");
+                
+            }
+        });
+        //test button to rotate the carrier image, still scuffed
         
         //Getting host and connect Buttons
         JButton cButton = view.getConnectButton();
@@ -78,24 +127,29 @@ public class battleshipController implements ActionListener{
                     ImageInfo imageInfo = imagesInfo.get(i);
                     Point coordinates = imageInfo.getCoordinates();
                     String imagePath = imageInfo.getImagePath();
-                    if(imagePath == "/resources/Carrier.png" || imagePath == "/resources/carrierRotated.png"){
-                        BS_Carrier cShip = new BS_Carrier(coordinates, model);
+                    if(imagePath.equals("/resources/Carrier.png") || imagePath.equals("/resources/carrierRotated.png")){
+                        cShip = new BS_Carrier(coordinates, model, rotateCarrier);
+                        //cShip.getRotateStatus(rotateCarrier);
                         System.out.println("Carrier");
                     }
-                    else if(imagePath == "/resources/Battleship.png" || imagePath == "/resources/battleshipRotated.png"){
-                        BS_Battleship bShip = new BS_Battleship(coordinates, model);
+                    else if(imagePath.equals("/resources/Battleship.png") || imagePath.equals("/resources/battleshipRotated.png")){
+                        bShip = new BS_Battleship(coordinates, model, rotateBattleship);
+                        //bShip.getRotateStatus(rotateBattleship);
                         System.out.println("battleship");
                     }
-                    else if(imagePath == "/resources/Destroyer.png" || imagePath == "/resources/destroyerRotated.png"){
-                        BS_Destroyer dShip = new BS_Destroyer(coordinates, model);
+                    else if(imagePath.equals("/resources/Destroyer.png") || imagePath.equals("/resources/destroyerRotated.png")){
+                        dShip = new BS_Destroyer(coordinates, model, rotateDestroyer);
+                        //dShip.getRotateStatus(rotateDestroyer);
                         System.out.println("destroyer");
                     }
-                    else if(imagePath == "/resources/Cruiser.png" || imagePath == "/resources/cruiserRotated.png"){
-                        BS_Cruiser rShip = new BS_Cruiser(coordinates, model);
+                    else if(imagePath.equals("/resources/Cruiser.png") || imagePath.equals("/resources/cruiserRotated.png")){
+                        rShip = new BS_Cruiser(coordinates, model, rotateCruiser);
+                        //rShip.getRotateStatus(rotateCruiser);
                         System.out.println("cruiser");
                     }
-                    else if(imagePath == "/resources/SubmarineReSize.png" || imagePath == "/resources/submarineRotated.png"){
-                        BS_Submarine sShip = new BS_Submarine(coordinates, model);
+                    else if(imagePath.equals("/resources/SubmarineReSize.png") || imagePath.equals("/resources/submarineRotated.png")){
+                        sShip = new BS_Submarine(coordinates, model, rotateSubmarine);
+                        //sShip.getRotateStatus(rotateSubmarine);
                         System.out.println("submarine");
                     }
                     System.out.println("Image " + (i + 1) + " - X: " + coordinates.getX() + ", Y: " + coordinates.getY() + ", Path: " + imagePath);
@@ -105,24 +159,23 @@ public class battleshipController implements ActionListener{
         });
     }
 
-    public void rotateBattleship(){
-        view.getRotateShip().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                List<DraggableImage> images = view.getPanel().getImages();
-                DraggableImage oldImage = images.get(0);
-                if(!rotated){
-                    images.set(0, new DraggableImage("/resources/carrierRotated.png", oldImage.getImageUpperLeft()));
-                    rotated = true;
-                }
-                else{
-                    images.set(0, new DraggableImage("/resources/Carrier.png", oldImage.getImageUpperLeft()));
-                    rotated = false;
-                }
-                view.getPanel().repaint();
-            }
-        });
+    public boolean rotateBattleship(int index, String path1, String path2){
+        List<DraggableImage> images = view.getPanel().getImages();
+        DraggableImage oldImage = images.get(index);
+        if(!rotated){
+            images.set(index, new DraggableImage(path1, oldImage.getImageUpperLeft()));
+            rotated = true;
+        }
+        else{
+            images.set(index, new DraggableImage(path2, oldImage.getImageUpperLeft()));
+            rotated = false;
+        }
+        view.getPanel().repaint();
+        return rotated;
     }
+    
+    
+    
 
 //button action for firing
 @Override
