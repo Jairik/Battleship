@@ -49,6 +49,8 @@ public class battleshipView{
     JButton pushToHost;
     JButton pushToConnect;
     JButton finalizeShipPlacement;
+    JButton randomPlacement;
+    JButton rotatePlacement;
 
     //View constructor that builds frame, gridlayout, labels, and buttons
     battleshipView(char[][] testArr) throws IOException{
@@ -189,9 +191,9 @@ public class battleshipView{
     }
 
     /* Update the middle panel with ships */
-    void updateMiddlePanel() {
+    void updateMiddlePanelPlay() {
         /* Resetting the middle panel */
-        middlePanel = new JPanel();
+        middlePanel.removeAll(); //Remove the current elements from the panel
         middlePanel.setBackground(Color.GREEN); //just for testing
         middlePanel.setLayout(new GridLayout(1, 5));
         middlePanel.setPreferredSize(new Dimension(300, 100));
@@ -212,6 +214,10 @@ public class battleshipView{
         destroyer = new JLabel("Destroyer");
         destroyer.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         middlePanel.add(destroyer);
+
+        //Submit the changes to the GUI
+        middlePanel.revalidate();
+        middlePanel.repaint();
     }
 
     //called in fireCannon() method in controller. returns a button
@@ -303,6 +309,32 @@ public class battleshipView{
         y = (y*50);
         int pos[] = {x, y};
         return pos;
+    }
+
+    /* Update the middle panel for placing ships */
+    void updateMiddlePanelPlace() {
+        /* Resetting the middle panel */
+        middlePanel.removeAll(); //Remove the current elements from the panel
+        middlePanel.setBackground(Color.GREEN); //just for testing
+        middlePanel.setLayout(new GridLayout(1, 7));
+        middlePanel.setPreferredSize(new Dimension(300, 100));
+
+        /* Creating buttons to finalize the ship placement, randomizing ships, and rotating the ship */
+        finalizeShipPlacement = new JButton("Finalize Placement");
+        randomPlacement = new JButton("Randomize");
+        
+    }
+
+    JButton getFinalizePlacementButton() {
+        return finalizeShipPlacement;
+    }
+
+    JButton getRandomPlacement() {
+        return randomPlacement;
+    }
+
+    JButton getrotatePlacement() {
+        return rotatePlacement;
     }
 }
 
