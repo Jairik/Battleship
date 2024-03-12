@@ -62,6 +62,17 @@ public class battleshipController implements ActionListener{
                 model.printBoard();
             }
         });
+
+        view.getRotateShip().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<DraggableImage> images = view.getDragImage();
+                if (!images.isEmpty()) {
+                    DraggableImage firstImage = images.get(0);
+                    firstImage.rotateImage(view.getPanel());
+                }
+            }
+        });
         //Getting host and connect Buttons
         JButton cButton = view.getConnectButton();
         JButton hButton = view.getHostButton();
