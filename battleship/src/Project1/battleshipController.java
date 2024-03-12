@@ -3,7 +3,7 @@ package Project1;
 /*----------------------------------------------------------------------------------------------------------
   Authors: JJ McCauley & Will Lamuth 
   Creation Date: 2/23/24
-  Last Update: 3/5/24
+  Last Update: 3/11/24
 -------------------------------------------------------------------------------------------------------------*/
 
 
@@ -13,13 +13,14 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.util.concurrent.atomic.AtomicBoolean; //Avoid uncessarily complicated callbacks
 
 public class battleshipController implements ActionListener{
     
     private battleshipView view;
     private battleshipModel model;
     private battleshipServer server;
-    private boolean buttonClicked = false;
+    //private boolean buttonClicked = false;
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
         //Defining model and view
@@ -76,35 +77,6 @@ public class battleshipController implements ActionListener{
         JButton hButton = view.getHostButton();
         fireCannon();
         /* Adding action listeners for buttons, then defining them */
-        System.out.println("In while loop");
-        //If any of this works, dont ask me why I have absolutely no clue
-        hButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                server = new battleshipServer(true);
-                server.Connect();
-                buttonClicked = true;      
-            }
-        });
-
-        cButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                server = new battleshipServer(false);
-                server.Connect();
-                view.updateMiddlePanel();
-                buttonClicked = true;
-            }
-        });
-        
-        while(!buttonClicked) {
-            try {
-                Thread.sleep(100); //Avoid "busy-looping"
-            }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
 
         System.out.println("Updating Panel: ");
         view.updateMiddlePanel();
@@ -170,5 +142,42 @@ public void actionPerformed(ActionEvent e) {
         
     } 
 
+    void establishConnection() {
+        //Getting host and connect Buttons
+        JButton cButton = view.getConnectButton(); 
+        JButton hButton = view.getHostButton();
+        AtomicBoolean connection = new AtomicBoolean(false);
+        //Adding event listeners for each of the buttons
+        hButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean c = false;
+                server = new battleshipServer(true);
+                c = server.Connect();
+                connection.set(c);
+                buttonClicked = true;      
+            }
+        });
+        cButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean c = false;
+                server = new battleshipServer(false);
+                c = server.Connect();
+                connection.set(c);
+                view.updateMiddlePanel();
+            }
+        });
+        //Loop until a connection is established
+        while(!(connection.get())) {
+            try {
+                Thread.sleep(100); //Avoid "busy-looping"
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 }
 

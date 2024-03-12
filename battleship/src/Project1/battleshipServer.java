@@ -10,8 +10,8 @@ package Project1;
 
 /* GUIDE ON HOW TO USE THIS JAWN:
  * For implementation, this class bascially has 4 important functions that will have to be called in controller:
- * sendToOpponent(Char[][] board) >>> Used to send the char array to the opponent
- * sendToOpponent(int x, int y) >>> Used to pass the int coordinates to the opponent
+ * send(Char[][] board) >>> Used to send the char array to the opponent
+ * send(int x, int y) >>> Used to pass the int coordinates to the opponent
  * receiveOpponentBoard() >>> Used to get board from opponent, returns a char[][]
  * receiveOpponentCoordinates() >>> Used to get coordinates from opponent, returns an int[][]
  * 
@@ -21,7 +21,7 @@ package Project1;
 
 
 
-import javax.swing.SwingUtilities; //Used for invokeLater() Function
+import javax.swing.SwingUtilities; //Used for invokeLater() Function (Potentially)
 
 public class battleshipServer {
     static boolean Host;
@@ -43,18 +43,21 @@ public class battleshipServer {
         return hostIP;
     }
 
-    public void Connect() {
+    /* Runs either the client or host, returning whether a connection has been established or not */
+    public boolean Connect() {
+        boolean successfulConnection = false;
         if(Host) {
-            server.runServer();
+            successfulConnection = server.runServer();
         }
         else {
-            client.runClient();
+            successfulConnection = client.runClient();
         }
+        return successfulConnection;
     }
 
     /* Sends two coordinates to the opponent, of which is converted to a String message and sent. 
      * This message will be converted back to ints upon receiving. */
-    public void sendToOpponent(int x, int y) {
+    public void send(int x, int y) {
         String data = Integer.toString(x);
         data += Integer.toString(y);
         if(Host) {
