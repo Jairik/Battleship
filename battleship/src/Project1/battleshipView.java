@@ -174,10 +174,10 @@ public class battleshipView{
     }
     
     /* Create a pop-up window for the host. Exiting will cancel connection  */
-    void createHostExternalWindow(String IPAddress) {
+    void createHostExternalWindow() {
         cancelHost = new JButton("Cancel");
         /* Implementation of button, adding it to the message dialouge and adding an actionListener */
-        JOptionPane.showMessageDialog(frame, "IP: " + IPAddress + "\nWaiting for connection...", "Awaiting Connection", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frame, "Waiting for connection...", "Awaiting Connection", JOptionPane.INFORMATION_MESSAGE);
     }
 
     void clientErrorMessage() {
