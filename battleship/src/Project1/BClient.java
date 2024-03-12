@@ -29,11 +29,13 @@ public class BClient {
   }
 
   /* Connect to server and process messages from server */
-  public void runClient() {
+  public boolean runClient() {
+    boolean successfulConnection = false;
     try {
       connectToServer(); //Create a socket to make a connection
       getStreams(); //Get the input and output streams
       //processConnection(); //Process the connection
+      successfulConnection = true;
     }
     catch(EOFException e) {
       System.out.println("Client Terminated Connection");
@@ -43,7 +45,8 @@ public class BClient {
     }
     /*finally {
       closeConnection();
-    } */ //We probably should close this at some point, however 
+    } */
+    return successfulConnection;
   }
 
   /* Connects to the server */

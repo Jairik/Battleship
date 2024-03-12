@@ -16,35 +16,31 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class BServer {
-    //Variables go here
     private ObjectOutputStream output; // output stream to client
     private ObjectInputStream input; // input stream from client
     private ServerSocket server; // server socket
     private Socket connection; // connection to client
 
     //Open the server and wait for a valid connection
-    public void runServer() {
+    public boolean runServer() {
+      boolean successfulConnection = false; 
       // set up server to receive connections; process connections
       try {
          server = new ServerSocket( 12345, 100 ); // create ServerSocket
-
-         //while ( true ) {
-            try {
-               waitForConnection(); // wait for a connection
-               getStreams(); // get input & output streams
-               processConnection(); // process connection
-            } // end try
-            catch ( EOFException eofException ) {
-               //Display to JFRame in view that connection has been terminated
-            } // end catch
-            /*finally {
-               closeConnection(); //  close connection
-            } */ //We probably should close this at some point, however 
-         //} 
+         try {
+            waitForConnection(); // wait for a connection
+            getStreams(); // get input & output streams
+            processConnection(); // process connection
+            successfulConnection = true;
+         } // end try
+         catch ( EOFException eofException ) {
+            System.out.println("Error connecting to server.");
+         } 
       } 
       catch ( IOException ioException ) {
          ioException.printStackTrace();
       } 
+      return successfulConnection;
    } 
 
    // send message to client
