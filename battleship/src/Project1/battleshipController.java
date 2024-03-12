@@ -24,6 +24,8 @@ public class battleshipController implements ActionListener{
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
         //Defining model and view
+        boolean winner = false, turn = false, host;
+        int shotPosX = -1, shotPosY = -1;
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
@@ -40,21 +42,11 @@ public class battleshipController implements ActionListener{
                 }
             }
         });
-        //Getting host and connect Buttons
-        JButton cButton = view.getConnectButton();
-        JButton hButton = view.getHostButton();
-        fireCannon();
-        /* Adding action listeners for buttons, then defining them */
+        fireCannon(); //Adding action listeners for the buttons
 
-        System.out.println("Updating Panel: ");
-        //view.updateMiddlePanel();
+        view.updateMiddlePanelPlay();
 
-
-        /* We should have this all in a while loop inside a try catch statement that runs while
-         * a boolean winner is false and while the connection is valid.
-         */
-
-        /*SwingUtilities.invokeLater(() ->*/ fireCannon();
+        
 
         
     }
