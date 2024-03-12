@@ -70,7 +70,7 @@ public class battleshipServer {
 
     /* Overloaded function to send the board to the opponent. The board will be converted into a
      * String message, of which will be converted back upon receiving. */
-    public void sendToOpponent(char[][] board) {
+    public void send(char[][] board) {
         String data = "";
         // Convert char board to String array
         for(int i = 0; i < 10; i++) {
@@ -89,7 +89,7 @@ public class battleshipServer {
 
     /* Will receive the board from the opponent, convert it to a char[][], then
      * return it to the Controller */
-    public char[][] receiveOpponentBoard() {
+    public char[][] receiveBoard() {
         char[][] oppBoard = new char[10][10];
         String data;
         int currentIndex;
@@ -108,7 +108,7 @@ public class battleshipServer {
         return oppBoard;
     }
 
-    public int[] receiveOpponentCoordinates() {
+    public int[] receiveCoordinates() {
         int[] coordinates = new int[2];
         char coordinateChar1, coordinateChar2;
         String data;
@@ -128,4 +128,8 @@ public class battleshipServer {
         return coordinates;
     }
 
+    //Returns whether the user is the host or not
+    public boolean isHost() {
+        return Host;
+    }
 }

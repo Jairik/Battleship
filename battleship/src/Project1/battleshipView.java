@@ -47,6 +47,9 @@ public class battleshipView{
     JLabel destroyer;
     JLabel cruiser;
 
+    /* Button to be applied to connect button */
+    JButton cancelHost;
+
     /* Different buttons that will be applied to the middle panel */
     JButton pushToHost;
     JButton pushToConnect;
@@ -154,13 +157,21 @@ public class battleshipView{
         frame.setVisible(true);
 
     }
-
+    /* Never Used */
     void createConnectExternalWindow() {
         JOptionPane.showMessageDialog(frame, "Attempting to connect...", "Attempting to Connect", JOptionPane.INFORMATION_MESSAGE);
     }
-
+    
+    /* Create a pop-up window for the host. Exiting will cancel connection  */
     void createHostExternalWindow(String IPAddress) {
+        cancelHost = new JButton("Cancel");
+        /* Implementation of button, adding it to the message dialouge and adding an actionListener */
         JOptionPane.showMessageDialog(frame, "IP: " + IPAddress + "\nWaiting for connection...", "Awaiting Connection", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    void clientErrorMessage() {
+        String message = "Error Connecting\nEnsure that Host has started the game";
+        JOptionPane.showMessageDialog(frame, message, "Couldn't Connect!", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public JButton getConnectButton() {
@@ -305,7 +316,7 @@ public class battleshipView{
         /* Resetting the middle panel */
         middlePanel.removeAll(); //Remove the current elements from the panel
         middlePanel.setBackground(Color.GREEN); //just for testing
-        middlePanel.setLayout(new GridLayout(1, 7));
+        middlePanel.setLayout(new GridLayout(7, 1));
         middlePanel.setPreferredSize(new Dimension(300, 100));
 
         /* Creating buttons to finalize the ship placement, randomizing ships, and rotating each ship */
