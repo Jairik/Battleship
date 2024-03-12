@@ -20,7 +20,7 @@ public class MyPanel extends JPanel {
         int initialY = 100;//positions[1]; // Initial y-coordinate
 
         for (String imagePath : imagePaths) {
-            ImageIcon imageIcon;
+            //ImageIcon imageIcon;
             DraggableImage draggableImage = new DraggableImage(imagePath, new Point(initialX, initialY));              
             images.add(draggableImage);
             initialY += 50;// Adjust the gap between images
@@ -65,6 +65,9 @@ public class MyPanel extends JPanel {
             }
             repaint();
         }
+    }
+    public List<DraggableImage> getImages() {
+        return images;
     }
 
 }
