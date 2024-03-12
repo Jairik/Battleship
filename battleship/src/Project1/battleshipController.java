@@ -69,7 +69,7 @@ public class battleshipController implements ActionListener{
         /* Adding action listeners for buttons, then defining them */
 
         System.out.println("Updating Panel: ");
-        view.updateMiddlePanel();
+        //view.updateMiddlePanel();
 
 
         /* We should have this all in a while loop inside a try catch statement that runs while
@@ -144,8 +144,7 @@ public void actionPerformed(ActionEvent e) {
                 boolean c = false;
                 server = new battleshipServer(true);
                 c = server.Connect();
-                connection.set(c);
-                //buttonClicked = true;      
+                connection.set(c);    
             }
         });
         cButton.addActionListener(new ActionListener() {
@@ -155,7 +154,6 @@ public void actionPerformed(ActionEvent e) {
                 server = new battleshipServer(false);
                 c = server.Connect();
                 connection.set(c);
-                view.updateMiddlePanel();
             }
         });
         //Loop until a connection is established
