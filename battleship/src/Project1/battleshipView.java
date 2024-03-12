@@ -61,6 +61,7 @@ public class battleshipView{
     JButton rotateCruiser;
     JButton rotateSubmarine;
     JButton rotateDestroyer;
+    List<String> imagePaths;
 
     //View constructor that builds frame, gridlayout, labels, and buttons
     battleshipView(char[][] testArr) throws IOException {
@@ -68,7 +69,7 @@ public class battleshipView{
         Color seaTurqoise = new Color(108, 218, 231);
 
         //list of images to pass into MyPanel leftPanel
-        List<String> imagePaths = new ArrayList<>();
+        imagePaths = new ArrayList<>();
         imagePaths.add("/resources/Carrier.png");
         imagePaths.add("/resources/Battleship.png");
         imagePaths.add("/resources/Cruiser.png");
@@ -204,6 +205,10 @@ public class battleshipView{
         return leftPanel.getImages();
     }
 
+    public List<String> getPathList(){
+        return imagePaths;
+    }
+
     /* Update the middle panel with ships */
     void updateMiddlePanelPlay() {
         /* Resetting the middle panel */
@@ -306,24 +311,6 @@ public class battleshipView{
      * given ship. This program will then convert the instance in the array to the
      * coordinates in the gui, which can be assigned. 
      */
-    int[] findShipPosition(char[][] board, char c) {
-        int x = -1, y = -1; //Will hold the positions
-        //Find the first instance
-        outerLoop:
-        for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < 10; j++) {
-                if(board[i][j] == c) {
-                    x = i;
-                    y = j; 
-                    break outerLoop;
-                }
-            }
-        }
-        x = 500 - (x*50); //Finding the position on the GUI board
-        y = (y*50);
-        int pos[] = {x, y};
-        return pos;
-    }
 
     /* Update the middle panel for placing ships */
     void updateMiddlePanelPlace() {

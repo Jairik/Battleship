@@ -70,4 +70,16 @@ public class MyPanel extends JPanel {
         return images;
     }
 
+    public void replaceImage(String oldImagePath, String newImagePath) {
+        for (int i = 0; i < images.size(); i++) {
+            DraggableImage image = images.get(i);
+            if (image.getImagePath().equals(oldImagePath)) {
+                // Replace the old image with a new one
+                images.set(i, new DraggableImage(newImagePath, image.getImageUpperLeft()));
+                repaint(); // Repaint the panel to reflect the changes
+                return; // Exit the loop after the replacement
+            }
+        }
+    }
+
 }

@@ -20,7 +20,7 @@ public class BS_Submarine {
         if(rotation){
             while(shipSize > 0){
                 model.setModel(xPos, yPos, shipSymbol);
-                xPos++;
+                yPos++;
                 shipSize--;
             }
         }
