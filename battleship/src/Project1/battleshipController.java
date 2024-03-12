@@ -38,33 +38,23 @@ public class battleshipController implements ActionListener{
                     Point coordinates = imageInfo.getCoordinates();
                     String imagePath = imageInfo.getImagePath();
                     if(imagePath == "/resources/Carrier.png" ){
-                        //BS_Carrier cShip = new BS_Carrier(coordinates);
-                        double x = coordinates.getX();
-                        double y = coordinates.getY();
-                        int xPos = (int)x;
-                        int yPos = (int)y;
-                        int shipSize = 5;
-                        while(shipSize>0){
-                            model.setModel(xPos, yPos, "c");
-                            yPos++;
-                            shipSize--;
-                        }
+                        BS_Carrier cShip = new BS_Carrier(coordinates, model);
                         System.out.println("Carrier");
                     }
                     else if(imagePath == "/resources/Battleship.png"){
-                        //BS_Battleship bShip = new BS_Battleship(coordinates);
+                        BS_Battleship bShip = new BS_Battleship(coordinates, model);
                         System.out.println("battleship");
                     }
                     else if(imagePath == "/resources/Destroyer.png"){
-                        //BS_Destroyer dShip = new BS_Destroyer(coordinates);
+                        BS_Destroyer dShip = new BS_Destroyer(coordinates, model);
                         System.out.println("destroyer");
                     }
                     else if(imagePath == "/resources/Cruiser.png"){
-                        //BS_Cruiser rShip = new BS_Cruiser(coordinates);
+                        BS_Cruiser rShip = new BS_Cruiser(coordinates, model);
                         System.out.println("cruiser");
                     }
                     else if(imagePath == "/resources/SubmarineReSize.png"){
-                        //BS_Submarine sShip = new BS_Submarine(coordinates);
+                        BS_Submarine sShip = new BS_Submarine(coordinates, model);
                         System.out.println("submarine");
                     }
                     System.out.println("Image " + (i + 1) + " - X: " + coordinates.getX() + ", Y: " + coordinates.getY() + ", Path: " + imagePath);
@@ -155,7 +145,7 @@ public void actionPerformed(ActionEvent e) {
                 server = new battleshipServer(true);
                 c = server.Connect();
                 connection.set(c);
-                buttonClicked = true;      
+                //buttonClicked = true;      
             }
         });
         cButton.addActionListener(new ActionListener() {

@@ -9,7 +9,8 @@ public class BS_Battleship {
     private battleshipModel model;
     
 
-    BS_Battleship(Point coordinates){
+    BS_Battleship(Point coordinates, battleshipModel model){
+        this.model = model;
         double x = coordinates.getX();
         double y = coordinates.getY();
         int xPos = (int)x;
@@ -18,9 +19,8 @@ public class BS_Battleship {
         //updates ships x coordinate if no rotation
         if(rotation){
             while(shipSize > 0){
-                System.out.println("placed ship");
-                this.model.setModel(xPos, yPos, shipSymbol);
-                xPos++;
+                model.setModel(xPos, yPos, shipSymbol);
+                yPos++;
                 shipSize--;
             }
         }
