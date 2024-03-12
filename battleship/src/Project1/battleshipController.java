@@ -29,6 +29,18 @@ public class battleshipController implements ActionListener{
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
+        //Test function for Will
+        view.getRotateShip().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<DraggableImage> images = view.getDragImage();
+                if (!images.isEmpty()) {
+                    DraggableImage firstImage = images.get(0);
+                    firstImage.rotateImage(view.getPanel());
+                }
+            }
+        });
+        //End of test function
         establishConnection(); //Establish a connection with the user
         view.updateMiddlePanelPlace(); //Update the middle panel relevent ship placement buttons
         placeShips(); //Call the function to place the ships
