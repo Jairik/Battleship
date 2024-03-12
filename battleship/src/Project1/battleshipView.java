@@ -48,6 +48,7 @@ public class battleshipView{
 
     JButton pushToHost;
     JButton pushToConnect;
+    JButton pushToSet;
     JButton finalizeShipPlacement;
 
     //View constructor that builds frame, gridlayout, labels, and buttons
@@ -126,31 +127,7 @@ public class battleshipView{
         pushToHost = new JButton("Host");
 
         //button returns ship position
-        JButton pushToSet = new JButton("Set ships");
-        pushToSet.addActionListener(e -> {
-            List<ImageInfo> imagesInfo = ((MyPanel) leftPanel).getImagesInfo();
-            for (int i = 0; i < imagesInfo.size(); i++) {
-                ImageInfo imageInfo = imagesInfo.get(i);
-                Point coordinates = imageInfo.getCoordinates();
-                String imagePath = imageInfo.getImagePath();
-                if(imagePath == "/resources/Carrier.png" ){
-                    BS_Carrier cShip = new BS_Carrier(coordinates);
-                }
-                else if(imagePath == "/resources/Battleship.png"){
-                    BS_Battleship bShip = new BS_Battleship(coordinates);
-                }
-                else if(imagePath == "/resources/Destroyer.png"){
-                    BS_Destroyer dShip = new BS_Destroyer(coordinates);
-                }
-                else if(imagePath == "/resources/Cruiser.png"){
-                    BS_Cruiser rShip = new BS_Cruiser(coordinates);
-                }
-                else if(imagePath == "/resources/SubmarineReSize.png"){
-                    BS_Submarine sShip = new BS_Submarine(coordinates);
-                }
-                System.out.println("Image " + (i + 1) + " - X: " + coordinates.getX() + ", Y: " + coordinates.getY() + ", Path: " + imagePath);
-            }
-        }); 
+        pushToSet = new JButton("Set ships"); 
         // temp button to test ship setting
         /* Placing Buttons On the Middle Panel */
         middlePanel.add(pushToConnect);
@@ -186,6 +163,14 @@ public class battleshipView{
 
     public JButton getHostButton() {
         return pushToHost;
+    }
+
+    public JButton getSetButton(){
+        return pushToSet;
+    }
+
+    public List<ImageInfo> getPanelInfo(){
+        return ((MyPanel) leftPanel).getImagesInfo();
     }
 
     /* Update the middle panel with ships */

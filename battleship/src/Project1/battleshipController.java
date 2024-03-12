@@ -8,6 +8,8 @@ package Project1;
 
 
 import java.io.IOException;
+import java.util.List;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -24,7 +26,51 @@ public class battleshipController implements ActionListener{
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
-
+        view.getSetButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("setship clicked");
+                List<ImageInfo> imagesInfo = view.getPanelInfo();
+                model.clearBoard();
+                for (int i = 0; i < imagesInfo.size(); i++) {
+                    ImageInfo imageInfo = imagesInfo.get(i);
+                    Point coordinates = imageInfo.getCoordinates();
+                    String imagePath = imageInfo.getImagePath();
+                    if(imagePath == "/resources/Carrier.png" ){
+                        //BS_Carrier cShip = new BS_Carrier(coordinates);
+                        double x = coordinates.getX();
+                        double y = coordinates.getY();
+                        int xPos = (int)x;
+                        int yPos = (int)y;
+                        int shipSize = 5;
+                        while(shipSize>0){
+                            model.setModel(xPos, yPos, "c");
+                            yPos++;
+                            shipSize--;
+                        }
+                        System.out.println("Carrier");
+                    }
+                    else if(imagePath == "/resources/Battleship.png"){
+                        //BS_Battleship bShip = new BS_Battleship(coordinates);
+                        System.out.println("battleship");
+                    }
+                    else if(imagePath == "/resources/Destroyer.png"){
+                        //BS_Destroyer dShip = new BS_Destroyer(coordinates);
+                        System.out.println("destroyer");
+                    }
+                    else if(imagePath == "/resources/Cruiser.png"){
+                        //BS_Cruiser rShip = new BS_Cruiser(coordinates);
+                        System.out.println("cruiser");
+                    }
+                    else if(imagePath == "/resources/SubmarineReSize.png"){
+                        //BS_Submarine sShip = new BS_Submarine(coordinates);
+                        System.out.println("submarine");
+                    }
+                    System.out.println("Image " + (i + 1) + " - X: " + coordinates.getX() + ", Y: " + coordinates.getY() + ", Path: " + imagePath);
+                }
+                model.printBoard();
+            }
+        });
         //Getting host and connect Buttons
         JButton cButton = view.getConnectButton();
         JButton hButton = view.getHostButton();
@@ -69,6 +115,8 @@ public class battleshipController implements ActionListener{
          */
 
         /*SwingUtilities.invokeLater(() ->*/ fireCannon();
+
+        
     }
 
     //adds a actionlistener to every button
