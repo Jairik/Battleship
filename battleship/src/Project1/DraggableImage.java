@@ -10,6 +10,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 public class DraggableImage {
     ImageIcon image;
@@ -71,6 +72,24 @@ public class DraggableImage {
     public String getImagePath() {
         return imagePath;
     }
+
+    public void rotateImage(JPanel panel) {
+    Image oldImage = image.getImage();
+    
+    // Create a rotated version of the image
+    Image rotatedImage = new ImageIcon(new ImageIcon(oldImage)
+            .getImage()
+            .getScaledInstance(oldImage.getHeight(null), oldImage.getWidth(null), Image.SCALE_SMOOTH))
+            .getImage();
+    
+    // Update the ImageIcon with the rotated image
+    image = new ImageIcon(rotatedImage);
+    
+    // Repaint the panel to reflect the changes
+    panel.repaint();
+}
+
+    
     
 
 }

@@ -127,7 +127,7 @@ public class battleshipView{
         /* Create middle panel, reponsible for holding pictures of different ships */
         middlePanel = new JPanel();
         middlePanel.setBackground(Color.GRAY);
-        middlePanel.setLayout(new GridLayout(3, 1)); //Setting layout for just buttons
+        middlePanel.setLayout(new GridLayout(4, 1)); //Setting layout for just buttons
         middlePanel.setPreferredSize(new Dimension(150, 500));
 
 
@@ -137,11 +137,13 @@ public class battleshipView{
 
         //button returns ship position
         pushToSet = new JButton("Set ships"); 
+        rotateCarrier = new JButton("rotate carrier");
         // temp button to test ship setting
         /* Placing Buttons On the Middle Panel */
         middlePanel.add(pushToConnect);
         middlePanel.add(pushToHost);
         middlePanel.add(pushToSet);
+        middlePanel.add(rotateCarrier);
 
         /* Placing the bottoms in the right location */
         frame.add(rightPanel, BorderLayout.EAST);
@@ -179,6 +181,18 @@ public class battleshipView{
 
     public List<ImageInfo> getPanelInfo(){
         return ((MyPanel) leftPanel).getImagesInfo();
+    }
+
+    public JButton getRotateShip(){
+        return rotateCarrier;
+    }
+
+    public MyPanel getPanel(){
+        return leftPanel;
+    }
+
+    public List<DraggableImage> getDragImage(){
+        return leftPanel.getImages();
     }
 
     /* Update the middle panel with ships */
