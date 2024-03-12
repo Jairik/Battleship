@@ -31,33 +31,42 @@ public class battleshipController implements ActionListener{
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
-
+        //test button to rotate the carrier image, still scuffed
         setShipsManually();
         rotateBattleship();
-        //test button to rotate the carrier image, still scuffed
+        /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
+        establishConnection();
+        view.updateMiddlePanelPlace(); //Update the middle panel for placement
+        //placeShips(); <--!!All relevent functions for placing ships should go in here. If that isn't possible,
+        //I can try to multithread and run whatever 2/3 functions at the same time
+        server.send(model.getUserBoard());
+        char oppBoard[][] = server.receiveBoard();
+        model.setOppBoard(oppBoard);
+        view.updateMiddlePanelPlay(); //Update the middle panel with ship status
         
-        
-        //Getting host and connect Buttons
-        JButton cButton = view.getConnectButton();
-        JButton hButton = view.getHostButton();
-        fireCannon();
-        /* Adding action listeners for buttons, then defining them */
-
-        System.out.println("Updating Panel: ");
-        //view.updateMiddlePanel();
-
-
-        /* We should have this all in a while loop inside a try catch statement that runs while
-         * a boolean winner is false and while the connection is valid.
-         */
-
-        /*SwingUtilities.invokeLater(() ->*/ fireCannon();
-
+        //Remove action listeners for the d-n-d ships
+        readyCannons(); //add actionlisteners to the buttons
+        host = server.isHost();
+        turn = host; //Set the first turn to always be the host
+        while(winner) {
+            while(turn) {
+                //Wait for the event of a shot cannon, then turn off actionEventListener (maybe?)
+                //Get X & Y Positions
+                //Validate X & Y Positions
+                //Probably copying alot from the actionPerformed for fireCannon (or just using it w/ slight modification)
+                server.send(shotPosX, shotPosY); //Send the current shot
+                //CheckForWinner(userBoard)
+                turn = false;
+            }
+            server.receiveCoordinates(); //Wait until the opposing user sends shot coordinates
+            //!NECESSARY CODE!if (/*model.isWin(oppBoard)*/) //We're going to have to think out this logic
+            turn = true;
+        }
         
     }
 
     //adds a actionlistener to every button
-    public void fireCannon(){
+    public void readyCannons(){
         System.out.println("Inside Fire Cannon");
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
@@ -177,6 +186,7 @@ public void actionPerformed(ActionEvent e) {
                 boolean c = false;
                 server = new battleshipServer(true);
                 c = server.Connect();
+                //^^ Multithread with view.createHostExternalWindow()
                 connection.set(c);    
             }
         });
@@ -186,6 +196,7 @@ public void actionPerformed(ActionEvent e) {
                 boolean c = false;
                 server = new battleshipServer(false);
                 c = server.Connect();
+                //view.clientErrorMessage() //May also have to multithread this
                 connection.set(c);
             }
         });
