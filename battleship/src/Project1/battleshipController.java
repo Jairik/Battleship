@@ -27,6 +27,8 @@ public class battleshipController implements ActionListener{
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
+        establishConnection(); //Establish a connection with the user
+        view.updateMiddlePanelPlace(); //Update the middle panel relevent ship placement buttons
         view.getSetButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +64,9 @@ public class battleshipController implements ActionListener{
                 model.printBoard();
             }
         });
+        placeShips(); //Call the function to place the ships
+        view.updateMiddlePanelPlay(); //Update the middle panel with ship status
+        
         //Getting host and connect Buttons
         JButton cButton = view.getConnectButton();
         JButton hButton = view.getHostButton();
@@ -166,6 +171,17 @@ public void actionPerformed(ActionEvent e) {
             }
         }
 
+    }
+
+    /* Handle events of ships dragging and add event handlers for each of the buttons */
+    void placeShips() {
+        JButton finalizeShipPlacement = view.getFinalizePlacement();
+        JButton randomPlacement = view.getRandomPlacement();
+        JButton rotateCarrier = view.getRotateCarrier();
+        JButton rotateBattleship = view.getRotateBattleship();
+        JButton rotateCruiser = view.getRotateCruiser();
+        JButton rotateSubmarine = view.getRotateSubmarine();
+        JButton rotateDestroyer = view.getRotateDestroyer();
     }
 }
 
