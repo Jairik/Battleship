@@ -15,13 +15,13 @@ public class BS_Carrier{
         double y = coordinates.getY();
         int xPos = (int)x;
         int yPos = (int)y;
+        System.out.println("Carrier - x: " + xPos + " y: " + yPos);
         
         //updates ships x coordinate if no rotation
         if(rotation){
             while(shipSize > 0){
-                System.out.println("ship placed");
                 model.setModel(xPos, yPos, shipSymbol);
-                yPos++;
+                xPos++;
                 shipSize--;
             }
         }

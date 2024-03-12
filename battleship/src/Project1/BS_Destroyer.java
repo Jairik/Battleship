@@ -14,12 +14,13 @@ public class BS_Destroyer {
         double y = coordinates.getY();
         int xPos = (int)x;
         int yPos = (int)y;
+        System.out.println("Destroyer - x: " + xPos + " y: " + yPos);
 
         //updates ships x coordinate if no rotation
         if(rotation){
             while(shipSize > 0){
                 model.setModel(xPos, yPos, shipSymbol);
-                yPos++;
+                xPos++;
                 shipSize--;
             }
         }
