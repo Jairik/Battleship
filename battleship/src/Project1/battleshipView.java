@@ -51,10 +51,16 @@ public class battleshipView{
     JButton pushToSet;
     JButton finalizeShipPlacement;
     JButton randomPlacement;
-    JButton rotatePlacement;
+    JButton rotateCarrier;
+    JButton rotateBattleship;
+    JButton rotateCruiser;
+    JButton rotateSubmarine;
+    JButton rotateDestroyer;
 
     //View constructor that builds frame, gridlayout, labels, and buttons
     battleshipView(char[][] testArr) throws IOException{
+
+        Color seaTurqoise = new Color(108, 218, 231);
 
         //list of images to pass into MyPanel leftPanel
         List<String> imagePaths = new ArrayList<>();
@@ -99,7 +105,7 @@ public class battleshipView{
         
         /* Create right panel - used for shooting at enemy ships */
         rightPanel = new JPanel();
-        rightPanel.setBackground(Color.BLUE);
+        rightPanel.setBackground(seaTurqoise);
         rightPanel.setLayout(new GridLayout(10, 10));
 
         //adds grid of buttons to second panel
@@ -109,6 +115,7 @@ public class battleshipView{
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
                 JButton btn = new JButton();
+                btn.setBackground(seaTurqoise);
                 button2[i][j] = btn;
                 rightPanel.add(btn);
             }
@@ -151,7 +158,6 @@ public class battleshipView{
     }
 
     void createConnectExternalWindow() {
-        String ipAddress;
         JOptionPane.showMessageDialog(frame, "Attempting to connect...", "Attempting to Connect", JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -304,12 +310,27 @@ public class battleshipView{
         middlePanel.setLayout(new GridLayout(1, 7));
         middlePanel.setPreferredSize(new Dimension(300, 100));
 
-        /* Creating buttons to finalize the ship placement, randomizing ships, and rotating the ship */
+        /* Creating buttons to finalize the ship placement, randomizing ships, and rotating each ship */
         finalizeShipPlacement = new JButton("Finalize Placement");
+        finalizeShipPlacement.setBackground(new Color(255, 82, 82)); //Set the button color to a light-ish red
         randomPlacement = new JButton("Randomize");
-        
-    }
+        rotateCarrier = new JButton("Rotate Carrier");
+        rotateBattleship = new JButton("Rotate Battleship");
+        rotateCruiser = new JButton("Rotate Cruiser");
+        rotateSubmarine = new JButton("Rotate Submarine");
+        rotateDestroyer = new JButton("Rotate Destroyer");
 
+        /* Add the buttons to the panel */
+        middlePanel.add(finalizeShipPlacement);
+        middlePanel.add(randomPlacement);
+        middlePanel.add(rotateCarrier);
+        middlePanel.add(rotateBattleship);
+        middlePanel.add(rotateCruiser);
+        middlePanel.add(rotateSubmarine);
+        middlePanel.add(rotateDestroyer);
+    }   
+
+    /* Getter functions for the controller that returns the button */
     JButton getFinalizePlacementButton() {
         return finalizeShipPlacement;
     }
@@ -318,8 +339,24 @@ public class battleshipView{
         return randomPlacement;
     }
 
-    JButton getrotatePlacement() {
-        return rotatePlacement;
+    JButton getRotateCarrier() {
+        return rotateCarrier;
+    }
+
+    JButton getRotateBattleship() {
+        return rotateBattleship;
+    }
+
+    JButton getRotateCruiser() {
+        return rotateBattleship;
+    }
+
+    JButton getRotateSubmarine() {
+        return rotateSubmarine;
+    }
+
+    JButton getRotateDestroyer() {
+        return rotateDestroyer;
     }
 }
 
