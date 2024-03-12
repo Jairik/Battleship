@@ -89,7 +89,7 @@ public class battleshipController implements ActionListener{
         //Getting host and connect Buttons
         JButton cButton = view.getConnectButton();
         JButton hButton = view.getHostButton();
-        fireCannon();
+        readyCannons();
         /* Adding action listeners for buttons, then defining them */
 
         System.out.println("Updating Panel: ");
@@ -100,9 +100,8 @@ public class battleshipController implements ActionListener{
          * a boolean winner is false and while the connection is valid.
          */
 
-        /*SwingUtilities.invokeLater(() ->*/ fireCannon();
+        /*SwingUtilities.invokeLater(() ->*/ readyCannons();
 
-        rotateBattleship();
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
         establishConnection();
         view.updateMiddlePanelPlace(); //Update the middle panel for placement
