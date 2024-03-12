@@ -4,7 +4,7 @@ import java.awt.Point;
 
 public class BS_Battleship {
     private int shipSize = 4;
-    private boolean rotation = false;
+    private boolean rotation = true;
     private String shipSymbol = "b";
     private battleshipModel model;
     
@@ -16,9 +16,10 @@ public class BS_Battleship {
         int yPos = (int)y;
 
         //updates ships x coordinate if no rotation
-        if(rotation = false){
+        if(rotation){
             while(shipSize > 0){
-                model.setModel(xPos, yPos, shipSymbol);
+                System.out.println("placed ship");
+                this.model.setModel(xPos, yPos, shipSymbol);
                 xPos++;
                 shipSize--;
             }

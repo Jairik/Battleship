@@ -13,7 +13,7 @@ public class BS_Carrier {
         double y = coordinates.getY();
         int xPos = (int)x;
         int yPos = (int)y;
-
+        
         //updates ships x coordinate if no rotation
         if(rotation = false){
             while(shipSize > 0){
@@ -22,6 +22,7 @@ public class BS_Carrier {
                 shipSize--;
             }
         }
+       
 
     }
 }
