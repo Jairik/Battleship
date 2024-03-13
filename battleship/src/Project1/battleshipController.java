@@ -43,7 +43,6 @@ public class battleshipController implements ActionListener{
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
         //test button to rotate the carrier image, still scuffed
-        setShipsManually();
         rotateShipButtons();
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
         establishConnection();
@@ -157,6 +156,7 @@ public class battleshipController implements ActionListener{
                     System.out.println("Image " + (i + 1) + " - X: " + coordinates.getX() + ", Y: " + coordinates.getY() + ", Path: " + imagePath);
                 }
                 model.printBoard();
+                view.getPanel().setImagesMovable(false);
             }
         });
     }
@@ -177,7 +177,7 @@ public class battleshipController implements ActionListener{
     }
 
     public void rotateShipButtons(){
-        view.getRotateCarrierShip().addActionListener(new ActionListener() {
+        view.getRotateCarrier().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateCarrier = rotateBattleship(0, "/resources/carrierRotated.png", "/resources/Carrier.png");
@@ -185,23 +185,23 @@ public class battleshipController implements ActionListener{
             }
         });
         //battleship button
-        view.getRotateBattleShip().addActionListener(new ActionListener() {
+        view.getRotateBattleship().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateBattleship = rotateBattleship(1, "/resources/battleshipRotated.png", "/resources/Battleship.png");
-                
+                System.out.println("rotate battleship clicked");
             }
         });
         //cruiser button
-        view.getRotateCruiserShip().addActionListener(new ActionListener() {
+        view.getRotateCruiser().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateCruiser = rotateBattleship(2, "/resources/cruiserRotated.png", "/resources/Cruiser.png");
-                
+                System.out.println("rotate cruiser clicked");
             }
         });
         //submarine button
-        view.getRotateSubShip().addActionListener(new ActionListener() {
+        view.getRotateSubmarine().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateSubmarine = rotateBattleship(3, "/resources/submarineRotated.png", "/resources/SubmarineReSize.png");
@@ -209,7 +209,7 @@ public class battleshipController implements ActionListener{
             }
         });
         //destroyer button
-        view.getRotateDestroyerShip().addActionListener(new ActionListener() {
+        view.getRotateDestroyer().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateDestroyer = rotateBattleship(4, "/resources/destroyerRotated.png", "/resources/Destroyer.png");

@@ -6,7 +6,6 @@ public class BS_Battleship {
     private int shipSize = 4;
     private String shipSymbol = "b";
     private battleshipModel model;
-    
 
     BS_Battleship(Point coordinates, battleshipModel model, boolean rotation){
         this.model = model;
@@ -17,13 +16,6 @@ public class BS_Battleship {
         System.out.println("battleship - x: " + xPos + " y: " + yPos);
 
         //updates ships x coordinate if no rotation
-        if(rotation){
-            System.out.println("battleship rotated");
-        }
-        else{
-            System.out.println("battleship not rotated");
-        }
-        
         if(!rotation){
             while(shipSize > 0){
                 model.setModel(xPos, yPos, shipSymbol);
@@ -39,9 +31,5 @@ public class BS_Battleship {
             }
         }
     }
-    /* 
-    public void getRotateStatus(boolean rotate){
-        rotation = rotate;
-    }
-    */
+    
 }

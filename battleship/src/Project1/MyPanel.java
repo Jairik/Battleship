@@ -81,5 +81,10 @@ public class MyPanel extends JPanel {
             }
         }
     }
+    public void setImagesMovable(boolean moveable) {
+        for (DraggableImage image : images) {
+            image.setMovable(moveable);
+        }
+    }
 
 }

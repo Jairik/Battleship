@@ -200,22 +200,6 @@ public class battleshipView{
     public List<ImageInfo> getPanelInfo(){
         return ((MyPanel) leftPanel).getImagesInfo();
     }
-    //button for rotate carrier
-    public JButton getRotateCarrierShip(){
-        return rotateCarrier;
-    }
-    public JButton getRotateBattleShip(){
-        return rotateBattleship;
-    }
-    public JButton getRotateCruiserShip(){
-        return rotateCruiser;
-    }
-    public JButton getRotateSubShip(){
-        return rotateSubmarine;
-    }
-    public JButton getRotateDestroyerShip(){
-        return rotateDestroyer;
-    }
 
     public MyPanel getPanel(){
         return leftPanel;
@@ -305,24 +289,6 @@ public class battleshipView{
         JOptionPane.showMessageDialog(frame, message, "Opponent Disconnected!", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void updateLabel(String message){
-        if(message == "Carrier"){
-            carrier.setForeground(Color.RED);
-        }
-        if(message == "Battleship"){
-            battleShip.setForeground(Color.RED);
-        }
-        if(message == "Cruiser"){
-            cruiser.setForeground(Color.RED);
-        }
-        if(message == "Submarine"){
-            submarine.setForeground(Color.RED);
-        }
-        if(message == "Destroyer"){
-            destroyer.setForeground(Color.RED);
-        }
-    }
-
     public void playSoundEffect(String hitOrMiss) {
         if(hitOrMiss == "O") {
             soundEffects.playMissSound();
@@ -331,11 +297,6 @@ public class battleshipView{
             soundEffects.playHitSound();
         }
     }
-
-    /* Search top-to-bottom through the array to find the first instance of the
-     * given ship. This program will then convert the instance in the array to the
-     * coordinates in the gui, which can be assigned. 
-     */
 
     /* Update the middle panel for placing ships */
     void updateMiddlePanelPlace() {
@@ -387,7 +348,7 @@ public class battleshipView{
     }
 
     JButton getRotateCruiser() {
-        return rotateBattleship;
+        return rotateCruiser;
     }
 
     JButton getRotateSubmarine() {
