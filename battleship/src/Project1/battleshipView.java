@@ -224,6 +224,24 @@ public class battleshipView{
         return imagePaths;
     }
 
+    public void updateLabel(String shipName) {
+        if(shipName == "Carrier") {
+            carrier.setForeground(Color.RED);
+        }
+        if(shipName == "Battleship") {
+            battleShip.setForeground(Color.RED);
+        }
+        if(shipName == "Cruiser") {
+            cruiser.setForeground(Color.RED);
+        }
+        if(shipName == "Submarine") {
+            submarine.setForeground(Color.RED);
+        }
+        if(shipName == "Destroyer") {
+            destroyer.setForeground(Color.RED);
+        }
+    }
+
     //function handles randomize button
     public void updateLeftPanelRandom(char[][] userBoard){
         //leftPanel.removeAll(); //replace after view controler left panel is changed
