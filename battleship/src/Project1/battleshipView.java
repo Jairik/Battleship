@@ -90,7 +90,7 @@ public class battleshipView{
         leftPanel.setBackground(seaTurqoise);
         leftPanel.setLayout(new GridLayout(10, 10));
         
-        //Add grid labels for bottom of the screen
+        //Add grid labels for left of the screen
         label = new JLabel[10][10];
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
@@ -398,9 +398,75 @@ public class battleshipView{
         return rotateDestroyer;
     }
 
+    public boolean getPlayAgain() {
+        PlayAgainWindow p = new PlayAgainWindow();
+        return p.getInput();
+    }
+
     /* Called by controller to delete the frame, used to end the program */
     void forceCloseProg() {
-        frame.dispose();
+        frame.dispose(); //close the current JFrame
+    }
+}
+
+/* Create an external window, asking the user if they would like to play again */
+class PlayAgainWindow {
+    private JFrame pAgainWindow;
+    private JButton yesButton;
+    private JButton noButton;
+    //Initializing a variable signifying the user's choice, with -1 stating that user has not made one yet
+    int pAgain = -1; 
+
+    public PlayAgainWindow() {
+        pAgainWindow = new JFrame("Play Again?");
+
+        pAgainWindow.setSize(500, 200);
+        pAgainWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Create components
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel("Would you like to play again?");
+        JButton yesButton = new JButton("Yes!");
+        JButton noButton = new JButton("No :(");
+
+        // Add components to panel
+        panel.add(label);
+        panel.add(yesButton);
+        panel.add(noButton);
+
+        // Add panel to window
+        pAgainWindow.add(panel);
+
+        // Add action listeners to buttons
+        yesButton.addActionListener(e -> {
+            pAgain = 1;
+            
+        });
+
+        noButton.addActionListener(e -> {
+            pAgain = 0;
+        });
+
+        pAgainWindow.setLocationRelativeTo(null); // Center the window
+    }
+
+    boolean getInput() {
+        boolean choice = true;
+        while(true) { //needed to avoid error
+            try {
+                Thread.sleep(500);
+                while(pAgain != -1) {
+                    if(pAgain == 0) {
+                        choice = false;
+                    }
+                    pAgainWindow.dispose();
+                    return choice;
+                }
+            }
+            catch (InterruptedException e) {
+                return false;
+            }
+        }
     }
 }
 

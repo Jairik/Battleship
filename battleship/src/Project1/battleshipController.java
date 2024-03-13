@@ -33,50 +33,44 @@ public class battleshipController implements ActionListener{
     boolean rotateCruiser;
     boolean rotateSubmarine;
     boolean rotateDestroyer;
+    int shotPosX = -1, shotPosY = -1;
     //private boolean buttonClicked = false;
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
         //Defining model and view
-        boolean winner = false, turn = false, pAgain = true, host;
-        int shotPosX = -1, shotPosY = -1;
+        boolean winner = false, turn = false, pAgain = true, host, opponentPAgain;
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
         //test button to rotate the carrier image, still scuffed
         setShipsManually();
         rotateShipButtons();
-        //carrier button
-        
-        //test button to rotate the carrier image, still scuffed
-
-        /* We should have this all in a while loop inside a try catch statement that runs while
-         * a boolean winner is false and while the connection is valid.
-         */
-
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
         establishConnection();
         while(pAgain) {
-        
             view.updateMiddlePanelPlace(); //Update the middle panel for placement
-            //placeShips(); <--!!All relevent functions for placing ships should go in here. If that isn't possible,
-            //I can try to multithread and run whatever 2/3 functions at the same time
             server.send(model.getUserBoard());
             char oppBoard[][] = server.receiveBoard();
             model.setOppBoard(oppBoard);
             view.updateMiddlePanelPlay(); //Update the middle panel with ship status
-            
-            //Remove action listeners for the d-n-d ships
-            readyCannons(); //add actionlisteners to the buttons
+            //!Remove action listeners for the d-n-d ships!
             host = server.isHost();
             turn = host; //Set the first turn to always be the host
             gameLoop:
             while(winner) {
-                /* Shoot shot and  */
+                /* Shoot shot, then wait to receive input from the other player */
                 while(turn) {
-                    //Wait for the event of a shot cannon, then turn off actionEventListener (maybe?)
-                    //Get X & Y Positions
-                    //Validate X & Y Positions
-                    //Probably copying alot from the actionPerformed for fireCannon (or just using it w/ slight modification)
+                    shotPosX = -1; //Adding signal value that shot has not yet been taken 
+                    shotPosY = -1;
+                    readyCannons(); //add actionlisteners to the buttons
+                    //Looping until shotPosX is set to valid number (set in action listeners for buttons)
+                    while(shotPosX == -1) {
+                        try {
+                            Thread.sleep(100); //Avoid unnecessary work, pause for .1 second
+                        } catch (InterruptedException e) {
+                            System.out.println("Thread error????????");
+                        }
+                    }
                     server.send(shotPosX, shotPosY); //Send the current shot
                     if(winner) {
                         break gameLoop;
@@ -84,18 +78,24 @@ public class battleshipController implements ActionListener{
                     turn = false;
                 }
                 if(!server.checkConnection()) {
-                    exitGame();
+                    exitGame(); //Display a window saying that the game is disconected, then exiting the program
                 }
                 server.receiveCoordinates(); //Wait until the opposing user sends shot coordinates
                 //model.receiveShot()
                 //view.recieveShot()
                 //checkForWinner somehow?
                 if(winner) {
-
+                    break gameLoop;
                 }
                 turn = true;
             }
-        }    
+            pAgain = view.getPlayAgain();
+            server.send(pAgain);
+            opponentPAgain = server.receivePAgain();
+            if(!pAgain || !opponentPAgain) {
+                pAgain = false;
+            }
+        }
     }
 
     //adds a actionlistener to every button
@@ -104,6 +104,15 @@ public class battleshipController implements ActionListener{
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
                 view.getButton(i, j).addActionListener(this);
+            }
+        }
+    }
+
+    // Method to remove all action listeners from the buttons
+    public void disarmCannons() {
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                view.getButton(i, j).removeActionListener(this);
             }
         }
     }
@@ -212,43 +221,45 @@ public class battleshipController implements ActionListener{
     
     
 
-//button action for firing
-@Override
-public void actionPerformed(ActionEvent e) {
-    String HitOrMiss = ""; //Initializing
-    JButton clickedButton = (JButton)e.getSource();
-    //while(true) {
-        //finds clicked button position
-        int[] position = view.buttonPosition(clickedButton);
-        System.out.println(position[0] + ", " + position[1]);
-        //if statement calls checkforvalidshot() from model - if true hit = X else miss = O
-        if(model.checkForValidShot(position[0], position[1])){
-            HitOrMiss = model.determineHit(position[0], position[1]); //updates model //checks for sinkship
-            view.playSoundEffect(HitOrMiss);
-            if(HitOrMiss != "X" && HitOrMiss != "O"){
-                view.updateView(position[0], position[1], "X");
-                //view.showGameStatus(HitOrMiss);
-                view.updateLabel(HitOrMiss);
-                if(model.isWin()) {
-                    boolean winner = true;
+    /* Action Listeners for Buttons - gets the shot, determine if it is valid, then return the position*/
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String HitOrMiss = ""; //Initializing
+        JButton clickedButton = (JButton)e.getSource();
+        //while(true) {
+            //finds clicked button position
+            int[] position = view.buttonPosition(clickedButton);
+            System.out.println(position[0] + ", " + position[1]);
+            //if statement calls checkforvalidshot() from model - if true hit = X else miss = O
+            if(model.checkForValidShot(position[0], position[1])){
+                HitOrMiss = model.determineHit(position[0], position[1]); //updates model //checks for sinkship
+                view.playSoundEffect(HitOrMiss);
+                if(HitOrMiss != "X" && HitOrMiss != "O"){
+                    view.updateView(position[0], position[1], "X");
+                    //view.showGameStatus(HitOrMiss);
+                    view.updateLabel(HitOrMiss);
+                    if(model.isWin()) {
+                        boolean winner = true;
+                    }
                 }
+                else {
+                    view.updateView(position[0], position[1], HitOrMiss);
+                }
+                //check if all ships sunk
+                if(model.isWin()) {
+                    System.out.println("Game over");
+                    //view.showGameStatus("All ships sunk"); //May be needed?
+                }
+                //return
             }
             else {
-                view.updateView(position[0], position[1], HitOrMiss);
+                view.playSoundEffect("O");
+                view.updateView(position[0], position[1], "O");
+                shotPosX = position[0];
+                shotPosY = position[1];
             }
-            //check if all ships sunk
-            if(model.isWin()) {
-                System.out.println("Game over");
-                view.showGameStatus("All ships sunk");
-            }
-            //return
-        }
-        else {
-            view.playSoundEffect("O");
-            view.updateView(position[0], position[1], "O");
-        }
-        
-} 
+            
+    } 
 
     void establishConnection() {
         //Getting host and connect Buttons
@@ -272,7 +283,9 @@ public void actionPerformed(ActionEvent e) {
                 boolean c = false;
                 server = new battleshipServer(false);
                 c = server.Connect();
-                //view.clientErrorMessage() //May also have to multithread this
+                if(!c) {
+                    view.clientErrorMessage();
+                }
                 connection.set(c);
             }
         });
@@ -286,17 +299,6 @@ public void actionPerformed(ActionEvent e) {
             }
         }
 
-    }
-
-    /* Handle events of ships dragging and add event handlers for each of the buttons */
-    void placeShips() {
-        JButton finalizeShipPlacement = view.getFinalizePlacement();
-        JButton randomPlacement = view.getRandomPlacement();
-        JButton rotateCarrier = view.getRotateCarrier();
-        JButton rotateBattleship = view.getRotateBattleship();
-        JButton rotateCruiser = view.getRotateCruiser();
-        JButton rotateSubmarine = view.getRotateSubmarine();
-        JButton rotateDestroyer = view.getRotateDestroyer();
     }
 
     /* Close the JFrame and exit the game - in the event ofg  */

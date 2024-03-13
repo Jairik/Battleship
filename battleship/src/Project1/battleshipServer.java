@@ -87,6 +87,22 @@ public class battleshipServer {
         }
     }
 
+    public void send(boolean pAgain) {
+        String message;
+        if(pAgain) {
+            message = "1";
+        }
+        else {
+            message = "0";
+        }
+        if(Host) {
+            server.sendMessage(message);
+        }
+        else {
+            client.sendMessage(message);
+        }
+    }
+
     /* Will receive the board from the opponent, convert it to a char[][], then
      * return it to the Controller */
     public char[][] receiveBoard() {
@@ -126,6 +142,22 @@ public class battleshipServer {
         coordinates[1] = ((int)(coordinateChar1) - 48);
 
         return coordinates;
+    }
+
+    public boolean receivePAgain() {
+        String data;
+        if(Host) {
+            data = server.getMessage();
+        }
+        else {
+            data = client.getMessage();
+        }
+        if(data == "1") {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     //Returns whether the user is the host or not
