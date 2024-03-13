@@ -171,6 +171,7 @@ public class battleshipView{
         frame.setVisible(true);
 
     }
+
     /* Never Used */
     void createConnectExternalWindow() {
         JOptionPane.showMessageDialog(frame, "Attempting to connect...", "Attempting to Connect", JOptionPane.INFORMATION_MESSAGE);
@@ -244,6 +245,24 @@ public class battleshipView{
         //Submit the changes to the GUI
         middlePanel.revalidate();
         middlePanel.repaint();
+    }
+
+    public void updateLabel(String shipName) {
+        if(shipName == "Carrier") {
+            carrier.setForeground(Color.RED);
+        }
+        if(shipName == "Battleship") {
+            battleShip.setForeground(Color.RED);
+        }
+        if(shipName == "Cruiser") {
+            cruiser.setForeground(Color.RED);
+        }
+        if(shipName == "Submarine") {
+            submarine.setForeground(Color.RED);
+        }
+        if(shipName == "Destroyer") {
+            destroyer.setForeground(Color.RED);
+        }
     }
 
     //called in fireCannon() method in controller. returns a button

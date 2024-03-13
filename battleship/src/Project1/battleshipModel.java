@@ -52,10 +52,7 @@ public class battleshipModel {
     // will - called in controller to check valid shot
     /*Validates a user's shot, returning true if the shot will fall on an empty place on the array*/
     public boolean checkForValidShot(int x, int y) {
-        if(board[x][y] != ' ') {
-            return true;
-        }
-        return false;
+         return (board[x][y] == ' ');
     }
 
     //Logic to randomly place the ships on the board

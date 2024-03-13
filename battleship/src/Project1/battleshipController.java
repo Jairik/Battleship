@@ -247,23 +247,23 @@ public class battleshipController implements ActionListener{
             if(HitOrMiss != "X" && HitOrMiss != "O"){
                 view.updateView(position[0], position[1], "X");
                 //view.showGameStatus(HitOrMiss);
-                //view.updateLabel(HitOrMiss);
+                view.updateLabel(HitOrMiss);
             }
             else { //THIS is probably the issue
                 view.updateView(position[0], position[1], HitOrMiss);
             }
             //check if all ships sunk
-            if(model.isWinOpponent()) {
+            /*if(model.isWinOpponent()) {
                 System.out.println("Game over");
                 //view.showGameStatus("All ships sunk"); //May be needed?
-            }
-            //return
+            } */ //Uneeded, as we now check for win in the contructor
+            shotPosX = position[0];
+            shotPosY = position[1];
         }
         else {
             view.playSoundEffect("O");
             view.updateView(position[0], position[1], "O");
-            shotPosX = position[0];
-            shotPosY = position[1];
+            
         }
             
     } 
