@@ -16,6 +16,7 @@ public class DraggableImage {
     ImageIcon image;
     String imagePath;
     Point imageUpperLeft, prevPoint;
+    private boolean moveable = true;
 
     DraggableImage(String iPath, Point initialPosition) {
         imagePath = iPath;  // Store the image path
@@ -29,14 +30,18 @@ public class DraggableImage {
     }
 
     public void mousePressed(Point point) {
-        prevPoint = point;
+        if(moveable){
+            prevPoint = point;
+        }
     }
 
     public void mouseDragged(Point currPoint) {
-        int dx = (int) (currPoint.getX() - prevPoint.getX());
-        int dy = (int) (currPoint.getY() - prevPoint.getY());
-        imageUpperLeft.translate(dx, dy);
-        prevPoint = currPoint;
+        if(moveable){
+            int dx = (int) (currPoint.getX() - prevPoint.getX());
+            int dy = (int) (currPoint.getY() - prevPoint.getY());
+            imageUpperLeft.translate(dx, dy);
+            prevPoint = currPoint;
+        }
     }
 
     public boolean contains(Point point) {
@@ -75,6 +80,8 @@ public class DraggableImage {
     public Point getImageUpperLeft() {
         return imageUpperLeft;
     }
-    
+    public void setMovable(boolean moveable) {
+        this.moveable = moveable;
+    }
 
 }

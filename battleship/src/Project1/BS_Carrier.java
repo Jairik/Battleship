@@ -1,11 +1,9 @@
 package Project1;
 
 import java.awt.Point;
-import java.io.IOException;
 
 public class BS_Carrier{
     private int shipSize = 5;
-    
     private String shipSymbol = "c";
     private battleshipModel model;
     
@@ -34,9 +32,4 @@ public class BS_Carrier{
         }
     }
 
-    /* 
-    public void getRotateStatus(boolean rotate){
-        rotation = rotate;
-    }
-    */
 }

@@ -43,8 +43,8 @@ public class battleshipController implements ActionListener{
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
         //test button to rotate the carrier image, still scuffed
-        setShipsManually();
         rotateShipButtons();
+        setShipsManually();
         //carrier button
         readyCannons();
         //test button to rotate the carrier image, still scuffed
@@ -148,6 +148,7 @@ public class battleshipController implements ActionListener{
                     System.out.println("Image " + (i + 1) + " - X: " + coordinates.getX() + ", Y: " + coordinates.getY() + ", Path: " + imagePath);
                 }
                 model.printBoard();
+                view.getPanel().setImagesMovable(false);
             }
         });
     }
@@ -180,7 +181,7 @@ public class battleshipController implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateBattleship = rotateBattleship(1, "/resources/battleshipRotated.png", "/resources/Battleship.png");
-                
+                System.out.println("rotate battleship clicked");
             }
         });
         //cruiser button
@@ -188,7 +189,7 @@ public class battleshipController implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateCruiser = rotateBattleship(2, "/resources/cruiserRotated.png", "/resources/Cruiser.png");
-                
+                System.out.println("rotate cruiser clicked");
             }
         });
         //submarine button

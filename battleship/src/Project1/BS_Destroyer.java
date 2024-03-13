@@ -4,7 +4,6 @@ import java.awt.Point;
 
 public class BS_Destroyer {
     private int shipSize = 2;
-   
     private String shipSymbol = "d";
     private battleshipModel model;
 
@@ -32,9 +31,5 @@ public class BS_Destroyer {
             }
         }
     }
-    /* 
-    public void getRotateStatus(boolean rotate){
-        rotation = rotate;
-    }
-    */
+
 }

@@ -348,7 +348,7 @@ public class battleshipView{
     }
 
     JButton getRotateCruiser() {
-        return rotateBattleship;
+        return rotateCruiser;
     }
 
     JButton getRotateSubmarine() {
