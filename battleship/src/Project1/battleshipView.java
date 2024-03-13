@@ -30,7 +30,7 @@ import java.util.List;
 
 
 
-public class battleshipView{
+public class battleshipView extends JFrame{
     
     private JFrame frame;
     private JPanel rightPanel; //Used for the user to shoot
@@ -64,6 +64,8 @@ public class battleshipView{
     JButton rotateDestroyer;
     JButton manuallyPlace;
     List<String> imagePaths;
+
+    boolean manualClicked;
 
     //View constructor that builds frame, gridlayout, labels, and buttons
     battleshipView(char[][] testArr) throws IOException {
@@ -223,6 +225,13 @@ public class battleshipView{
     public List<String> getPathList(){
         return imagePaths;
     }
+    void setManualBoolean(boolean manualButtonClicked){
+        manualClicked = manualButtonClicked;
+    }
+    
+    boolean getManualBoolean(){
+        return manualClicked;
+    }
 
     //function handles randomize button
     public void updateLeftPanelRandom(char[][] userBoard){
@@ -240,6 +249,7 @@ public class battleshipView{
                 randomPanel.add(grid[i][j]);
             }
         }
+        
         randomPanel.revalidate();
         randomPanel.repaint();
     }
@@ -259,8 +269,28 @@ public class battleshipView{
             }
         }
 
+        mPanel.setPreferredSize(new Dimension(500, 500));
+        
+        mPanel.revalidate();
+        Container container = this.getContentPane();
+
+        // Call revalidate and repaint before adding the new panel
         mPanel.revalidate();
         mPanel.repaint();
+
+        // Remove the existing leftPanel1 (if not null)
+        if (this.leftPanel1 != null) {
+            container.remove(this.leftPanel1);
+        }
+
+        // Add the new panel to the container
+        container.add(mPanel, BorderLayout.WEST);
+        this.leftPanel1 = mPanel;
+
+        //boolean clicked = true;
+        //setManualBoolean(clicked);
+        
+        updateMiddlePanelPlace();
     }
 
     /* Update the middle panel with ships */
@@ -353,14 +383,12 @@ public class battleshipView{
         /* Resetting the middle panel */
         middlePanel.removeAll(); //Remove the current elements from the panel
         middlePanel.setBackground(Color.GRAY); //just for testing
-        middlePanel.setLayout(new GridLayout(8, 1));
+        middlePanel.setLayout(new GridLayout(6, 1));
         middlePanel.setPreferredSize(new Dimension(300, 100));
 
         /* Creating buttons to finalize the ship placement, randomizing ships, and rotating each ship */
         finalizeShipPlacement = new JButton("Finalize Placement");
         finalizeShipPlacement.setBackground(new Color(255, 82, 82)); //Set the button color to a light-ish red
-        randomPlacement = new JButton("Randomize");
-        manuallyPlace = new JButton("Place ships");
         rotateCarrier = new JButton("Rotate Carrier");
         rotateBattleship = new JButton("Rotate Battleship");
         rotateCruiser = new JButton("Rotate Cruiser");
@@ -369,8 +397,6 @@ public class battleshipView{
 
         /* Add the buttons to the panel */
         middlePanel.add(finalizeShipPlacement);
-        middlePanel.add(randomPlacement);
-        middlePanel.add(manuallyPlace);
         middlePanel.add(rotateCarrier);
         middlePanel.add(rotateBattleship);
         middlePanel.add(rotateCruiser);
@@ -380,7 +406,23 @@ public class battleshipView{
         //Submit the changes to the GUI
         middlePanel.revalidate();
         middlePanel.repaint();
-    }   
+    } 
+    
+    void updateMiddlePanel2(){
+        middlePanel.removeAll(); //Remove the current elements from the panel
+        middlePanel.setBackground(Color.GRAY); //just for testing
+        middlePanel.setLayout(new GridLayout(2, 1));
+        middlePanel.setPreferredSize(new Dimension(300, 100));
+
+        randomPlacement = new JButton("Randomize");
+        manuallyPlace = new JButton("Place ships");
+
+        middlePanel.add(randomPlacement);
+        middlePanel.add(manuallyPlace);
+
+        middlePanel.revalidate();
+        middlePanel.repaint();
+    }
 
     /* Getter functions for the controller that returns the button */
     JButton getFinalizePlacement() {
@@ -484,6 +526,7 @@ class PlayAgainWindow {
             }
         }
     }
+
 
 }
 

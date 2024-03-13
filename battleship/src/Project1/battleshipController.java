@@ -35,6 +35,7 @@ public class battleshipController implements ActionListener{
     boolean rotateDestroyer;
     int shotPosX = -1, shotPosY = -1;
     boolean winner = false;
+    boolean clicked = true;
 
     //private boolean buttonClicked = false;
     //controller contructor calls view and model constructors
@@ -51,8 +52,13 @@ public class battleshipController implements ActionListener{
         //rotateShipButtons(); <----XXX
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
         establishConnection();
-        while(pAgain) {
-            view.updateMiddlePanelPlace(); //Update the middle panel for placement
+        if(pAgain) {
+            view.updateMiddlePanel2();//Update the middle panel for placement
+            manualPanel();
+            if(clicked){
+                System.out.println("in whileloop");
+            }
+            /* 
             server.send(model.getUserBoard());
             char oppBoard[][] = server.receiveBoard();
             
@@ -70,7 +76,7 @@ public class battleshipController implements ActionListener{
             turn = host; //Set the first turn to always be the host
             gameLoop: //Assigning name to outermost loop so we can later break it
             while(winner) {
-                /* Shoot shot, then wait to receive input from the other player */
+                //Shoot shot, then wait to receive input from the other player 
                 while(turn) {
                     shotPosX = -1; //Adding signal value that shot has not yet been taken 
                     shotPosY = -1;
@@ -106,6 +112,7 @@ public class battleshipController implements ActionListener{
             if(!pAgain || !opponentPAgain) {
                 pAgain = false;
             }
+            */
         }
     }
 
@@ -243,6 +250,7 @@ public class battleshipController implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 view.updateLeftPanelManual();
+                clicked = true;
             }
         });
     }
@@ -264,7 +272,7 @@ public class battleshipController implements ActionListener{
                 //If HitOrMiss is neither "X" or "O" it signifies ship has been sunk
                 if(HitOrMiss != "X" && HitOrMiss != "O"){
                     view.updateView(position[0], position[1], "X");
-                    view.updateLabel(HitOrMiss);
+                    //view.updateLabel(HitOrMiss);
                     //if(model.isWin()) {
                     //    boolean winner = true;
                     //}
