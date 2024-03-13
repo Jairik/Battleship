@@ -48,7 +48,6 @@ public class battleshipController implements ActionListener{
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
-        //rotateShipButtons();
         //test button to rotate the carrier image, still scuffed
         //rotateShipButtons(); <----XXX
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
