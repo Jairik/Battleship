@@ -46,7 +46,7 @@ public class battleshipController implements ActionListener{
         setShipsManually();
         rotateShipButtons();
         //carrier button
-        
+        readyCannons();
         //test button to rotate the carrier image, still scuffed
 
         /* We should have this all in a while loop inside a try catch statement that runs while
@@ -168,7 +168,7 @@ public class battleshipController implements ActionListener{
     }
 
     public void rotateShipButtons(){
-        view.getRotateCarrierShip().addActionListener(new ActionListener() {
+        view.getRotateCarrier().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateCarrier = rotateBattleship(0, "/resources/carrierRotated.png", "/resources/Carrier.png");
@@ -176,7 +176,7 @@ public class battleshipController implements ActionListener{
             }
         });
         //battleship button
-        view.getRotateBattleShip().addActionListener(new ActionListener() {
+        view.getRotateBattleship().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateBattleship = rotateBattleship(1, "/resources/battleshipRotated.png", "/resources/Battleship.png");
@@ -184,7 +184,7 @@ public class battleshipController implements ActionListener{
             }
         });
         //cruiser button
-        view.getRotateCruiserShip().addActionListener(new ActionListener() {
+        view.getRotateCruiser().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateCruiser = rotateBattleship(2, "/resources/cruiserRotated.png", "/resources/Cruiser.png");
@@ -192,7 +192,7 @@ public class battleshipController implements ActionListener{
             }
         });
         //submarine button
-        view.getRotateSubShip().addActionListener(new ActionListener() {
+        view.getRotateSubmarine().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateSubmarine = rotateBattleship(3, "/resources/submarineRotated.png", "/resources/SubmarineReSize.png");
@@ -200,7 +200,7 @@ public class battleshipController implements ActionListener{
             }
         });
         //destroyer button
-        view.getRotateDestroyerShip().addActionListener(new ActionListener() {
+        view.getRotateDestroyer().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateDestroyer = rotateBattleship(4, "/resources/destroyerRotated.png", "/resources/Destroyer.png");
@@ -228,7 +228,7 @@ public void actionPerformed(ActionEvent e) {
             if(HitOrMiss != "X" && HitOrMiss != "O"){
                 view.updateView(position[0], position[1], "X");
                 //view.showGameStatus(HitOrMiss);
-                view.updateLabel(HitOrMiss);
+                //view.updateLabel(HitOrMiss);
                 if(model.isWin()) {
                     boolean winner = true;
                 }
