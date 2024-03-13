@@ -58,6 +58,7 @@ public class battleshipView extends JFrame{
     JButton rotateSubmarine;
     JButton rotateDestroyer;
     JButton manuallyPlace;
+    JButton finalizeRandomButton;
     List<String> imagePaths;
 
     boolean manualClicked;
@@ -466,10 +467,10 @@ public class battleshipView extends JFrame{
         middlePanel.setPreferredSize(new Dimension(300, 100));
 
         randomPlacement = new JButton("Randomize");
-        finalizeShipPlacement = new JButton("Finalize Placement");
+        finalizeRandomButton = new JButton("Finalize Placement");
 
         middlePanel.add(randomPlacement);
-        middlePanel.add(finalizeShipPlacement);
+        middlePanel.add(finalizeRandomButton);
 
         middlePanel.revalidate();
         middlePanel.repaint();
@@ -506,6 +507,9 @@ public class battleshipView extends JFrame{
     }
     JButton getManualButton(){
         return manuallyPlace;
+    }
+    JButton getfinalizeRandomButton(){
+        return finalizeRandomButton;
     }
 
     public boolean getPlayAgain() {

@@ -39,6 +39,8 @@ public class battleshipController implements ActionListener{
     boolean manualClicked = false;
     boolean donePlacing = false;
 
+    boolean modelSet;
+
     //private boolean buttonClicked = false;
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
@@ -51,10 +53,11 @@ public class battleshipController implements ActionListener{
         //test button to rotate the carrier image, still scuffed
         //rotateShipButtons(); <----XXX
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
-        //establishConnection();
+        establishConnection();
         if(pAgain) {
             view.updateMiddlePanel2();//Update the middle panel for placement
             manualPanel();
+            //randomizePanel();
             while(!manualClicked){
                 try {
                     Thread.sleep(100);
@@ -65,8 +68,8 @@ public class battleshipController implements ActionListener{
             System.out.println("TESTING- Manual Clicked: " + manualClicked);
             view.updateMiddlePanelPlace();
             setShipsManually(); //button function to set ships with dragndrop
-            randomizePanel(); // button function to randomize ship
             rotateShipButtons();
+            //setShipsRandomly();
             readyCannons();
             /* 
             server.send(model.getUserBoard());
@@ -79,7 +82,7 @@ public class battleshipController implements ActionListener{
                 System.out.println();
             }
             model.setOppBoard(oppBoard);
-            /* UPDATES MIDDLE PANEL HERE (GREEN LABELS) - testing */
+            // UPDATES MIDDLE PANEL HERE (GREEN LABELS) - testing 
             view.updateMiddlePanelPlay(); //Update the middle panel with ship status
             //!Remove action listeners for the d-n-d ships!
             rotateShipButtons();
@@ -187,7 +190,7 @@ public class battleshipController implements ActionListener{
                 model.printBoard();
                 //sets images to not move after button clicked
                 view.getPanel().setImagesMovable(false);
-                boolean modelSet = true;
+                modelSet = true;
                 model.setModelBoolean(modelSet);
                 donePlacing = true;
                 //updates middle panel after finalize ships
@@ -257,8 +260,10 @@ public class battleshipController implements ActionListener{
                 model.randomlySetBoard();
                 //replace left panel with grid
                 System.out.println("random ship clicked");
+                model.printBoard();
                 char[][] randomBoard = model.getUserBoard();
                 view.updateLeftPanelRandom(randomBoard);
+                manualClicked = true;
             }
         });
     }
@@ -270,6 +275,18 @@ public class battleshipController implements ActionListener{
             public void actionPerformed(ActionEvent e) {
                 //view.updateLeftPanelManual();
                 manualClicked = true;
+            }
+        });
+    }
+
+    public void setShipsRandomly(){
+        view.getfinalizeRandomButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                manualClicked = true;
+                modelSet = true;
+                model.setModelBoolean(modelSet);
+                view.updateMiddlePanelPlay();
             }
         });
     }
@@ -293,16 +310,17 @@ public class battleshipController implements ActionListener{
                 //If HitOrMiss is neither "X" or "O" it signifies ship has been sunk
                 if(HitOrMiss != "X" && HitOrMiss != "O"){
                     view.updateView(position[0], position[1], "X");
+                    System.out.println(HitOrMiss + " has sunk");
                     //view.updateLabel(HitOrMiss);
-                    //if(model.isWin()) {
-                    //    boolean winner = true;
-                    //}
                 }
                 else {
                     view.updateView(position[0], position[1], HitOrMiss);
                     System.out.println("valid shot");
                     model.printBoard();
                 }
+            }
+            if(model.isWinUser()) {
+                view.showGameStatus("All ships sunk");
             }
             else {
                 view.playSoundEffect("O");

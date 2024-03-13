@@ -130,7 +130,7 @@ public class battleshipModel {
      */
     String determineHitUserBoard(int xPos, int yPos) {
         String hit;
-        boolean shipSank = checkForSinkShipUserBoard(xPos, yPos);
+        boolean shipSank; //= checkForSinkShipUserBoard(xPos, yPos);
 
         if(board[xPos][yPos] == ' ') {
             board[xPos][yPos] = 'O';
@@ -145,7 +145,7 @@ public class battleshipModel {
                 board[xPos][yPos] = 'X';
                 hit = "X";
                 carrierRemaining--;
-                if(shipSank) {
+                if(shipSank = checkForSinkShipUserBoard()) {
                     hit = "Carrier";
                 }
             }
@@ -153,7 +153,7 @@ public class battleshipModel {
                 board[xPos][yPos] = 'X';
                 hit = "X";
                 battleshipRemaining--;
-                if(shipSank) {
+                if(shipSank = checkForSinkShipUserBoard()) {
                     hit = "Battleship";
                 }
             }
@@ -161,7 +161,7 @@ public class battleshipModel {
                 board[xPos][yPos] = 'X';
                 hit = "X";
                 cruiserRemaining--;
-                if(shipSank) {
+                if(shipSank = checkForSinkShipUserBoard()) {
                     hit = "Cruiser";
                 }
             }
@@ -169,7 +169,7 @@ public class battleshipModel {
                 board[xPos][yPos] = 'X';
                 hit = "X";
                 submarineRemaining--;
-                if(shipSank) {
+                if(shipSank = checkForSinkShipUserBoard()) {
                     hit = "Submarine";
                 }
             }
@@ -177,7 +177,7 @@ public class battleshipModel {
                 board[xPos][yPos] = 'X';
                 hit = "X";
                 destroyerRemaining--;
-                if(shipSank) {
+                if(shipSank = checkForSinkShipUserBoard()) {
                     hit = "Destroyer";
                 }
             }
@@ -239,13 +239,13 @@ public class battleshipModel {
     }
 
     /* Check the user board for a sunken ship, returning true if it was sank */
-    boolean checkForSinkShipUserBoard(int xPos, int yPos) {
+    boolean checkForSinkShipUserBoard() {
         boolean sank = false;
         int numOfShips = 5;
         //char shipArr[] = {carrier, battleShip, cruiser, submarine, destroyer};
         int shipHitsRemainingArr[] = {carrierRemaining, battleshipRemaining, cruiserRemaining, submarineRemaining, destroyerRemaining};
         for(int i = 0; i < numOfShips; i++) {
-            if(shipHitsRemainingArr[i] == 1) {
+            if(shipHitsRemainingArr[i] == 0) {
                 sank = true;
                 shipsRemaining--; // decrements ship amount after each dink
                 break; //skip the rest of the iterations
@@ -277,7 +277,15 @@ public class battleshipModel {
 
     //called in controller to signal win
     boolean isWinUser(){
-        return (shipsRemaining == 0);
+        for(int i = 0; i < boardHeight; i++) {
+            for (int j = 0; j < boardWidth; j++) {
+                if(board[i][j] == 'c' || board[i][j] == 'b'|| board[i][j] == 'r'|| board[i][j] == 'd' || board[i][j] == 's'){
+                    return false;
+                }
+            }
+            
+        }
+        return true;
     }
 
     boolean isWinOpponent(){
