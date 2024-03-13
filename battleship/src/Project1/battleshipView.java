@@ -429,6 +429,21 @@ class PlayAgainWindow {
             }
         }
     }
+
+    public void updateLeftPanel(){
+        JPanel randomPanel = new JPanel();
+        randomPanel.setLayout(new GridLayout(10, 10));
+
+        JLabel[][] grid = new JLabel[10][10];
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                JLabel lbl = new JLabel();
+                grid[i][j] = lbl;
+                grid[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK))
+            }
+        }
+
+    }
 }
 
 

@@ -83,5 +83,6 @@ public class DraggableImage {
     public void setMovable(boolean moveable) {
         this.moveable = moveable;
     }
+    
 
 }

@@ -190,7 +190,6 @@ public class battleshipController implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateCarrier = rotateBattleship(0, "/resources/carrierRotated.png", "/resources/Carrier.png");
-                
             }
         });
         //battleship button
@@ -198,7 +197,6 @@ public class battleshipController implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateBattleship = rotateBattleship(1, "/resources/battleshipRotated.png", "/resources/Battleship.png");
-                System.out.println("rotate battleship clicked");
             }
         });
         //cruiser button
@@ -206,23 +204,31 @@ public class battleshipController implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotateCruiser = rotateBattleship(2, "/resources/cruiserRotated.png", "/resources/Cruiser.png");
-                System.out.println("rotate cruiser clicked");
             }
         });
         //submarine button
         view.getRotateSubmarine().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rotateSubmarine = rotateBattleship(3, "/resources/submarineRotated.png", "/resources/SubmarineReSize.png");
-                
+                rotateSubmarine = rotateBattleship(3, "/resources/submarineRotated.png", "/resources/SubmarineReSize.png"); 
             }
         });
         //destroyer button
         view.getRotateDestroyer().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rotateDestroyer = rotateBattleship(4, "/resources/destroyerRotated.png", "/resources/Destroyer.png");
-                
+                rotateDestroyer = rotateBattleship(4, "/resources/destroyerRotated.png", "/resources/Destroyer.png"); 
+            }
+        });
+    }
+
+    public void randomizePanel(){
+        view.getRandomPlacement().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.randomlySetBoard();
+                //replace left panel with grid
+                view.updateLeftPanel();
             }
         });
     }
@@ -243,13 +249,15 @@ public class battleshipController implements ActionListener{
             if(model.checkForValidShot(position[0], position[1])){
                 HitOrMiss = model.determineHit(position[0], position[1]); //updates model //checks for sinkship
                 view.playSoundEffect(HitOrMiss);
-                if(HitOrMiss != "X" && HitOrMiss != "O") {
+
+                //If HitOrMiss is neither "X" or "O" it signies ship has been sunk
+                if(HitOrMiss != "X" && HitOrMiss != "O"){
                     view.updateView(position[0], position[1], "X");
                     //view.showGameStatus(HitOrMiss);
                     //view.updateLabel(HitOrMiss);
-                    if(model.isWin()) {
-                        boolean winner = true;
-                    }
+                    //if(model.isWin()) {
+                    //    boolean winner = true;
+                    //}
                 }
                 else {
                     view.updateView(position[0], position[1], HitOrMiss);
