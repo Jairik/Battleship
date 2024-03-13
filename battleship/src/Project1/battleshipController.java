@@ -125,7 +125,7 @@ public class battleshipController implements ActionListener{
             if(!pAgain || !opponentPAgain) {
                 pAgain = false;
             }
-            */
+            
         }
     }
 
