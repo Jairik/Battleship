@@ -61,10 +61,8 @@ public class battleshipView{
     JButton rotateCruiser;
     JButton rotateSubmarine;
     JButton rotateDestroyer;
+    JButton manuallyPlace;
     List<String> imagePaths;
-
-    /* Font used to change labels/buttons to indicate a hit */
-    Font indicatorFont = new Font("Arial", Font.BOLD, 30);
 
     //View constructor that builds frame, gridlayout, labels, and buttons
     battleshipView(char[][] testArr) throws IOException {
@@ -217,6 +215,44 @@ public class battleshipView{
         return imagePaths;
     }
 
+    //function handles randomize button
+    public void updateLeftPanelRandom(char[][] userBoard){
+        //leftPanel.removeAll(); //replace after view controler left panel is changed
+        JPanel randomPanel = new JPanel();
+        randomPanel.setLayout(new GridLayout(10, 10));
+
+        JLabel[][] grid = new JLabel[10][10];
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                String testChar = Character.toString(userBoard[i][j]);
+                grid[i][j] = new JLabel();
+                grid[i][j].setText(testChar);
+                label[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                randomPanel.add(grid[i][j]);
+            }
+        }
+        randomPanel.revalidate();
+        randomPanel.repaint();
+    }
+    public void updateLeftPanelManual(){
+        //panel.removeAll();
+        MyPanel mPanel = new MyPanel(imagePaths);
+        mPanel.setLayout(new GridLayout(10, 10));
+
+        JLabel[][] grid = new JLabel[10][10];
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                JLabel lbl = new JLabel();
+                grid[i][j] = lbl;
+                grid[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                mPanel.add(grid[i][j]);
+            }
+        }
+
+        mPanel.revalidate();
+        mPanel.repaint();
+    }
+
     /* Update the middle panel with ships */
     void updateMiddlePanelPlay() {
         /* Resetting the middle panel */
@@ -266,12 +302,12 @@ public class battleshipView{
     }
 
     //called in fireCannon() method in controller. returns a button
-    public JButton getButton(int row, int column) {
+    public JButton getButton(int row, int column){
         return button2[row][column];
     }
 
     //called in controller to find clickedButton x&y position
-    public int[] buttonPosition(JButton btn) {
+    public int[] buttonPosition(JButton btn){
         // Find the button's position in the array
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -284,8 +320,9 @@ public class battleshipView{
     }
 
     //called in controller after checking if hit or miss. sets button text to X for hit or O for miss
-    public void updateView(int row, int column, String HitOrMiss) {
-        button2[row][column].setFont(indicatorFont);      
+    public void updateView(int row, int column, String HitOrMiss){
+        Font newFont = new Font("Arial", Font.BOLD, 30);
+        button2[row][column].setFont(newFont);      
         button2[row][column].setText("•");
         if(HitOrMiss == "O") {
             button2[row][column].setForeground(Color.GRAY);
@@ -324,13 +361,14 @@ public class battleshipView{
         /* Resetting the middle panel */
         middlePanel.removeAll(); //Remove the current elements from the panel
         middlePanel.setBackground(Color.GRAY); //just for testing
-        middlePanel.setLayout(new GridLayout(7, 1));
+        middlePanel.setLayout(new GridLayout(8, 1));
         middlePanel.setPreferredSize(new Dimension(300, 100));
 
         /* Creating buttons to finalize the ship placement, randomizing ships, and rotating each ship */
         finalizeShipPlacement = new JButton("Finalize Placement");
         finalizeShipPlacement.setBackground(new Color(255, 82, 82)); //Set the button color to a light-ish red
         randomPlacement = new JButton("Randomize");
+        manuallyPlace = new JButton("Place ships");
         rotateCarrier = new JButton("Rotate Carrier");
         rotateBattleship = new JButton("Rotate Battleship");
         rotateCruiser = new JButton("Rotate Cruiser");
@@ -340,6 +378,7 @@ public class battleshipView{
         /* Add the buttons to the panel */
         middlePanel.add(finalizeShipPlacement);
         middlePanel.add(randomPlacement);
+        middlePanel.add(manuallyPlace);
         middlePanel.add(rotateCarrier);
         middlePanel.add(rotateBattleship);
         middlePanel.add(rotateCruiser);
@@ -379,6 +418,9 @@ public class battleshipView{
     JButton getRotateDestroyer() {
         return rotateDestroyer;
     }
+    JButton getManualButton(){
+        return manuallyPlace;
+    }
 
     public boolean getPlayAgain() {
         PlayAgainWindow p = new PlayAgainWindow();
@@ -389,37 +431,13 @@ public class battleshipView{
     void forceCloseProg() {
         frame.dispose(); //close the current JFrame
     }
-
-    void receiveShot(int x, int y, String HitOrMiss) {
-        label[x][y].setFont(indicatorFont);      
-        label[x][y].setText("•");
-        if(HitOrMiss == "O") {
-            button2[x][y].setForeground(Color.GRAY);
-        }
-        else {
-            button2[x][y].setForeground(Color.RED);
-        }
-    }
-
-    public void updateLeftPanel(){
-        JPanel randomPanel = new JPanel();
-        randomPanel.setLayout(new GridLayout(10, 10));
-
-        JLabel[][] grid = new JLabel[10][10];
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
-                JLabel lbl = new JLabel();
-                grid[i][j] = lbl;
-                grid[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            }
-        }
-
-    }
 }
 
 /* Create an external window, asking the user if they would like to play again */
 class PlayAgainWindow {
     private JFrame pAgainWindow;
+    private JButton yesButton;
+    private JButton noButton;
     //Initializing a variable signifying the user's choice, with -1 stating that user has not made one yet
     int pAgain = -1; 
 
@@ -474,6 +492,7 @@ class PlayAgainWindow {
             }
         }
     }
+
 }
 
 
