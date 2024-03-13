@@ -128,6 +128,7 @@ public class battleshipController implements ActionListener{
         }
     }
 
+    //function sets action for button to set ships manually
     public void setShipsManually(){
         view.getSetButton().addActionListener(new ActionListener() {
             @SuppressWarnings("unused")
@@ -136,33 +137,30 @@ public class battleshipController implements ActionListener{
                 System.out.println("setship clicked");
                 List<ImageInfo> imagesInfo = view.getPanelInfo();
                 model.clearBoard();
+                //iterates through List, assigning coordinate, imagepath,
+                //sends coordinates to corresponding ship class by comparing image path
                 for (int i = 0; i < imagesInfo.size(); i++) {
                     ImageInfo imageInfo = imagesInfo.get(i);
                     Point coordinates = imageInfo.getCoordinates();
                     String imagePath = imageInfo.getImagePath();
                     if(imagePath.equals("/resources/Carrier.png") || imagePath.equals("/resources/carrierRotated.png")){
                         cShip = new BS_Carrier(coordinates, model, rotateCarrier);
-                        //cShip.getRotateStatus(rotateCarrier);
                         System.out.println("Carrier");
                     }
                     else if(imagePath.equals("/resources/Battleship.png") || imagePath.equals("/resources/battleshipRotated.png")){
                         bShip = new BS_Battleship(coordinates, model, rotateBattleship);
-                        //bShip.getRotateStatus(rotateBattleship);
                         System.out.println("battleship");
                     }
                     else if(imagePath.equals("/resources/Destroyer.png") || imagePath.equals("/resources/destroyerRotated.png")){
                         dShip = new BS_Destroyer(coordinates, model, rotateDestroyer);
-                        //dShip.getRotateStatus(rotateDestroyer);
                         System.out.println("destroyer");
                     }
                     else if(imagePath.equals("/resources/Cruiser.png") || imagePath.equals("/resources/cruiserRotated.png")){
                         rShip = new BS_Cruiser(coordinates, model, rotateCruiser);
-                        //rShip.getRotateStatus(rotateCruiser);
                         System.out.println("cruiser");
                     }
                     else if(imagePath.equals("/resources/SubmarineReSize.png") || imagePath.equals("/resources/submarineRotated.png")){
                         sShip = new BS_Submarine(coordinates, model, rotateSubmarine);
-                        //sShip.getRotateStatus(rotateSubmarine);
                         System.out.println("submarine");
                     }
                     System.out.println("Image " + (i + 1) + " - X: " + coordinates.getX() + ", Y: " + coordinates.getY() + ", Path: " + imagePath);
