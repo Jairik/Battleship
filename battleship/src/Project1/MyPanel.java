@@ -1,5 +1,7 @@
 package Project1;
 
+/*Description: This class takes a list of image paths and turns them into a list of 
+draggable images using the Draggable images class.*/
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import javax.swing.JPanel;
 public class MyPanel extends JPanel {
     List<DraggableImage> images = new ArrayList<>();
 
+    //constructor iterates over imaagePath list and creates draggableImage instance for each
     MyPanel(List<String> imagePaths) {
         setLayout(new FlowLayout(FlowLayout.LEFT)); // Use FlowLayout
 
@@ -31,12 +34,15 @@ public class MyPanel extends JPanel {
         this.addMouseMotionListener(dragListener);
     }
 
+    //paints images onto panel
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (DraggableImage image : images) {
             image.paintIcon(this, g);
         }
     }
+
+    //returns image path and coordinates
     public List<ImageInfo> getImagesInfo() {
         List<ImageInfo> imagesInfo = new ArrayList<>();
         for (DraggableImage image : images) {
@@ -70,6 +76,7 @@ public class MyPanel extends JPanel {
         return images;
     }
 
+    //replaces an imagepath in list for another. Used to toggle vertical and horizontal ships
     public void replaceImage(String oldImagePath, String newImagePath) {
         for (int i = 0; i < images.size(); i++) {
             DraggableImage image = images.get(i);
@@ -81,6 +88,8 @@ public class MyPanel extends JPanel {
             }
         }
     }
+
+    //after set ships clicked. makes images non-movable
     public void setImagesMovable(boolean moveable) {
         for (DraggableImage image : images) {
             image.setMovable(moveable);
