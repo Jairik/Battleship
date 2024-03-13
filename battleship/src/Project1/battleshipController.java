@@ -36,7 +36,7 @@ public class battleshipController implements ActionListener{
     int shotPosX = -1, shotPosY = -1;
     boolean winner = false;
     boolean clicked = true;
-    boolean manualClicked = false;
+    boolean finalizeClicked = false;
     boolean donePlacing = false;
 
     //private boolean buttonClicked = false;
@@ -53,20 +53,21 @@ public class battleshipController implements ActionListener{
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
         //establishConnection();
         if(pAgain) {
-            view.updateMiddlePanel2();//Update the middle panel for placement
-            manualPanel();
-            while(!manualClicked){
+            view.updateMiddlePanelPlace();//Update the middle panel for placement
+            randomizePanel(); // button function to randomize ship
+            //manualPanel();
+            rotateShipButtons();
+            setShipsManually();
+            while(!finalizeClicked){
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            System.out.println("TESTING- Manual Clicked: " + manualClicked);
             view.updateMiddlePanelPlace();
-            setShipsManually(); //button function to set ships with dragndrop
-            randomizePanel(); // button function to randomize ship
-            rotateShipButtons();
+            //setShipsManually(); //button function to set ships with dragndrop
+            //rotateShipButtons();
             readyCannons();
             /* 
             server.send(model.getUserBoard());
@@ -190,6 +191,7 @@ public class battleshipController implements ActionListener{
                 boolean modelSet = true;
                 model.setModelBoolean(modelSet);
                 donePlacing = true;
+                finalizeClicked = true;
                 //updates middle panel after finalize ships
                 view.updateMiddlePanelPlay();
             }
@@ -258,7 +260,7 @@ public class battleshipController implements ActionListener{
                 //replace left panel with grid
                 System.out.println("random ship clicked");
                 char[][] randomBoard = model.getUserBoard();
-                view.updateLeftPanelRandom(randomBoard);
+                //view.updateLeftPanelRandom(randomBoard);
             }
         });
     }
@@ -269,7 +271,7 @@ public class battleshipController implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //view.updateLeftPanelManual();
-                manualClicked = true;
+                finalizeClicked = true;
             }
         });
     }
