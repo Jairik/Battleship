@@ -332,7 +332,7 @@ public class battleshipView extends JFrame{
     void updateMiddlePanelPlay() {
         /* Resetting the middle panel */
         middlePanel.removeAll(); //Remove the current elements from the panel
-        middlePanel.setBackground(Color.GREEN); //just for testing
+        middlePanel.setBackground(Color.GRAY); 
         middlePanel.setLayout(new GridLayout(5, 1));
         middlePanel.setPreferredSize(new Dimension(300, 100));
         
@@ -517,6 +517,8 @@ public class battleshipView extends JFrame{
     void forceCloseProg() {
         frame.dispose(); //close the current JFrame
     }
+
+
 }
 
 /* Create an external window, asking the user if they would like to play again */

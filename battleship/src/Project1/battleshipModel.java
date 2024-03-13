@@ -290,8 +290,8 @@ public class battleshipModel {
     }
 
     //each ship class will call this function to update model
-    void setModel(int x, int y, String shipCharacter){
-        board[y][x] = shipCharacter.charAt(0);
+    void setModel(int x, int y, char shipCharacter){
+        board[y][x] = shipCharacter;
     }
 
     void printBoard(){
