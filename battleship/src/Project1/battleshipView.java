@@ -381,13 +381,26 @@ public class battleshipView{
             button2[x][y].setForeground(Color.RED);
         }
     }
+
+    public void updateLeftPanel(){
+        JPanel randomPanel = new JPanel();
+        randomPanel.setLayout(new GridLayout(10, 10));
+
+        JLabel[][] grid = new JLabel[10][10];
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                JLabel lbl = new JLabel();
+                grid[i][j] = lbl;
+                grid[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            }
+        }
+
+    }
 }
 
 /* Create an external window, asking the user if they would like to play again */
 class PlayAgainWindow {
     private JFrame pAgainWindow;
-    private JButton yesButton;
-    private JButton noButton;
     //Initializing a variable signifying the user's choice, with -1 stating that user has not made one yet
     int pAgain = -1; 
 

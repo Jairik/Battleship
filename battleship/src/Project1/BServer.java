@@ -70,6 +70,7 @@ public class BServer {
    }
 
    //Close the conection 
+   @SuppressWarnings("unused")
    private void closeConnection() {
     try {
         output.close();

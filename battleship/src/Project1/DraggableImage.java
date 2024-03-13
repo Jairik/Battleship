@@ -10,7 +10,6 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 public class DraggableImage {
     ImageIcon image;

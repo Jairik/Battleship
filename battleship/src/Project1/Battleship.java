@@ -2,8 +2,6 @@ package Project1;
 
 import java.io.IOException;
 
-import javax.swing.SwingUtilities;
-
 /*----------------------------------------------------------------------------------------------------------
   Authors: JJ McCauley & Will Lamuth 
   Creation Date: 2/22/24

@@ -21,7 +21,7 @@ package Project1;
 
 
 
-import javax.swing.SwingUtilities; //Used for invokeLater() Function (Potentially)
+
 
 public class battleshipServer {
     static boolean Host;
@@ -142,7 +142,7 @@ public class battleshipServer {
         coordinateChar2 = data.charAt(1); 
         //Convert the chars to ints via ascii conversions
         coordinates[0] = ((int)(coordinateChar1) - 48);
-        coordinates[1] = ((int)(coordinateChar1) - 48);
+        coordinates[1] = ((int)(coordinateChar2) - 48);
 
         return coordinates;
     }

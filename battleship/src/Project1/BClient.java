@@ -13,13 +13,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class BClient {
   private ObjectOutputStream output; // output stream to server
   private ObjectInputStream input; // input stream from server
-  private String message = ""; // message from server
   private String serverIP; // host server for this application
   private Socket client; // socket to communicate with server
 

@@ -8,8 +8,6 @@ package Project1;
 
 
 import java.io.IOException;
-import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.List;
 import java.awt.Point;
 import java.awt.event.ActionEvent;

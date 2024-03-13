@@ -1,8 +1,5 @@
 package Project1;
 
-/*Description: This class takes a list of image paths and turns them into a list of 
-draggable images using the Draggable images class.*/
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
