@@ -43,47 +43,9 @@ public class battleshipController implements ActionListener{
         view = new battleshipView(userBoard);
         //test button to rotate the carrier image, still scuffed
         setShipsManually();
-        
+        rotateShipButtons();
         //carrier button
-        view.getRotateCarrierShip().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rotateCarrier = rotateBattleship(0, "/resources/carrierRotated.png", "/resources/Carrier.png");
-                
-            }
-        });
-        //battleship button
-        view.getRotateBattleShip().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rotateBattleship = rotateBattleship(1, "/resources/battleshipRotated.png", "/resources/Battleship.png");
-                
-            }
-        });
-        //cruiser button
-        view.getRotateCruiserShip().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rotateCruiser = rotateBattleship(2, "/resources/cruiserRotated.png", "/resources/Cruiser.png");
-                
-            }
-        });
-        //submarine button
-        view.getRotateSubShip().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rotateSubmarine = rotateBattleship(3, "/resources/submarineRotated.png", "/resources/SubmarineReSize.png");
-                
-            }
-        });
-        //destroyer button
-        view.getRotateDestroyerShip().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rotateDestroyer = rotateBattleship(4, "/resources/destroyerRotated.png", "/resources/Destroyer.png");
-                
-            }
-        });
+        
         //test button to rotate the carrier image, still scuffed
         
         //Getting host and connect Buttons
@@ -200,6 +162,48 @@ public class battleshipController implements ActionListener{
         }
         view.getPanel().repaint();
         return rotated;
+    }
+
+    public void rotateShipButtons(){
+        view.getRotateCarrierShip().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rotateCarrier = rotateBattleship(0, "/resources/carrierRotated.png", "/resources/Carrier.png");
+                
+            }
+        });
+        //battleship button
+        view.getRotateBattleShip().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rotateBattleship = rotateBattleship(1, "/resources/battleshipRotated.png", "/resources/Battleship.png");
+                
+            }
+        });
+        //cruiser button
+        view.getRotateCruiserShip().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rotateCruiser = rotateBattleship(2, "/resources/cruiserRotated.png", "/resources/Cruiser.png");
+                
+            }
+        });
+        //submarine button
+        view.getRotateSubShip().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rotateSubmarine = rotateBattleship(3, "/resources/submarineRotated.png", "/resources/SubmarineReSize.png");
+                
+            }
+        });
+        //destroyer button
+        view.getRotateDestroyerShip().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rotateDestroyer = rotateBattleship(4, "/resources/destroyerRotated.png", "/resources/Destroyer.png");
+                
+            }
+        });
     }
     
     
