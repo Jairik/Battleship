@@ -63,6 +63,9 @@ public class battleshipView{
     JButton rotateDestroyer;
     List<String> imagePaths;
 
+    /* Font used to change labels/buttons to indicate a hit */
+    Font indicatorFont = new Font("Arial", Font.BOLD, 30);
+
     //View constructor that builds frame, gridlayout, labels, and buttons
     battleshipView(char[][] testArr) throws IOException {
 
@@ -244,12 +247,12 @@ public class battleshipView{
     }
 
     //called in fireCannon() method in controller. returns a button
-    public JButton getButton(int row, int column){
+    public JButton getButton(int row, int column) {
         return button2[row][column];
     }
 
     //called in controller to find clickedButton x&y position
-    public int[] buttonPosition(JButton btn){
+    public int[] buttonPosition(JButton btn) {
         // Find the button's position in the array
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -262,9 +265,8 @@ public class battleshipView{
     }
 
     //called in controller after checking if hit or miss. sets button text to X for hit or O for miss
-    public void updateView(int row, int column, String HitOrMiss){
-        Font newFont = new Font("Arial", Font.BOLD, 30);
-        button2[row][column].setFont(newFont);      
+    public void updateView(int row, int column, String HitOrMiss) {
+        button2[row][column].setFont(indicatorFont);      
         button2[row][column].setText("•");
         if(HitOrMiss == "O") {
             button2[row][column].setForeground(Color.GRAY);
@@ -368,6 +370,17 @@ public class battleshipView{
     void forceCloseProg() {
         frame.dispose(); //close the current JFrame
     }
+
+    void receiveShot(int x, int y, String HitOrMiss) {
+        label[x][y].setFont(indicatorFont);      
+        label[x][y].setText("•");
+        if(HitOrMiss == "O") {
+            button2[x][y].setForeground(Color.GRAY);
+        }
+        else {
+            button2[x][y].setForeground(Color.RED);
+        }
+    }
 }
 
 /* Create an external window, asking the user if they would like to play again */
@@ -430,14 +443,3 @@ class PlayAgainWindow {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-    
