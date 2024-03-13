@@ -130,7 +130,7 @@ public class battleshipView{
         /* Create middle panel, reponsible for holding pictures of different ships */
         middlePanel = new JPanel();
         middlePanel.setBackground(Color.GRAY);
-        middlePanel.setLayout(new GridLayout(8, 1)); //Setting layout for just buttons
+        middlePanel.setLayout(new GridLayout(2, 1)); //Setting layout for just buttons
         middlePanel.setPreferredSize(new Dimension(150, 500));
 
 

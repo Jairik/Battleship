@@ -263,19 +263,10 @@ public class battleshipController implements ActionListener{
             if(model.checkForValidShot(position[0], position[1])){
                 HitOrMiss = model.determineHitUserBoard(position[0], position[1]); //updates model //checks for sinkship
                 view.playSoundEffect(HitOrMiss);
-
-<<<<<<< Updated upstream
-            //If HitOrMiss is neither "X" or "O" it signies ship has been sunk
-            if(HitOrMiss != "X" && HitOrMiss != "O"){
-                view.updateView(position[0], position[1], "X");
-                //view.showGameStatus(HitOrMiss);
-                view.updateLabel(HitOrMiss);
-=======
-                //If HitOrMiss is neither "X" or "O" it signies ship has been sunk
+                //If HitOrMiss is neither "X" or "O" it signifies ship has been sunk
                 if(HitOrMiss != "X" && HitOrMiss != "O"){
                     view.updateView(position[0], position[1], "X");
-                    //view.showGameStatus(HitOrMiss);
-                    //view.updateLabel(HitOrMiss);
+                    view.updateLabel(HitOrMiss);
                     //if(model.isWin()) {
                     //    boolean winner = true;
                     //}
@@ -283,13 +274,6 @@ public class battleshipController implements ActionListener{
                 else {
                     view.updateView(position[0], position[1], HitOrMiss);
                 }
-                //check if all ships sunk
-                if(model.isWinUser()) {
-                    System.out.println("Game over");
-                    //view.showGameStatus("All ships sunk"); //May be needed?
-                }
-                //return
->>>>>>> Stashed changes
             }
             else {
                 view.playSoundEffect("O");
@@ -297,23 +281,6 @@ public class battleshipController implements ActionListener{
                 shotPosX = position[0];
                 shotPosY = position[1];
             }
-<<<<<<< Updated upstream
-            //check if all ships sunk
-            /*if(model.isWinOpponent()) {
-                System.out.println("Game over");
-                //view.showGameStatus("All ships sunk"); //May be needed?
-            } */ //Uneeded, as we now check for win in the contructor
-            shotPosX = position[0];
-            shotPosY = position[1];
-        }
-        else {
-            view.playSoundEffect("O");
-            view.updateView(position[0], position[1], "O");
-            
-        }
-=======
->>>>>>> Stashed changes
-            
     } 
 
     void establishConnection() {
@@ -328,7 +295,6 @@ public class battleshipController implements ActionListener{
                 boolean c = false;
                 server = new battleshipServer(true);
                 c = server.Connect();
-                //^^ Multithread with view.createHostExternalWindow()
                 connection.set(c);    
             }
         });
