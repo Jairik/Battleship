@@ -39,6 +39,7 @@ public class battleshipView{
     private JButton[][] button2;
     private JLabel[][] label;
     SoundFX soundEffects;
+    JPanel leftPanel1;
 
     /* Labels on middle panel - showcases the current state of the ships */
     JLabel carrier;
@@ -86,25 +87,30 @@ public class battleshipView{
         frame.setLayout(new BorderLayout());       
         frame.setLocationRelativeTo(null);
 
-        /* Create left panel - used to display user ships and for Drag-n-Drop */
+        /* 
+        // Create left panel - used to display user ships and for Drag-n-Drop 
         leftPanel = new MyPanel(imagePaths);
         leftPanel.setBackground(seaTurqoise);
         leftPanel.setLayout(new GridLayout(10, 10));
-        
+        */
+
+        leftPanel1 = new JPanel();
+        leftPanel1.setBackground(seaTurqoise);
+        leftPanel1.setLayout(new GridLayout(10, 10));
         //Add grid labels for left of the screen
         label = new JLabel[10][10];
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
-                String testChar = Character.toString(testArr[i][j]);
+                //String testChar = Character.toString(testArr[i][j]);
                 label[i][j] = new JLabel();
-                label[i][j].setText(testChar);
+                //label[i][j].setText(testChar);
                 label[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                leftPanel.add(label[i][j]);
+                leftPanel1.add(label[i][j]);
             }
         }
-        
+        leftPanel1.setPreferredSize(new Dimension(500, 500));
         //Setting dimensions
-        leftPanel.setPreferredSize(new Dimension(500, 500));
+        //leftPanel.setPreferredSize(new Dimension(500, 500));
         
         /* Create right panel - used for shooting at enemy ships */
         rightPanel = new JPanel();
@@ -130,7 +136,7 @@ public class battleshipView{
         /* Create middle panel, reponsible for holding pictures of different ships */
         middlePanel = new JPanel();
         middlePanel.setBackground(Color.GRAY);
-        middlePanel.setLayout(new GridLayout(8, 1)); //Setting layout for just buttons
+        middlePanel.setLayout(new GridLayout(2, 1)); //Setting layout for just buttons
         middlePanel.setPreferredSize(new Dimension(150, 500));
 
 
@@ -139,27 +145,31 @@ public class battleshipView{
         pushToHost = new JButton("Host");
 
         //button returns ship position
-        pushToSet = new JButton("Set ships"); 
+        /* 
+        pushToSet = new JButton("Set ships");
         rotateCarrier = new JButton("rotate carrier");
         rotateBattleship = new JButton("rotate battleship");
         rotateCruiser = new JButton("rotate cruiser");
         rotateDestroyer = new JButton("rotate destroyer");
         rotateSubmarine = new JButton("rotate submarine");
+        */
         // temp button to test ship setting
         /* Placing Buttons On the Middle Panel */
         middlePanel.add(pushToConnect);
         middlePanel.add(pushToHost);
+        /* 
         middlePanel.add(pushToSet);
         middlePanel.add(rotateCarrier);
         middlePanel.add(rotateBattleship);
         middlePanel.add(rotateCruiser);
         middlePanel.add(rotateDestroyer);
         middlePanel.add(rotateSubmarine);
-
+        */
         /* Placing the bottoms in the right location */
         frame.add(rightPanel, BorderLayout.EAST);
         frame.add(middlePanel, BorderLayout.CENTER);
-        frame.add(leftPanel, BorderLayout.WEST);
+        frame.add(leftPanel1, BorderLayout.WEST);
+        //frame.add(leftPanel, BorderLayout.WEST);
 
         frame.setTitle("Battle-Ship-1");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -169,7 +179,6 @@ public class battleshipView{
         frame.setVisible(true);
 
     }
-
     /* Never Used */
     void createConnectExternalWindow() {
         JOptionPane.showMessageDialog(frame, "Attempting to connect...", "Attempting to Connect", JOptionPane.INFORMATION_MESSAGE);
@@ -234,6 +243,7 @@ public class battleshipView{
         randomPanel.revalidate();
         randomPanel.repaint();
     }
+
     public void updateLeftPanelManual(){
         //panel.removeAll();
         MyPanel mPanel = new MyPanel(imagePaths);
@@ -281,24 +291,6 @@ public class battleshipView{
         //Submit the changes to the GUI
         middlePanel.revalidate();
         middlePanel.repaint();
-    }
-
-    public void updateLabel(String shipName) {
-        if(shipName == "Carrier") {
-            carrier.setForeground(Color.RED);
-        }
-        if(shipName == "Battleship") {
-            battleShip.setForeground(Color.RED);
-        }
-        if(shipName == "Cruiser") {
-            cruiser.setForeground(Color.RED);
-        }
-        if(shipName == "Submarine") {
-            submarine.setForeground(Color.RED);
-        }
-        if(shipName == "Destroyer") {
-            destroyer.setForeground(Color.RED);
-        }
     }
 
     //called in fireCannon() method in controller. returns a button

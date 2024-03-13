@@ -128,6 +128,7 @@ public class battleshipController implements ActionListener{
         }
     }
 
+    //function sets action for button to set ships manually
     public void setShipsManually(){
         view.getSetButton().addActionListener(new ActionListener() {
             @SuppressWarnings("unused")
@@ -136,33 +137,30 @@ public class battleshipController implements ActionListener{
                 System.out.println("setship clicked");
                 List<ImageInfo> imagesInfo = view.getPanelInfo();
                 model.clearBoard();
+                //iterates through List, assigning coordinate, imagepath,
+                //sends coordinates to corresponding ship class by comparing image path
                 for (int i = 0; i < imagesInfo.size(); i++) {
                     ImageInfo imageInfo = imagesInfo.get(i);
                     Point coordinates = imageInfo.getCoordinates();
                     String imagePath = imageInfo.getImagePath();
                     if(imagePath.equals("/resources/Carrier.png") || imagePath.equals("/resources/carrierRotated.png")){
                         cShip = new BS_Carrier(coordinates, model, rotateCarrier);
-                        //cShip.getRotateStatus(rotateCarrier);
                         System.out.println("Carrier");
                     }
                     else if(imagePath.equals("/resources/Battleship.png") || imagePath.equals("/resources/battleshipRotated.png")){
                         bShip = new BS_Battleship(coordinates, model, rotateBattleship);
-                        //bShip.getRotateStatus(rotateBattleship);
                         System.out.println("battleship");
                     }
                     else if(imagePath.equals("/resources/Destroyer.png") || imagePath.equals("/resources/destroyerRotated.png")){
                         dShip = new BS_Destroyer(coordinates, model, rotateDestroyer);
-                        //dShip.getRotateStatus(rotateDestroyer);
                         System.out.println("destroyer");
                     }
                     else if(imagePath.equals("/resources/Cruiser.png") || imagePath.equals("/resources/cruiserRotated.png")){
                         rShip = new BS_Cruiser(coordinates, model, rotateCruiser);
-                        //rShip.getRotateStatus(rotateCruiser);
                         System.out.println("cruiser");
                     }
                     else if(imagePath.equals("/resources/SubmarineReSize.png") || imagePath.equals("/resources/submarineRotated.png")){
                         sShip = new BS_Submarine(coordinates, model, rotateSubmarine);
-                        //sShip.getRotateStatus(rotateSubmarine);
                         System.out.println("submarine");
                     }
                     System.out.println("Image " + (i + 1) + " - X: " + coordinates.getX() + ", Y: " + coordinates.getY() + ", Path: " + imagePath);
@@ -264,13 +262,6 @@ public class battleshipController implements ActionListener{
                 HitOrMiss = model.determineHitUserBoard(position[0], position[1]); //updates model //checks for sinkship
                 view.playSoundEffect(HitOrMiss);
 
-<<<<<<< Updated upstream
-            //If HitOrMiss is neither "X" or "O" it signies ship has been sunk
-            if(HitOrMiss != "X" && HitOrMiss != "O"){
-                view.updateView(position[0], position[1], "X");
-                //view.showGameStatus(HitOrMiss);
-                view.updateLabel(HitOrMiss);
-=======
                 //If HitOrMiss is neither "X" or "O" it signies ship has been sunk
                 if(HitOrMiss != "X" && HitOrMiss != "O"){
                     view.updateView(position[0], position[1], "X");
@@ -289,7 +280,6 @@ public class battleshipController implements ActionListener{
                     //view.showGameStatus("All ships sunk"); //May be needed?
                 }
                 //return
->>>>>>> Stashed changes
             }
             else {
                 view.playSoundEffect("O");
@@ -297,22 +287,6 @@ public class battleshipController implements ActionListener{
                 shotPosX = position[0];
                 shotPosY = position[1];
             }
-<<<<<<< Updated upstream
-            //check if all ships sunk
-            /*if(model.isWinOpponent()) {
-                System.out.println("Game over");
-                //view.showGameStatus("All ships sunk"); //May be needed?
-            } */ //Uneeded, as we now check for win in the contructor
-            shotPosX = position[0];
-            shotPosY = position[1];
-        }
-        else {
-            view.playSoundEffect("O");
-            view.updateView(position[0], position[1], "O");
-            
-        }
-=======
->>>>>>> Stashed changes
             
     } 
 
