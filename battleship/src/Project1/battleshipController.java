@@ -36,6 +36,8 @@ public class battleshipController implements ActionListener{
     int shotPosX = -1, shotPosY = -1;
     boolean winner = false;
     boolean clicked = true;
+    boolean manualClicked = false;
+    boolean donePlacing = false;
 
     //private boolean buttonClicked = false;
     //controller contructor calls view and model constructors
@@ -46,7 +48,6 @@ public class battleshipController implements ActionListener{
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
         //rotateShipButtons();
-        //setShipsManually();
         //readyCannons();
         //test button to rotate the carrier image, still scuffed
         //rotateShipButtons(); <----XXX
@@ -55,10 +56,17 @@ public class battleshipController implements ActionListener{
         if(pAgain) {
             view.updateMiddlePanel2();//Update the middle panel for placement
             manualPanel();
-            if(clicked){
-                System.out.println("in whileloop");
+            while(!manualClicked){
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            /* 
+            view.updateMiddlePanelPlace();
+            setShipsManually();
+            rotateShipButtons();
+            
             server.send(model.getUserBoard());
             char oppBoard[][] = server.receiveBoard();
             
@@ -84,12 +92,13 @@ public class battleshipController implements ActionListener{
                     //Looping until shotPosX is set to valid number (set in action listeners for buttons)
                     while(shotPosX == -1) {
                         try {
-                            Thread.sleep(100); //Avoid unnecessary work, pause for .1 second
+                            Thread.sleep(10); //Avoid unnecessary work, pause for .1 second
                         } catch (InterruptedException e) {
                             System.out.println("Thread error????????");
                         }
                     }
                     server.send(shotPosX, shotPosY); //Send the current shot
+                    disarmCannons();
                     if(winner) {
                         break gameLoop;
                     }
@@ -112,7 +121,7 @@ public class battleshipController implements ActionListener{
             if(!pAgain || !opponentPAgain) {
                 pAgain = false;
             }
-            */
+            
         }
     }
 
@@ -137,7 +146,16 @@ public class battleshipController implements ActionListener{
 
     //function sets action for button to set ships manually
     public void setShipsManually(){
-        view.getSetButton().addActionListener(new ActionListener() {
+        /*view.().addActionListener(new ActionListener() {
+            @SuppressWarnings("unused")
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                donePlacing = true;
+            }
+        }*/
+
+
+        view.getFinalizePlacement().addActionListener(new ActionListener() {
             @SuppressWarnings("unused")
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -175,6 +193,7 @@ public class battleshipController implements ActionListener{
                 model.printBoard();
                 //sets images to not move after button clicked
                 view.getPanel().setImagesMovable(false);
+                donePlacing = true;
             }
         });
     }
@@ -194,6 +213,7 @@ public class battleshipController implements ActionListener{
         return rotated;
     }
 
+    /* Adding action listeners for the "rotate" buttons */
     public void rotateShipButtons(){
         view.getRotateCarrier().addActionListener(new ActionListener() {
             @Override
@@ -249,8 +269,8 @@ public class battleshipController implements ActionListener{
         view.getManualButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                view.updateLeftPanelManual();
-                clicked = true;
+                //view.updateLeftPanelManual();
+                manualClicked = true;
             }
         });
     }

@@ -227,6 +227,7 @@ public class battleshipView extends JFrame{
     public List<String> getPathList(){
         return imagePaths;
     }
+
     void setManualBoolean(boolean manualButtonClicked){
         manualClicked = manualButtonClicked;
     }
@@ -311,7 +312,7 @@ public class battleshipView extends JFrame{
         //boolean clicked = true;
         //setManualBoolean(clicked);
         
-        updateMiddlePanelPlace();
+        //updateMiddlePanelPlace();
     }
 
     /* Update the middle panel with ships */
@@ -447,6 +448,7 @@ public class battleshipView extends JFrame{
 
     /* Getter functions for the controller that returns the button */
     JButton getFinalizePlacement() {
+        System.out.println("Getting finalizePlacement");
         return finalizeShipPlacement;
     }
 
