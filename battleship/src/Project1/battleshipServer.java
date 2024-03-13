@@ -76,6 +76,7 @@ public class battleshipServer {
         for(int i = 0; i < 10; i++) {
             for(int j = 0; j < 10; j++) {
                 data += Character.toString(board[i][j]);
+                System.out.println(data);
             }
         }
 
@@ -118,7 +119,9 @@ public class battleshipServer {
         for(int i = 0; i < 10; i++) {
             for(int j = 0; j < 10; j++) {
                 currentIndex = (i*10)+j;
+                System.out.println(currentIndex);
                 oppBoard[i][j] = data.charAt(currentIndex);
+                System.out.println(oppBoard[i][j]);
             }
         }
         return oppBoard;

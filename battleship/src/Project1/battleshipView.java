@@ -218,7 +218,7 @@ public class battleshipView{
         /* Resetting the middle panel */
         middlePanel.removeAll(); //Remove the current elements from the panel
         middlePanel.setBackground(Color.GREEN); //just for testing
-        middlePanel.setLayout(new GridLayout(1, 5));
+        middlePanel.setLayout(new GridLayout(5, 1));
         middlePanel.setPreferredSize(new Dimension(300, 100));
         
         //middle panel formatting (should change later)
@@ -302,7 +302,7 @@ public class battleshipView{
     void updateMiddlePanelPlace() {
         /* Resetting the middle panel */
         middlePanel.removeAll(); //Remove the current elements from the panel
-        middlePanel.setBackground(Color.GREEN); //just for testing
+        middlePanel.setBackground(Color.GRAY); //just for testing
         middlePanel.setLayout(new GridLayout(7, 1));
         middlePanel.setPreferredSize(new Dimension(300, 100));
 

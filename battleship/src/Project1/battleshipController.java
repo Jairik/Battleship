@@ -34,28 +34,38 @@ public class battleshipController implements ActionListener{
     boolean rotateSubmarine;
     boolean rotateDestroyer;
     int shotPosX = -1, shotPosY = -1;
+    boolean winner = false;
+
     //private boolean buttonClicked = false;
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
         //Defining model and view
-        boolean winner = false, turn = false, pAgain = true, host, opponentPAgain;
+        boolean turn = false, pAgain = true, host, opponentPAgain;
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
         //test button to rotate the carrier image, still scuffed
-        rotateShipButtons();
+        //rotateShipButtons(); <----XXX
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
         establishConnection();
         while(pAgain) {
             view.updateMiddlePanelPlace(); //Update the middle panel for placement
             server.send(model.getUserBoard());
             char oppBoard[][] = server.receiveBoard();
+            
+            for(int i = 0; i < 10; i++) {
+                for(int j = 0; j < 10; j++) {
+                    System.out.print(oppBoard[i][j]);
+                }
+                System.out.println();
+            }
             model.setOppBoard(oppBoard);
             view.updateMiddlePanelPlay(); //Update the middle panel with ship status
             //!Remove action listeners for the d-n-d ships!
+            rotateShipButtons();
             host = server.isHost();
             turn = host; //Set the first turn to always be the host
-            gameLoop:
+            gameLoop: //Assigning name to outermost loop so we can later break it
             while(winner) {
                 /* Shoot shot, then wait to receive input from the other player */
                 while(turn) {
@@ -80,7 +90,6 @@ public class battleshipController implements ActionListener{
                     exitGame(); //Display a window saying that the game is disconected, then exiting the program
                 }
                 server.receiveCoordinates(); //Wait until the opposing user sends shot coordinates
-                //model.receiveShot()
                 //view.recieveShot()
                 //checkForWinner somehow?
                 if(winner) {
@@ -234,10 +243,10 @@ public class battleshipController implements ActionListener{
             if(model.checkForValidShot(position[0], position[1])){
                 HitOrMiss = model.determineHit(position[0], position[1]); //updates model //checks for sinkship
                 view.playSoundEffect(HitOrMiss);
-                if(HitOrMiss != "X" && HitOrMiss != "O"){
+                if(HitOrMiss != "X" && HitOrMiss != "O") {
                     view.updateView(position[0], position[1], "X");
                     //view.showGameStatus(HitOrMiss);
-                    view.updateLabel(HitOrMiss);
+                    //view.updateLabel(HitOrMiss);
                     if(model.isWin()) {
                         boolean winner = true;
                     }
