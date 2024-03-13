@@ -5,6 +5,7 @@ import java.awt.Point;
 public class BS_Cruiser {
     private int shipSize = 3;
     private String shipSymbol = "r";
+    @SuppressWarnings("unused")
     private battleshipModel model;
 
     BS_Cruiser(Point coordinates, battleshipModel model, boolean rotation){

@@ -241,7 +241,7 @@ public class battleshipModel {
     boolean checkForSinkShipUserBoard(int xPos, int yPos) {
         boolean sank = false;
         int numOfShips = 5;
-        char shipArr[] = {carrier, battleShip, cruiser, submarine, destroyer};
+        //char shipArr[] = {carrier, battleShip, cruiser, submarine, destroyer};
         int shipHitsRemainingArr[] = {carrierRemaining, battleshipRemaining, cruiserRemaining, submarineRemaining, destroyerRemaining};
         for(int i = 0; i < numOfShips; i++) {
             if(shipHitsRemainingArr[i] == 1) {
@@ -257,7 +257,7 @@ public class battleshipModel {
     boolean checkForSinkShipOpponentBoard(int xPos, int yPos) {
         boolean sank = false;
         int numOfShips = 5;
-        char shipArr[] = {carrier, battleShip, cruiser, submarine, destroyer};
+        //char shipArr[] = {carrier, battleShip, cruiser, submarine, destroyer};
         int shipHitsRemainingArr[] = {carrierRemainingOpponent, battleshipRemainingOpponent, cruiserRemainingOpponent, submarineRemainingOpponent, destroyerRemainingOpponent};
         for(int i = 0; i < numOfShips; i++) {
             if(shipHitsRemainingArr[i] == 1) {

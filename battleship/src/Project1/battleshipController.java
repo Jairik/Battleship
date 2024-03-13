@@ -49,20 +49,18 @@ public class battleshipController implements ActionListener{
         establishConnection();
         while(pAgain) {
             view.updateMiddlePanelPlace(); //Update the middle panel for placement
+            rotateShipButtons();
             server.send(model.getUserBoard());
             char oppBoard[][] = server.receiveBoard();
             model.setOppBoard(oppBoard);
             view.updateMiddlePanelPlay(); //Update the middle panel with ship status
             //!Remove action listeners for the d-n-d ships!
-            rotateShipButtons();
             host = server.isHost();
             turn = host; //Set the first turn to always be the host
             gameLoop: //Assigning name to outermost loop so we can later break it
             while(!winner) {
                 /* Shoot shot, then wait to receive input from the other player */
-                System.out.println("------\nIn game loop\n------------");
                 while(turn) {
-                    System.out.println("------\nPlayer's Turn\n------------");
                     shotPosX = -1; //Adding signal value that shot has not yet been taken 
                     shotPosY = -1;
                     readyCannons(); //add actionlisteners to the buttons
@@ -237,37 +235,36 @@ public class battleshipController implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         String HitOrMiss = ""; //Initializing
         JButton clickedButton = (JButton)e.getSource();
-        //while(true) {
-            //finds clicked button position
-            int[] position = view.buttonPosition(clickedButton);
-            System.out.println(position[0] + ", " + position[1]);
-            //if statement calls checkforvalidshot() from model - if true hit = X else miss = O
-            if(model.checkForValidShot(position[0], position[1])){
-                HitOrMiss = model.determineHitOpponentBoard(position[0], position[1]); //check opponent board
-                view.playSoundEffect(HitOrMiss);
+        //finds clicked button position
+        int[] position = view.buttonPosition(clickedButton);
+        System.out.println(position[0] + ", " + position[1]);
+        //if statement calls checkforvalidshot() from model - if true hit = X else miss = O
+        if(model.checkForValidShot(position[0], position[1])){
+            HitOrMiss = model.determineHitOpponentBoard(position[0], position[1]); //check opponent board
+            view.playSoundEffect(HitOrMiss);
 
-                //If HitOrMiss is neither "X" or "O" it signies ship has been sunk
-                if(HitOrMiss != "X" && HitOrMiss != "O"){
-                    view.updateView(position[0], position[1], "X");
-                    //view.showGameStatus(HitOrMiss);
-                    //view.updateLabel(HitOrMiss);
-                }
-                else { //THIS is probably the issue
-                    view.updateView(position[0], position[1], HitOrMiss);
-                }
-                //check if all ships sunk
-                if(model.isWinOpponent()) {
-                    System.out.println("Game over");
-                    //view.showGameStatus("All ships sunk"); //May be needed?
-                }
-                //return
+            //If HitOrMiss is neither "X" or "O" it signies ship has been sunk
+            if(HitOrMiss != "X" && HitOrMiss != "O"){
+                view.updateView(position[0], position[1], "X");
+                //view.showGameStatus(HitOrMiss);
+                //view.updateLabel(HitOrMiss);
             }
-            else {
-                view.playSoundEffect("O");
-                view.updateView(position[0], position[1], "O");
-                shotPosX = position[0];
-                shotPosY = position[1];
+            else { //THIS is probably the issue
+                view.updateView(position[0], position[1], HitOrMiss);
             }
+            //check if all ships sunk
+            if(model.isWinOpponent()) {
+                System.out.println("Game over");
+                //view.showGameStatus("All ships sunk"); //May be needed?
+            }
+            //return
+        }
+        else {
+            view.playSoundEffect("O");
+            view.updateView(position[0], position[1], "O");
+            shotPosX = position[0];
+            shotPosY = position[1];
+        }
             
     } 
 

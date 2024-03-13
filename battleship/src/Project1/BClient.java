@@ -66,6 +66,7 @@ public class BClient {
     System.out.println("Got IO Streams");
   }
 
+  /*
   private void closeConnection() 
    {
       System.out.println("Closing Connection");
@@ -77,7 +78,7 @@ public class BClient {
       catch (IOException e) {
          e.printStackTrace();
       } 
-   } 
+   } */
 
   // send message to server
   public void sendMessage(String message) {
