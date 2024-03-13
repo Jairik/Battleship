@@ -132,4 +132,14 @@ public class battleshipServer {
     public boolean isHost() {
         return Host;
     }
+
+    /* Checks the current connection status, returning whether the connection is still up or not */
+    public boolean checkConnection() {
+        if(Host) {
+            return server.getConnectionStatus();
+        }
+        else {
+            return client.getConnectionStatus();
+        }
+    }
 }

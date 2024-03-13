@@ -299,6 +299,11 @@ public class battleshipView{
     public void declareWinner(String message){
         JOptionPane.showMessageDialog(frame, message + " has won!", "Winner!", JOptionPane.INFORMATION_MESSAGE);
     }
+    //Used in controller
+    public void showConnectionError() {
+        String message = "Whoops, your opponent has disconnected!\nPlease close this window to exit the game";
+        JOptionPane.showMessageDialog(frame, message, "Opponent Disconnected!", JOptionPane.INFORMATION_MESSAGE);
+    }
 
     public void updateLabel(String message){
         if(message == "Carrier"){
@@ -391,6 +396,11 @@ public class battleshipView{
 
     JButton getRotateDestroyer() {
         return rotateDestroyer;
+    }
+
+    /* Called by controller to delete the frame, used to end the program */
+    void forceCloseProg() {
+        frame.dispose();
     }
 }
 

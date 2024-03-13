@@ -52,7 +52,7 @@ public class DraggableImage {
     //Creates an image icon given a file path. Serves as a helper function the the constructor
     private void createImageIcon() {
         try {
-            URL shipImagePath = shipPanel.class.getResource(imagePath);
+            URL shipImagePath = DraggableImage.class.getResource(imagePath);
             InputStream inputStream = shipImagePath.openStream();
             Image image = ImageIO.read(inputStream);
             inputStream.close();
