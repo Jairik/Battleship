@@ -106,6 +106,12 @@ public class BClient {
     }
     return messageFromClient;
   }
+
+  /* Checks the connection status, returning false if the connection is closed */
+  public boolean getConnectionStatus() {
+    return !client.isClosed();
+ }
+
 }
 
   /*  process connection with server

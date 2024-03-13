@@ -83,7 +83,7 @@ public class BServer {
 
    /* Waits for the connection with the client, then returns the Host name*/
    private void waitForConnection() throws IOException {
-      System.out.println("Waiting for connection...");
+    System.out.println("Waiting for connection...");
     connection = server.accept();
     System.out.println("Connection Successful");
    }
@@ -109,6 +109,10 @@ public class BServer {
     System.out.println("Outside of process Connection"); */
    }
 
+   /* Checks the connection status, returning false if the connection is closed */
+   public boolean getConnectionStatus() {
+      return !connection.isClosed();
+   }
 }
 
 //Code modified:

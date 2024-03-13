@@ -8,6 +8,7 @@ package Project1;
 
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Point;
@@ -36,7 +37,7 @@ public class battleshipController implements ActionListener{
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
         //Defining model and view
-        boolean winner = false, turn = false, host;
+        boolean winner = false, turn = false, pAgain = true, host;
         int shotPosX = -1, shotPosY = -1;
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
@@ -85,52 +86,54 @@ public class battleshipController implements ActionListener{
             }
         });
         //test button to rotate the carrier image, still scuffed
-        
-        //Getting host and connect Buttons
-        JButton cButton = view.getConnectButton();
-        JButton hButton = view.getHostButton();
-        readyCannons();
-        /* Adding action listeners for buttons, then defining them */
-
-        System.out.println("Updating Panel: ");
-        //view.updateMiddlePanel();
-
 
         /* We should have this all in a while loop inside a try catch statement that runs while
          * a boolean winner is false and while the connection is valid.
          */
 
-        /*SwingUtilities.invokeLater(() ->*/ readyCannons();
-
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
         establishConnection();
-        view.updateMiddlePanelPlace(); //Update the middle panel for placement
-        //placeShips(); <--!!All relevent functions for placing ships should go in here. If that isn't possible,
-        //I can try to multithread and run whatever 2/3 functions at the same time
-        server.send(model.getUserBoard());
-        char oppBoard[][] = server.receiveBoard();
-        model.setOppBoard(oppBoard);
-        view.updateMiddlePanelPlay(); //Update the middle panel with ship status
+        while(pAgain) {
         
-        //Remove action listeners for the d-n-d ships
-        readyCannons(); //add actionlisteners to the buttons
-        host = server.isHost();
-        turn = host; //Set the first turn to always be the host
-        while(winner) {
-            while(turn) {
-                //Wait for the event of a shot cannon, then turn off actionEventListener (maybe?)
-                //Get X & Y Positions
-                //Validate X & Y Positions
-                //Probably copying alot from the actionPerformed for fireCannon (or just using it w/ slight modification)
-                server.send(shotPosX, shotPosY); //Send the current shot
-                //CheckForWinner(userBoard)
-                turn = false;
+            view.updateMiddlePanelPlace(); //Update the middle panel for placement
+            //placeShips(); <--!!All relevent functions for placing ships should go in here. If that isn't possible,
+            //I can try to multithread and run whatever 2/3 functions at the same time
+            server.send(model.getUserBoard());
+            char oppBoard[][] = server.receiveBoard();
+            model.setOppBoard(oppBoard);
+            view.updateMiddlePanelPlay(); //Update the middle panel with ship status
+            
+            //Remove action listeners for the d-n-d ships
+            readyCannons(); //add actionlisteners to the buttons
+            host = server.isHost();
+            turn = host; //Set the first turn to always be the host
+            gameLoop:
+            while(winner) {
+                /* Shoot shot and  */
+                while(turn) {
+                    //Wait for the event of a shot cannon, then turn off actionEventListener (maybe?)
+                    //Get X & Y Positions
+                    //Validate X & Y Positions
+                    //Probably copying alot from the actionPerformed for fireCannon (or just using it w/ slight modification)
+                    server.send(shotPosX, shotPosY); //Send the current shot
+                    if(winner) {
+                        break gameLoop;
+                    }
+                    turn = false;
+                }
+                if(!server.checkConnection()) {
+                    exitGame();
+                }
+                server.receiveCoordinates(); //Wait until the opposing user sends shot coordinates
+                //model.receiveShot()
+                //view.recieveShot()
+                //checkForWinner somehow?
+                if(winner) {
+
+                }
+                turn = true;
             }
-            server.receiveCoordinates(); //Wait until the opposing user sends shot coordinates
-            //!NECESSARY CODE!if (/*model.isWin(oppBoard)*/) //We're going to have to think out this logic
-            turn = true;
-        }
-        
+        }    
     }
 
     //adds a actionlistener to every button
@@ -187,7 +190,7 @@ public class battleshipController implements ActionListener{
         });
     }
 
-    public boolean rotateBattleship(int index, String path1, String path2){
+    public boolean rotateBattleship(int index, String path1, String path2) {
         List<DraggableImage> images = view.getPanel().getImages();
         DraggableImage oldImage = images.get(index);
         if(!rotated){
@@ -216,17 +219,14 @@ public void actionPerformed(ActionEvent e) {
         System.out.println(position[0] + ", " + position[1]);
         //if statement calls checkforvalidshot() from model - if true hit = X else miss = O
         if(model.checkForValidShot(position[0], position[1])){
-            System.out.println("Valid");
             HitOrMiss = model.determineHit(position[0], position[1]); //updates model //checks for sinkship
-            System.out.println(HitOrMiss);
             view.playSoundEffect(HitOrMiss);
             if(HitOrMiss != "X" && HitOrMiss != "O"){
                 view.updateView(position[0], position[1], "X");
                 //view.showGameStatus(HitOrMiss);
                 view.updateLabel(HitOrMiss);
                 if(model.isWin()) {
-                    view.declareWinner("Player");
-                    //Restart the game (?) (Last thing we implement)
+                    boolean winner = true;
                 }
             }
             else {
@@ -293,6 +293,12 @@ public void actionPerformed(ActionEvent e) {
         JButton rotateCruiser = view.getRotateCruiser();
         JButton rotateSubmarine = view.getRotateSubmarine();
         JButton rotateDestroyer = view.getRotateDestroyer();
+    }
+
+    /* Close the JFrame and exit the game - in the event ofg  */
+    void exitGame() {
+        view.forceCloseProg();
+        System.exit(0); //Forcibly end the program
     }
 }
 
