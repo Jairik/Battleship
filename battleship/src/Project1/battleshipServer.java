@@ -16,12 +16,8 @@ package Project1;
  * receiveOpponentCoordinates() >>> Used to get coordinates from opponent, returns an int[][]
  * 
  * Note: I did all the conversions within the function, however they likelihood of them not working is high. Therefore,
- * it isnt working as intended. I would verify the logic and stuff
+ * if it isnt working as intended I would verify the logic and stuff
  */
-
-
-
-
 
 public class battleshipServer {
     static boolean Host;

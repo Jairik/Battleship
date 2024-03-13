@@ -42,6 +42,7 @@ public class battleshipController implements ActionListener{
     //private boolean buttonClicked = false;
     //controller contructor calls view and model constructors
     public battleshipController() throws IOException {
+        char oppBoard[][]; //Initialize a null board for the opponent
         //Defining model and view
         boolean turn = false, pAgain = true, host, opponentPAgain;
         model = new battleshipModel(); 
@@ -52,7 +53,7 @@ public class battleshipController implements ActionListener{
         //test button to rotate the carrier image, still scuffed
         //rotateShipButtons(); <----XXX
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
-        establishConnection();
+        //establishConnection();
         if(pAgain) {
             view.updateMiddlePanel2();//Update the middle panel for placement
             manualPanel();
@@ -63,12 +64,13 @@ public class battleshipController implements ActionListener{
                     e.printStackTrace();
                 }
             }
+            System.out.println("TESTING- Manual Clicked: " + manualClicked);
             view.updateMiddlePanelPlace();
             setShipsManually();
             rotateShipButtons();
-            
+            System.out.println("Send Board to Opponent");
             server.send(model.getUserBoard());
-            char oppBoard[][] = server.receiveBoard();
+            oppBoard = server.receiveBoard(); //receive the opponent board
             
             for(int i = 0; i < 10; i++) {
                 for(int j = 0; j < 10; j++) {
@@ -77,13 +79,14 @@ public class battleshipController implements ActionListener{
                 System.out.println();
             }
             model.setOppBoard(oppBoard);
+            /* UPDATES MIDDLE PANEL HERE (GREEN LABELS) - testing */
             view.updateMiddlePanelPlay(); //Update the middle panel with ship status
             //!Remove action listeners for the d-n-d ships!
             rotateShipButtons();
             host = server.isHost();
             turn = host; //Set the first turn to always be the host
             gameLoop: //Assigning name to outermost loop so we can later break it
-            while(winner) {
+            while(!winner) {
                 //Shoot shot, then wait to receive input from the other player 
                 while(turn) {
                     shotPosX = -1; //Adding signal value that shot has not yet been taken 
