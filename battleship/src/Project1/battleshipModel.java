@@ -42,6 +42,7 @@ public class battleshipModel {
     int shipsRemaining = 5; // variable to track how many of the user's ships remain
     int shipsRemainingOpponent = 5; // variable to track how many of the opponent's ships remain
 
+    boolean setModel;
     //Constructor to make board and declare currentTurn
     public battleshipModel() {
         board = new char[boardHeight][boardWidth];
@@ -52,7 +53,10 @@ public class battleshipModel {
     // will - called in controller to check valid shot
     /*Validates a user's shot, returning true if the shot will fall on an empty place on the array*/
     public boolean checkForValidShot(int x, int y) {
-         return (board[x][y] == ' ');
+         if(board[x][y] == 'X' || board[x][y] == 'O'){
+            return false;
+         }
+         return true;
     }
 
     //Logic to randomly place the ships on the board
@@ -306,6 +310,14 @@ public class battleshipModel {
             hitOrMissChar = 'O';
         }
         board[x][y] = hitOrMissChar;
+    }
+
+    void setModelBoolean(boolean modelset){
+        setModel = modelset;
+    }
+
+    public boolean modelIsSet(){
+        return setModel;
     }
 
 }

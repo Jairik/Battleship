@@ -25,11 +25,6 @@ import java.util.List;
    your test program should have GUI and a Data Model backend and should update the GUI and data model accordingly.
 */
 
-
-
-
-
-
 public class battleshipView extends JFrame{
     
     private JFrame frame;
@@ -256,23 +251,41 @@ public class battleshipView extends JFrame{
 
     //function handles randomize button
     public void updateLeftPanelRandom(char[][] userBoard){
-        //leftPanel.removeAll(); //replace after view controler left panel is changed
+
+        System.out.println("Inside updateLeftPanelRandom");
+        // Create a new JPanel to overlay
         JPanel randomPanel = new JPanel();
         randomPanel.setLayout(new GridLayout(10, 10));
 
         JLabel[][] grid = new JLabel[10][10];
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
                 String testChar = Character.toString(userBoard[i][j]);
                 grid[i][j] = new JLabel();
                 grid[i][j].setText(testChar);
-                label[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                grid[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 randomPanel.add(grid[i][j]);
             }
         }
-        
-        randomPanel.revalidate();
-        randomPanel.repaint();
+
+        randomPanel.setPreferredSize(new Dimension(500, 500));
+
+        // Assuming you have a reference to the container (e.g., contentPane)
+        Container container = this.getContentPane();
+
+        // Remove the existing leftPanel1 (if not null)
+        if (this.leftPanel1 != null) {
+            container.remove(this.leftPanel1);
+            container.revalidate();
+            container.repaint();
+        }
+
+        // Add the new panel to the container
+        container.add(randomPanel, BorderLayout.WEST);
+        this.leftPanel1 = randomPanel;
+
+        updateMiddlePanel3();
+
     }
 
     public void updateLeftPanelManual(){
@@ -441,6 +454,22 @@ public class battleshipView extends JFrame{
 
         middlePanel.add(randomPlacement);
         middlePanel.add(manuallyPlace);
+
+        middlePanel.revalidate();
+        middlePanel.repaint();
+    }
+
+    void updateMiddlePanel3(){
+        middlePanel.removeAll(); //Remove the current elements from the panel
+        middlePanel.setBackground(Color.GRAY); //just for testing
+        middlePanel.setLayout(new GridLayout(2, 1));
+        middlePanel.setPreferredSize(new Dimension(300, 100));
+
+        randomPlacement = new JButton("Randomize");
+        finalizeShipPlacement = new JButton("Finalize Placement");
+
+        middlePanel.add(randomPlacement);
+        middlePanel.add(finalizeShipPlacement);
 
         middlePanel.revalidate();
         middlePanel.repaint();

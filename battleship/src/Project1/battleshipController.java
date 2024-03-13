@@ -49,7 +49,6 @@ public class battleshipController implements ActionListener{
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
         //rotateShipButtons();
-        //readyCannons();
         //test button to rotate the carrier image, still scuffed
         //rotateShipButtons(); <----XXX
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
@@ -66,9 +65,11 @@ public class battleshipController implements ActionListener{
             }
             System.out.println("TESTING- Manual Clicked: " + manualClicked);
             view.updateMiddlePanelPlace();
-            setShipsManually();
+            setShipsManually(); //button function to set ships with dragndrop
+            randomizePanel(); // button function to randomize ship
             rotateShipButtons();
-            System.out.println("Send Board to Opponent");
+            readyCannons();
+            /* 
             server.send(model.getUserBoard());
             oppBoard = server.receiveBoard(); //receive the opponent board
             
@@ -124,7 +125,7 @@ public class battleshipController implements ActionListener{
             if(!pAgain || !opponentPAgain) {
                 pAgain = false;
             }
-            
+            */
         }
     }
 
@@ -149,15 +150,6 @@ public class battleshipController implements ActionListener{
 
     //function sets action for button to set ships manually
     public void setShipsManually(){
-        /*view.().addActionListener(new ActionListener() {
-            @SuppressWarnings("unused")
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                donePlacing = true;
-            }
-        }*/
-
-
         view.getFinalizePlacement().addActionListener(new ActionListener() {
             @SuppressWarnings("unused")
             @Override
@@ -196,7 +188,11 @@ public class battleshipController implements ActionListener{
                 model.printBoard();
                 //sets images to not move after button clicked
                 view.getPanel().setImagesMovable(false);
+                boolean modelSet = true;
+                model.setModelBoolean(modelSet);
                 donePlacing = true;
+                //updates middle panel after finalize ships
+                view.updateMiddlePanelPlay();
             }
         });
     }
@@ -261,6 +257,7 @@ public class battleshipController implements ActionListener{
             public void actionPerformed(ActionEvent e) {
                 model.randomlySetBoard();
                 //replace left panel with grid
+                System.out.println("random ship clicked");
                 char[][] randomBoard = model.getUserBoard();
                 view.updateLeftPanelRandom(randomBoard);
             }
@@ -284,7 +281,9 @@ public class battleshipController implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         String HitOrMiss = ""; //Initializing
         JButton clickedButton = (JButton)e.getSource();
-        //while(true) {
+        
+        //if model isnt set 
+        if(model.modelIsSet()){
             //finds clicked button position
             int[] position = view.buttonPosition(clickedButton);
             System.out.println(position[0] + ", " + position[1]);
@@ -302,14 +301,21 @@ public class battleshipController implements ActionListener{
                 }
                 else {
                     view.updateView(position[0], position[1], HitOrMiss);
+                    System.out.println("valid shot");
+                    model.printBoard();
                 }
             }
             else {
                 view.playSoundEffect("O");
-                view.updateView(position[0], position[1], "O");
                 shotPosX = position[0];
                 shotPosY = position[1];
+                System.out.println("not valid shot");
+                model.printBoard();
             }
+        }
+        else{
+            System.out.println("Model not set");
+        }
     } 
 
     void establishConnection() {
