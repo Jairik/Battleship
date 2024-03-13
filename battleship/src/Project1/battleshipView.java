@@ -89,16 +89,18 @@ public class battleshipView extends JFrame{
         frame.setLayout(new BorderLayout());       
         frame.setLocationRelativeTo(null);
 
-        /* 
+        
         // Create left panel - used to display user ships and for Drag-n-Drop 
         leftPanel = new MyPanel(imagePaths);
         leftPanel.setBackground(seaTurqoise);
         leftPanel.setLayout(new GridLayout(10, 10));
-        */
+        
 
+        /* 
         leftPanel1 = new JPanel();
         leftPanel1.setBackground(seaTurqoise);
         leftPanel1.setLayout(new GridLayout(10, 10));
+        */
         //Add grid labels for left of the screen
         label = new JLabel[10][10];
         for(int i = 0; i < 10; i++){
@@ -107,12 +109,12 @@ public class battleshipView extends JFrame{
                 label[i][j] = new JLabel();
                 //label[i][j].setText(testChar);
                 label[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                leftPanel1.add(label[i][j]);
+                leftPanel.add(label[i][j]);
             }
         }
-        leftPanel1.setPreferredSize(new Dimension(500, 500));
+        //leftPanel1.setPreferredSize(new Dimension(500, 500));
         //Setting dimensions
-        //leftPanel.setPreferredSize(new Dimension(500, 500));
+        leftPanel.setPreferredSize(new Dimension(500, 500));
         
         /* Create right panel - used for shooting at enemy ships */
         rightPanel = new JPanel();
@@ -170,8 +172,8 @@ public class battleshipView extends JFrame{
         /* Placing the bottoms in the right location */
         frame.add(rightPanel, BorderLayout.EAST);
         frame.add(middlePanel, BorderLayout.CENTER);
-        frame.add(leftPanel1, BorderLayout.WEST);
-        //frame.add(leftPanel, BorderLayout.WEST);
+        //frame.add(leftPanel1, BorderLayout.WEST);
+        frame.add(leftPanel, BorderLayout.WEST);
 
         frame.setTitle("Battle-Ship-1");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -274,6 +276,7 @@ public class battleshipView extends JFrame{
 
     public void updateLeftPanelManual(){
         //panel.removeAll();
+        /* 
         MyPanel mPanel = new MyPanel(imagePaths);
         mPanel.setLayout(new GridLayout(10, 10));
 
@@ -288,7 +291,7 @@ public class battleshipView extends JFrame{
         }
 
         mPanel.setPreferredSize(new Dimension(500, 500));
-        
+
         mPanel.revalidate();
         Container container = this.getContentPane();
 
@@ -304,7 +307,7 @@ public class battleshipView extends JFrame{
         // Add the new panel to the container
         container.add(mPanel, BorderLayout.WEST);
         this.leftPanel1 = mPanel;
-
+        */
         //boolean clicked = true;
         //setManualBoolean(clicked);
         
