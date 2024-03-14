@@ -262,7 +262,7 @@ public class battleshipController implements ActionListener{
                 //view.updateMiddlePanel3();
                 System.out.print("random model set");
 
-                //view.updateLeftPanelRandom(randomBoard);
+                view.updateLeftPanelRandom(randomBoard);
             }
         });
     }

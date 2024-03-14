@@ -91,12 +91,6 @@ public class battleshipView extends JFrame{
         leftPanel.setBackground(seaTurqoise);
         leftPanel.setLayout(new GridLayout(10, 10));
         
-
-        /* 
-        leftPanel1 = new JPanel();
-        leftPanel1.setBackground(seaTurqoise);
-        leftPanel1.setLayout(new GridLayout(10, 10));
-        */
         //Add grid labels for left of the screen
         label = new JLabel[10][10];
         for(int i = 0; i < 10; i++){
@@ -108,7 +102,6 @@ public class battleshipView extends JFrame{
                 leftPanel.add(label[i][j]);
             }
         }
-        //leftPanel1.setPreferredSize(new Dimension(500, 500));
         //Setting dimensions
         leftPanel.setPreferredSize(new Dimension(500, 500));
         
@@ -144,27 +137,9 @@ public class battleshipView extends JFrame{
         pushToConnect = new JButton("Connect");
         pushToHost = new JButton("Host");
 
-        //button returns ship position
-        /* 
-        pushToSet = new JButton("Set ships");
-        rotateCarrier = new JButton("rotate carrier");
-        rotateBattleship = new JButton("rotate battleship");
-        rotateCruiser = new JButton("rotate cruiser");
-        rotateDestroyer = new JButton("rotate destroyer");
-        rotateSubmarine = new JButton("rotate submarine");
-        */
-        // temp button to test ship setting
-        /* Placing Buttons On the Middle Panel */
         middlePanel.add(pushToConnect);
         middlePanel.add(pushToHost);
-        /* 
-        middlePanel.add(pushToSet);
-        middlePanel.add(rotateCarrier);
-        middlePanel.add(rotateBattleship);
-        middlePanel.add(rotateCruiser);
-        middlePanel.add(rotateDestroyer);
-        middlePanel.add(rotateSubmarine);
-        */
+
         /* Placing the bottoms in the right location */
         frame.add(rightPanel, BorderLayout.EAST);
         frame.add(middlePanel, BorderLayout.CENTER);
@@ -251,13 +226,13 @@ public class battleshipView extends JFrame{
     }
 
     //function handles randomize button
-    public void updateLeftPanelRandom(char[][] userBoard){
-
+    public void updateLeftPanelRandom(char[][] userBoard) {
         System.out.println("Inside updateLeftPanelRandom");
-        // Create a new JPanel to overlay
-        JPanel randomPanel = new JPanel();
+        
+        // Create a new MyPanel to overlay
+        MyPanel randomPanel = new MyPanel(new ArrayList<>()); // You can pass an empty list since it's not used here
         randomPanel.setLayout(new GridLayout(10, 10));
-
+        
         JLabel[][] grid = new JLabel[10][10];
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -268,66 +243,29 @@ public class battleshipView extends JFrame{
                 randomPanel.add(grid[i][j]);
             }
         }
-
-        randomPanel.setPreferredSize(new Dimension(500, 500));
-
-        // Assuming you have a reference to the container (e.g., contentPane)
-        Container container = this.getContentPane();
-
-        // Remove the existing leftPanel1 (if not null)
-        if (this.leftPanel1 != null) {
-            container.remove(this.leftPanel1);
-            container.revalidate();
-            container.repaint();
-        }
-
-        // Add the new panel to the container
-        container.add(randomPanel, BorderLayout.WEST);
-        this.leftPanel1 = randomPanel;
-
-        updateMiddlePanel3();
-
-    }
-
-    public void updateLeftPanelManual(){
-        //panel.removeAll();
-        /* 
-        MyPanel mPanel = new MyPanel(imagePaths);
-        mPanel.setLayout(new GridLayout(10, 10));
-
-        JLabel[][] grid = new JLabel[10][10];
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
-                JLabel lbl = new JLabel();
-                grid[i][j] = lbl;
-                grid[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                mPanel.add(grid[i][j]);
-            }
-        }
-
-        mPanel.setPreferredSize(new Dimension(500, 500));
-
-        mPanel.revalidate();
-        Container container = this.getContentPane();
-
-        // Call revalidate and repaint before adding the new panel
-        mPanel.revalidate();
-        mPanel.repaint();
-
-        // Remove the existing leftPanel1 (if not null)
-        if (this.leftPanel1 != null) {
-            container.remove(this.leftPanel1);
-        }
-
-        // Add the new panel to the container
-        container.add(mPanel, BorderLayout.WEST);
-        this.leftPanel1 = mPanel;
-        */
-        //boolean clicked = true;
-        //setManualBoolean(clicked);
         
-        //updateMiddlePanelPlace();
+        randomPanel.setPreferredSize(new Dimension(500, 500));
+        
+        // Get the glass pane from the JFrame
+        JComponent glassPane = (JComponent) frame.getGlassPane();
+        
+        // Set the layout of the glass pane to null to allow manual positioning
+        glassPane.setLayout(null);
+        
+        // Get the bounds of the left panel
+        Rectangle bounds = leftPanel.getBounds();
+        
+        // Set the bounds of the random panel to match the left panel
+        randomPanel.setBounds(bounds);
+        
+        // Add the new panel to the glass pane
+        glassPane.add(randomPanel);
+        
+        // Make the glass pane visible
+        glassPane.setVisible(true);
     }
+    
+    
 
     /* Update the middle panel with ships */
     void updateMiddlePanelPlay() {
