@@ -359,6 +359,18 @@ public class battleshipView extends JFrame{
         middlePanel.repaint();
     }
 
+    public void receiveShot(int x, int y, String z) {
+        Font newFont = new Font("Arial", Font.BOLD, 30);
+        label[x][y].setFont(newFont);      
+        label[x][y].setText("•");
+        if(z == "O") {
+            label[x][y].setForeground(Color.GRAY);
+        }
+        else {
+            label[x][y].setForeground(Color.RED);
+        }
+    }
+
     //called in fireCannon() method in controller. returns a button
     public JButton getButton(int row, int column){
         return button2[row][column];
@@ -480,7 +492,6 @@ public class battleshipView extends JFrame{
 
     /* Getter functions for the controller that returns the button */
     JButton getFinalizePlacement() {
-        System.out.println("Getting finalizePlacement");
         return finalizeShipPlacement;
     }
 
