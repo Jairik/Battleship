@@ -8,8 +8,6 @@ package Project1;
 
 
 import java.io.IOException;
-import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.List;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -38,7 +36,7 @@ public class battleshipController implements ActionListener{
     boolean clicked = true;
     boolean finalizeClicked = false;
     boolean donePlacing = false;
-
+    boolean manualClicked = false;
     boolean modelSet;
 
     //private boolean buttonClicked = false;
@@ -50,18 +48,15 @@ public class battleshipController implements ActionListener{
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
         view = new battleshipView(userBoard);
-        //test button to rotate the carrier image, still scuffed
-        //rotateShipButtons(); <----XXX
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
-        establishConnection();
+        //establishConnection();
         if(pAgain) {
             view.updateMiddlePanelPlace();//Update the middle panel for placement
             randomizePanel(); // button function to randomize ship
             //manualPanel();
             rotateShipButtons();
             setShipsManually();
-            while(!finalizeClicked){
-            view.updateMiddlePanel2();//Update the middle panel for placement
+            //view.updateMiddlePanel2();//Update the middle panel for placement
             manualPanel();
             //randomizePanel();
             while(!manualClicked){
@@ -133,6 +128,7 @@ public class battleshipController implements ActionListener{
                 pAgain = false;
             }
             */
+        
         }
     }
 
