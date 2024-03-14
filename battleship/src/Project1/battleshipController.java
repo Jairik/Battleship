@@ -56,20 +56,14 @@ public class battleshipController implements ActionListener{
             //manualPanel();
             rotateShipButtons();
             setShipsManually();
-            //view.updateMiddlePanel2();//Update the middle panel for placement
-            manualPanel();
-            //randomizePanel();
-            while(!manualClicked){
+            while(!manualClicked) {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            view.updateMiddlePanelPlace();
-            setShipsManually(); //button function to set ships with dragndrop
-            rotateShipButtons();
-            //setShipsRandomly();
+            System.out.println("Out of rotateShips function");
             readyCannons();
             /* 
             server.send(model.getUserBoard());
@@ -194,7 +188,7 @@ public class battleshipController implements ActionListener{
                 modelSet = true;
                 model.setModelBoolean(modelSet);
                 donePlacing = true;
-                finalizeClicked = true;
+                manualClicked = true;
                 //updates middle panel after finalize ships
                 view.updateMiddlePanelPlay();
             }
