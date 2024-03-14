@@ -36,7 +36,7 @@ public class battleshipController implements ActionListener{
     int shotPosX = -1, shotPosY = -1;
     boolean winner = false;
     boolean clicked = true;
-    boolean manualClicked = false;
+    boolean finalizeClicked = false;
     boolean donePlacing = false;
 
     boolean modelSet;
@@ -55,6 +55,12 @@ public class battleshipController implements ActionListener{
         /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
         establishConnection();
         if(pAgain) {
+            view.updateMiddlePanelPlace();//Update the middle panel for placement
+            randomizePanel(); // button function to randomize ship
+            //manualPanel();
+            rotateShipButtons();
+            setShipsManually();
+            while(!finalizeClicked){
             view.updateMiddlePanel2();//Update the middle panel for placement
             manualPanel();
             //randomizePanel();
@@ -65,7 +71,6 @@ public class battleshipController implements ActionListener{
                     e.printStackTrace();
                 }
             }
-            System.out.println("TESTING- Manual Clicked: " + manualClicked);
             view.updateMiddlePanelPlace();
             setShipsManually(); //button function to set ships with dragndrop
             rotateShipButtons();
@@ -193,6 +198,7 @@ public class battleshipController implements ActionListener{
                 modelSet = true;
                 model.setModelBoolean(modelSet);
                 donePlacing = true;
+                finalizeClicked = true;
                 //updates middle panel after finalize ships
                 view.updateMiddlePanelPlay();
             }
@@ -262,8 +268,7 @@ public class battleshipController implements ActionListener{
                 System.out.println("random ship clicked");
                 model.printBoard();
                 char[][] randomBoard = model.getUserBoard();
-                view.updateLeftPanelRandom(randomBoard);
-                manualClicked = true;
+                //view.updateLeftPanelRandom(randomBoard);
             }
         });
     }
@@ -274,7 +279,7 @@ public class battleshipController implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //view.updateLeftPanelManual();
-                manualClicked = true;
+                //manualClicked = true;
             }
         });
     }
@@ -283,7 +288,7 @@ public class battleshipController implements ActionListener{
         view.getfinalizeRandomButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                manualClicked = true;
+                //manualClicked = true;
                 modelSet = true;
                 model.setModelBoolean(modelSet);
                 view.updateMiddlePanelPlay();

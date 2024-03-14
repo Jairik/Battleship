@@ -333,7 +333,7 @@ public class battleshipView extends JFrame{
     void updateMiddlePanelPlay() {
         /* Resetting the middle panel */
         middlePanel.removeAll(); //Remove the current elements from the panel
-        middlePanel.setBackground(Color.GREEN); //just for testing
+        middlePanel.setBackground(Color.GRAY); 
         middlePanel.setLayout(new GridLayout(5, 1));
         middlePanel.setPreferredSize(new Dimension(300, 100));
         
@@ -419,11 +419,12 @@ public class battleshipView extends JFrame{
         /* Resetting the middle panel */
         middlePanel.removeAll(); //Remove the current elements from the panel
         middlePanel.setBackground(Color.GRAY); //just for testing
-        middlePanel.setLayout(new GridLayout(6, 1));
+        middlePanel.setLayout(new GridLayout(7, 1));
         middlePanel.setPreferredSize(new Dimension(300, 100));
 
         /* Creating buttons to finalize the ship placement, randomizing ships, and rotating each ship */
         finalizeShipPlacement = new JButton("Finalize Placement");
+        randomPlacement = new JButton("Randomize");
         finalizeShipPlacement.setBackground(new Color(255, 82, 82)); //Set the button color to a light-ish red
         rotateCarrier = new JButton("Rotate Carrier");
         rotateBattleship = new JButton("Rotate Battleship");
@@ -433,6 +434,7 @@ public class battleshipView extends JFrame{
 
         /* Add the buttons to the panel */
         middlePanel.add(finalizeShipPlacement);
+        middlePanel.add(randomPlacement);
         middlePanel.add(rotateCarrier);
         middlePanel.add(rotateBattleship);
         middlePanel.add(rotateCruiser);
@@ -521,6 +523,8 @@ public class battleshipView extends JFrame{
     void forceCloseProg() {
         frame.dispose(); //close the current JFrame
     }
+
+
 }
 
 /* Create an external window, asking the user if they would like to play again */

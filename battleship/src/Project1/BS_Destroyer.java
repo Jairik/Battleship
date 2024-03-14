@@ -4,7 +4,7 @@ import java.awt.Point;
 
 public class BS_Destroyer {
     private int shipSize = 2;
-    private String shipSymbol = "d";
+    private char shipSymbol = 'd';
     @SuppressWarnings("unused")
     private battleshipModel model;
 

@@ -4,7 +4,7 @@ import java.awt.Point;
 
 public class BS_Carrier{
     private int shipSize = 5;
-    private String shipSymbol = "c";
+    private char shipSymbol = 'c';
     @SuppressWarnings("unused")
     private battleshipModel model;
     

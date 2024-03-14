@@ -4,7 +4,7 @@ import java.awt.Point;
 
 public class BS_Battleship {
     private int shipSize = 4;
-    private String shipSymbol = "b";
+    private char shipSymbol = 'b';
     @SuppressWarnings("unused")
     private battleshipModel model;
 
@@ -31,5 +31,31 @@ public class BS_Battleship {
                 shipSize--;
             }
         }
+    }
+
+    /* Looks at the model and resets the positions */
+    void resetPosition() {
+        char[][] board = model.getUserBoard();
+        int x = 0, y = 0; //Holds the positions of the ships
+        outerloop:
+        //Find the first instance of the character in the model
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                if(board[i][j] == shipSymbol) {
+                    x = i;
+                    y = j;
+                    break outerloop;
+                }
+            }
+        }
+        //Convert point in the array to a point on the screen
+        x = 500 - (x*50);
+        y = (y*50);
+
+        //Create a new point
+        Point newPoint = new Point(x, y);
+
+        //Place the image at this point
+        
     }
 }
