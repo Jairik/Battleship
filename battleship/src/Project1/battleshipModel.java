@@ -328,4 +328,10 @@ public class battleshipModel {
         return setModel;
     }
 
+
+    //fucntions below used for OppPlayer
+    public char getBoardChar(int x, int y){
+        return board[x][y];
+    }
+
 }

@@ -38,6 +38,8 @@ public class battleshipController implements ActionListener{
     boolean donePlacing = false;
     boolean manualClicked = false;
     boolean modelSet;
+    OppPlayer opponent;
+    
 
     //private boolean buttonClicked = false;
     //controller contructor calls view and model constructors
@@ -47,9 +49,10 @@ public class battleshipController implements ActionListener{
         boolean turn = false, pAgain = true, host, opponentPAgain;
         model = new battleshipModel(); 
         char[][] userBoard = model.getUserBoard(); 
-        view = new battleshipView(userBoard);
-        /* Establish a connection between host and client - Ships can not be modified yet and shots cannot be fired */
-        //establishConnection();
+        view = new battleshipView();
+
+        // initialized opponent
+        opponent = new OppPlayer(); 
         if(pAgain) {
             view.updateMiddlePanelPlace();//Update the middle panel for placement
             randomizePanel(); // button function to randomize ship
@@ -66,63 +69,6 @@ public class battleshipController implements ActionListener{
             }
             System.out.println("Out of rotateShips function");
             readyCannons();
-            /* 
-            server.send(model.getUserBoard());
-            oppBoard = server.receiveBoard(); //receive the opponent board
-            
-            for(int i = 0; i < 10; i++) {
-                for(int j = 0; j < 10; j++) {
-                    System.out.print(oppBoard[i][j]);
-                }
-                System.out.println();
-            }
-            model.setOppBoard(oppBoard);
-            // UPDATES MIDDLE PANEL HERE (GREEN LABELS) - testing 
-            view.updateMiddlePanelPlay(); //Update the middle panel with ship status
-            //!Remove action listeners for the d-n-d ships!
-            rotateShipButtons();
-            host = server.isHost();
-            turn = host; //Set the first turn to always be the host
-            gameLoop: //Assigning name to outermost loop so we can later break it
-            while(!winner) {
-                //Shoot shot, then wait to receive input from the other player 
-                while(turn) {
-                    shotPosX = -1; //Adding signal value that shot has not yet been taken 
-                    shotPosY = -1;
-                    readyCannons(); //add actionlisteners to the buttons
-                    //Looping until shotPosX is set to valid number (set in action listeners for buttons)
-                    while(shotPosX == -1) {
-                        try {
-                            Thread.sleep(10); //Avoid unnecessary work, pause for .1 second
-                        } catch (InterruptedException e) {
-                            System.out.println("Thread error????????");
-                        }
-                    }
-                    server.send(shotPosX, shotPosY); //Send the current shot
-                    disarmCannons();
-                    if(winner) {
-                        break gameLoop;
-                    }
-                    turn = false;
-                }
-                if(!server.checkConnection()) {
-                    exitGame(); //Display a window saying that the game is disconected, then exiting the program
-                }
-                server.receiveCoordinates(); //Wait until the opposing user sends shot coordinates
-                //view.recieveShot()
-                //checkForWinner somehow?
-                if(winner) {
-                    break gameLoop;
-                }
-                turn = true;
-            }
-            pAgain = view.getPlayAgain();
-            server.send(pAgain);
-            opponentPAgain = server.receivePAgain();
-            if(!pAgain || !opponentPAgain) {
-                pAgain = false;
-            }
-            */
         
         }
     }
@@ -304,37 +250,48 @@ public class battleshipController implements ActionListener{
             System.out.println("model set now ready to fire");
             //finds clicked button position
             int[] position = view.buttonPosition(clickedButton);
-            System.out.println(position[0] + ", " + position[1]);
-            //if statement calls checkforvalidshot() from model - if true hit = X else miss = O
-            if(model.checkForValidShot(position[0], position[1])){
-                HitOrMiss = model.determineHitUserBoard(position[0], position[1]); //updates model //checks for sinkship
+            System.out.println(position[1] + ", " + position[0]);
+            //if statement calls checkforvalidshot() from opponent - if true hit = X else miss = O
+            if(opponent.checkForValidShot(position[0], position[1])){
+                HitOrMiss = opponent.determineHit(position[0], position[1]); 
+                System.out.println(HitOrMiss);
                 view.playSoundEffect(HitOrMiss);
                 //If HitOrMiss is neither "X" or "O" it signifies ship has been sunk
                 if(HitOrMiss != "X" && HitOrMiss != "O"){
                     view.updateView(position[0], position[1], "X");
                     System.out.println(HitOrMiss + " has sunk");
                     view.updateLabel(HitOrMiss);
+                    if(opponent.isWin()) {
+                        view.updateView(position[0], position[1], "X");
+                        view.showGameStatus("All ships sunk User won");
+                        System.out.println("Game over ships sunk");
+                        opponent.printBoard();
+                    }
+                    if(model.isWinUser()){
+                        view.updateView(position[0], position[1], "W");
+                        view.showGameStatus("All ships sunk Opponent won");
+                    }
+                    opponent.printBoard();
                 }
                 else {
                     view.updateView(position[0], position[1], HitOrMiss);
                     System.out.println("valid shot");
-                    model.printBoard();
+                    opponent.printBoard();
                 }
-            }
-            if(model.isWinUser()) {
-                view.showGameStatus("All ships sunk");
-                System.out.println("Game over ships sunk");
+                opponent.opponentShoot(model.getUserBoard(), 'X'); //opponent shoots after
+                System.out.println("User board");
+                model.printBoard();
             }
             else {
                 view.playSoundEffect("O");
                 shotPosX = position[0];
                 shotPosY = position[1];
                 System.out.println("not valid shot");
-                model.printBoard();
+                opponent.printBoard();
             }
         }
         else{
-            System.out.println("Model not set");
+            System.out.print("Board not set");
         }
     } 
 

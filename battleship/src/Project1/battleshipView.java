@@ -64,7 +64,7 @@ public class battleshipView extends JFrame{
     boolean manualClicked;
 
     //View constructor that builds frame, gridlayout, labels, and buttons
-    battleshipView(char[][] testArr) throws IOException {
+    battleshipView() throws IOException {
 
         Color seaTurqoise = new Color(108, 218, 231);
 
@@ -331,6 +331,7 @@ public class battleshipView extends JFrame{
     //testing
     public void showGameStatus(String message){
         JOptionPane.showMessageDialog(frame, message, "Game Over!", JOptionPane.INFORMATION_MESSAGE);
+        System.exit(0);
     }
 
     /* Opens a new window declaring when a player has won */
