@@ -246,7 +246,7 @@ public class battleshipView extends JFrame{
         
         randomPanel.setPreferredSize(new Dimension(500, 500));
         
-        // Get the glass pane from the JFrame
+        
         JComponent glassPane = (JComponent) frame.getGlassPane();
         
         // Set the layout of the glass pane to null to allow manual positioning
