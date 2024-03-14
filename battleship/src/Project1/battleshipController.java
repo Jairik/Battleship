@@ -56,6 +56,7 @@ public class battleshipController implements ActionListener{
             //manualPanel();
             rotateShipButtons();
             setShipsManually();
+            setShipsRandomly();
             while(!manualClicked) {
                 try {
                     Thread.sleep(100);
@@ -258,6 +259,9 @@ public class battleshipController implements ActionListener{
                 System.out.println("random ship clicked");
                 model.printBoard();
                 char[][] randomBoard = model.getUserBoard();
+                //view.updateMiddlePanel3();
+                System.out.print("random model set");
+
                 //view.updateLeftPanelRandom(randomBoard);
             }
         });
@@ -279,9 +283,11 @@ public class battleshipController implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //manualClicked = true;
+                manualClicked = true;
                 modelSet = true;
                 model.setModelBoolean(modelSet);
                 view.updateMiddlePanelPlay();
+                
             }
         });
     }
@@ -295,6 +301,7 @@ public class battleshipController implements ActionListener{
         
         //if model isnt set 
         if(model.modelIsSet()){
+            System.out.println("model set now ready to fire");
             //finds clicked button position
             int[] position = view.buttonPosition(clickedButton);
             System.out.println(position[0] + ", " + position[1]);
@@ -306,7 +313,7 @@ public class battleshipController implements ActionListener{
                 if(HitOrMiss != "X" && HitOrMiss != "O"){
                     view.updateView(position[0], position[1], "X");
                     System.out.println(HitOrMiss + " has sunk");
-                    //view.updateLabel(HitOrMiss);
+                    view.updateLabel(HitOrMiss);
                 }
                 else {
                     view.updateView(position[0], position[1], HitOrMiss);
@@ -316,6 +323,7 @@ public class battleshipController implements ActionListener{
             }
             if(model.isWinUser()) {
                 view.showGameStatus("All ships sunk");
+                System.out.println("Game over ships sunk");
             }
             else {
                 view.playSoundEffect("O");

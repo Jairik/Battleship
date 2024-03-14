@@ -419,11 +419,12 @@ public class battleshipView extends JFrame{
         /* Resetting the middle panel */
         middlePanel.removeAll(); //Remove the current elements from the panel
         middlePanel.setBackground(Color.GRAY); //just for testing
-        middlePanel.setLayout(new GridLayout(7, 1));
+        middlePanel.setLayout(new GridLayout(8, 1));
         middlePanel.setPreferredSize(new Dimension(300, 100));
 
         /* Creating buttons to finalize the ship placement, randomizing ships, and rotating each ship */
         finalizeShipPlacement = new JButton("Finalize Placement");
+        finalizeRandomButton = new JButton("Finalize random");
         randomPlacement = new JButton("Randomize");
         finalizeShipPlacement.setBackground(new Color(255, 82, 82)); //Set the button color to a light-ish red
         rotateCarrier = new JButton("Rotate Carrier");
@@ -434,6 +435,7 @@ public class battleshipView extends JFrame{
 
         /* Add the buttons to the panel */
         middlePanel.add(finalizeShipPlacement);
+        middlePanel.add(finalizeRandomButton);
         middlePanel.add(randomPlacement);
         middlePanel.add(rotateCarrier);
         middlePanel.add(rotateBattleship);
